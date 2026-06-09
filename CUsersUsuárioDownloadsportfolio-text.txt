@@ -1,0 +1,898 @@
+
+Portfolio & Media Tracker
+Documento de Requisitos e Planejamento Tecnico
+v1.0 - Junho 2025
+FRONTEND
+Next.js 14
+BACKEND
+Node + Fastify
+BANCO
+PostgreSQL + Prisma
+
+
+1. Visao Geral do Projeto
+Portfolio pessoal de desenvolvedor Full Stack com sistema integrado de rastreamento de midia (livros, filmes, series e animes), blog tecnico e servidor MCP para integracao com Claude.
+
+Objetivo: demonstrar habilidade tecnica real atraves de uma aplicacao que voce mesmo usa no dia a dia, combinando portfolio profissional com utilidade pratica.
+
+1.1 Modulos Principais
+Modulo
+Descricao
+Visibilidade
+Portfolio
+Apresentacao pessoal, skills, projetos em destaque
+Publico
+Media Tracker
+Catalogo de livros, filmes, series e animes
+Publico
+Blog
+Posts tecnicos com editor Markdown
+Publico
+Stats
+Dashboard visual de consumo de midia
+Publico
+Admin Panel
+CMS proprio para gerenciar todo o conteudo
+Privado
+MCP Server
+Servidor para integracao com Claude
+Privado
+
+1.2 Stack Tecnologica
+Camada
+Tecnologia
+Justificativa
+Frontend
+Next.js 14 + TypeScript
+SSR/SSG, SEO otimizado, App Router
+Estilo
+Tailwind CSS + shadcn/ui
+Rapido de desenvolver, dark mode nativo
+Backend
+Node.js + Fastify
+Dominio existente, mais leve que Express
+ORM
+Prisma
+Curva minima, type-safe, migrations automaticas
+Banco
+PostgreSQL
+Robusto, suporte a JSON, queries complexas
+Auth
+JWT + bcrypt
+Simples, apenas um usuario admin
+MCP
+SDK oficial @anthropic/mcp
+Protocolo padrao, integracao direta com Claude
+Deploy Frontend
+Vercel
+Gratis, CI/CD automatico
+Deploy Backend
+Railway
+Gratis, PostgreSQL incluso
+
+
+2. Requisitos Funcionais
+2.1 Modulo: Portfolio
+ID
+Requisito
+Prioridade
+RF-P01
+Exibir hero com nome, titulo, bio e links (GitHub, LinkedIn)
+Alta
+RF-P02
+Listar skills organizadas por categoria (Frontend, Backend, DevOps, etc)
+Alta
+RF-P03
+Exibir projetos em destaque com titulo, descricao, stack, link GitHub e demo
+Alta
+RF-P04
+Widget "Atualmente" mostrando o que esta sendo lido/assistido no momento
+Media
+RF-P05
+Formulario de contato funcional com envio de e-mail
+Media
+RF-P06
+Links para redes sociais e curriculo para download
+Alta
+RF-P07
+Secao de timeline / historia profissional
+Baixa
+
+2.2 Modulo: Media Tracker (Publico)
+ID
+Requisito
+Prioridade
+RF-M01
+Listar midias com filtro por tipo (livro, filme, serie, anime)
+Alta
+RF-M02
+Filtrar por status: Concluido / Em andamento / Quero ver
+Alta
+RF-M03
+Busca por titulo em tempo real
+Alta
+RF-M04
+Ordenar por nota, data de adicao e titulo
+Media
+RF-M05
+Exibir nota pessoal (1-10) e comentario curto por item
+Alta
+RF-M06
+Integrar com TMDB para buscar dados de filmes e series
+Alta
+RF-M07
+Integrar com Google Books API para buscar dados de livros
+Alta
+RF-M08
+Integrar com Jikan API para buscar dados de animes
+Alta
+RF-M09
+Exibir capa, titulo, ano, genero e sinopse de cada item
+Alta
+RF-M10
+Paginacao ou scroll infinito na listagem
+Media
+
+2.3 Modulo: Blog
+ID
+Requisito
+Prioridade
+RF-B01
+Listar posts com titulo, data, tempo de leitura estimado e tags
+Alta
+RF-B02
+Exibir post completo com syntax highlight de codigo
+Alta
+RF-B03
+Filtrar posts por tags
+Media
+RF-B04
+Busca por texto nos posts
+Media
+RF-B05
+Suporte a posts em formato Markdown com MDX
+Alta
+RF-B06
+Series de posts (ex: "construindo X - parte 1, 2, 3")
+Baixa
+RF-B07
+RSS feed automatico dos posts publicados
+Media
+RF-B08
+Estimativa de tempo de leitura calculada automaticamente
+Media
+RF-B09
+Posts com status: Rascunho ou Publicado
+Alta
+
+2.4 Modulo: Stats (Dashboard Publico)
+ID
+Requisito
+Prioridade
+RF-S01
+Total de itens por tipo (livros, filmes, series, animes)
+Alta
+RF-S02
+Grafico de itens consumidos por mes/ano
+Alta
+RF-S03
+Distribuicao por genero favorito
+Media
+RF-S04
+Media de notas por categoria
+Media
+RF-S05
+Grafico estilo "GitHub contributions" de atividade ao longo do tempo
+Baixa
+RF-S06
+Top 5 mais bem avaliados por categoria
+Media
+
+
+2.5 Modulo: Admin Panel (Privado)
+ID
+Requisito
+Prioridade
+RF-A01
+Login com e-mail e senha (JWT)
+Alta
+RF-A02
+Dashboard com resumo do conteudo (contadores)
+Alta
+RF-A03
+CRUD completo de midias (criar, editar, excluir)
+Alta
+RF-A04
+Buscar midia por titulo via APIs externas e pre-preencher formulario
+Alta
+RF-A05
+CRUD completo de posts do blog
+Alta
+RF-A06
+Editor Markdown com preview em tempo real
+Alta
+RF-A07
+Gerenciar status de posts (rascunho / publicado)
+Alta
+RF-A08
+Gerenciar projetos do portfolio
+Media
+RF-A09
+Gerenciar skills e categorias
+Baixa
+RF-A10
+Upload de imagens (capas personalizadas)
+Media
+
+2.6 Modulo: MCP Server
+ID
+Tool MCP
+Descricao
+RF-MCP01
+list_media
+Listar midias com filtros opcionais (tipo, status, nota minima)
+RF-MCP02
+get_media
+Buscar detalhes de um item especifico por ID ou titulo
+RF-MCP03
+search_media
+Pesquisar por titulo parcial em todo o acervo
+RF-MCP04
+add_media
+Adicionar novo item ao acervo com todos os campos
+RF-MCP05
+update_media
+Atualizar status, nota ou comentario de um item
+RF-MCP06
+delete_media
+Remover item do acervo pelo ID
+RF-MCP07
+get_stats
+Retornar estatisticas gerais do acervo
+RF-MCP08
+list_posts
+Listar posts do blog (todos ou por status)
+RF-MCP09
+create_draft
+Criar rascunho de post com titulo e conteudo Markdown
+RF-MCP10
+publish_post
+Publicar um rascunho existente pelo ID
+
+
+3. Requisitos Nao Funcionais
+3.1 Performance
+ID
+Requisito
+Metrica
+RNF-PE01
+Paginas publicas com SSG/ISR para carregamento rapido
+LCP < 2.5s
+RNF-PE02
+Imagens otimizadas com next/image
+Formato WebP automatico
+RNF-PE03
+Cache de respostas das APIs externas (TMDB, Jikan)
+TTL de 24h
+RNF-PE04
+Paginacao no backend para listas grandes
+Max 20 itens/pagina
+RNF-PE05
+Queries Prisma otimizadas com indices adequados
+Queries < 100ms
+
+3.2 Seguranca
+ID
+Requisito
+Detalhe
+RNF-SE01
+Rotas admin protegidas por JWT com expiracao
+Token de 24h
+RNF-SE02
+Senhas armazenadas com bcrypt
+Salt rounds: 12
+RNF-SE03
+MCP Server autenticado com API Key propria
+Header X-MCP-Key
+RNF-SE04
+Rate limiting nas rotas publicas da API
+Max 60 req/min por IP
+RNF-SE05
+Variaveis de ambiente nunca commitadas
+Uso de .env + .gitignore
+RNF-SE06
+CORS configurado para aceitar apenas dominios proprios
+Whitelist de origens
+RNF-SE07
+Input validation com Zod em todos os endpoints
+Rejeitar payloads invalidos
+
+3.3 Usabilidade
+ID
+Requisito
+Detalhe
+RNF-US01
+Dark mode e light mode com persistencia de preferencia
+next-themes
+RNF-US02
+Design responsivo para mobile, tablet e desktop
+Breakpoints Tailwind
+RNF-US03
+Acessibilidade basica (WCAG AA)
+Alt texts, contraste, ARIA
+RNF-US04
+Loading states e skeletons para conteudo assincrono
+UX sem flicker
+RNF-US05
+Mensagens de erro claras e amigaveis ao usuario
+Toast notifications
+RNF-US06
+Animacoes suaves e nao intrusivas
+Framer Motion leve
+
+3.4 SEO e Descobribilidade
+ID
+Requisito
+Detalhe
+RNF-SEO01
+Meta tags dinamicas por pagina (titulo, descricao)
+Next.js Metadata API
+RNF-SEO02
+Open Graph tags para preview em redes sociais
+Imagens OG dinamicas
+RNF-SEO03
+Sitemap.xml gerado automaticamente
+next-sitemap
+RNF-SEO04
+Schema.org structured data nas paginas de post
+Article schema
+RNF-SEO05
+URLs amigaveis e canonicas
+Slugs nos posts
+
+3.5 Manutencao e Qualidade de Codigo
+ID
+Requisito
+Detalhe
+RNF-MQ01
+TypeScript em toda a codebase (frontend e backend)
+Strict mode ativado
+RNF-MQ02
+ESLint + Prettier configurados
+Lint on save + pre-commit
+RNF-MQ03
+Commits seguindo Conventional Commits
+feat:, fix:, chore:, etc
+RNF-MQ04
+Variaveis e funcoes nomeadas em ingles
+Padrao de mercado
+RNF-MQ05
+Documentacao do MCP Server (README com exemplos)
+Para uso proprio
+RNF-MQ06
+Scripts npm padronizados (dev, build, lint, test)
+DX consistente
+
+
+4. Telas e Fluxos de Navegacao
+4.1 Paginas Publicas
+/ — Home
+Hero: nome, titulo, bio curta, botoes CTA (Ver projetos / Contato)
+Widget "Atualmente": o que esta sendo lido/assistido agora
+Secao Skills: cards agrupados por categoria
+Secao Projetos em destaque: grid de 3-4 cards com stack e links
+Secao Blog preview: ultimos 3 posts
+Rodape: links sociais + email
+
+/shelf — Estante de Midia
+Header com titulo e contador total de itens
+Tabs de tipo: Todos / Livros / Filmes / Series / Animes
+Filtros: Status (concluido, em andamento, quero ver) + Ordenacao
+Campo de busca por titulo
+Grid de cards: capa, titulo, nota em estrelas, status badge
+Modal/drawer ao clicar no card: detalhes completos + comentario
+
+/blog — Lista de Posts
+Header com titulo e campo de busca
+Filtro de tags (chips clicaveis)
+Lista de posts: titulo, data, tempo de leitura, preview e tags
+Paginacao
+
+/blog/[slug] — Post Individual
+Titulo, data, autor, tempo de leitura
+Tags do post
+Conteudo Markdown renderizado com syntax highlight
+Sidebar (desktop): sumario de navegacao (headings)
+Navegacao anterior/proximo post
+Posts relacionados (mesma tag)
+
+/stats — Dashboard de Estatisticas
+Cards de totais: livros, filmes, series, animes
+Grafico de barras: itens por mes
+Grafico de pizza: distribuicao por genero
+Grafico de linha: notas medias ao longo do tempo
+Activity heatmap estilo GitHub
+Top 5 por categoria
+
+/contato — Formulario de Contato
+Campos: nome, e-mail, assunto, mensagem
+Feedback visual de envio (loading / sucesso / erro)
+
+4.2 Paginas Privadas (/admin)
+/admin/login
+Formulario de e-mail e senha
+Redirect automatico se ja autenticado
+
+/admin — Dashboard
+Cards de resumo: total de midias, posts publicados, rascunhos
+Ultimas midias adicionadas
+Acesso rapido para adicionar midia ou novo post
+
+/admin/media — Lista de Midias
+Tabela com titulo, tipo, status, nota e acoes (editar/excluir)
+Filtros e busca
+Botao "Adicionar midia"
+
+/admin/media/new e /admin/media/[id]/edit
+Campo de busca nas APIs externas para pre-preencher dados
+Formulario completo: titulo, tipo, status, nota (1-10), comentario
+Upload opcional de capa personalizada
+Preview da capa
+
+/admin/posts — Lista de Posts
+Tabela com titulo, status, data e acoes
+Filtro por status (rascunho/publicado)
+
+/admin/posts/new e /admin/posts/[id]/edit
+Campo de titulo e slug (auto-gerado)
+Editor Markdown com preview ao lado
+Gerenciador de tags
+Botoes: Salvar rascunho / Publicar
+
+
+5. Modelagem do Banco de Dados
+5.1 Entidades Principais
+Tabela
+Descricao
+Relacoes
+users
+Usuario admin (apenas 1)
+-
+media_items
+Livros, filmes, series e animes
+genres (N:N), tags (N:N)
+genres
+Generos de midia
+media_items (N:N)
+posts
+Posts do blog
+tags (N:N), series (N:1)
+tags
+Tags compartilhadas entre posts
+posts (N:N)
+post_series
+Agrupamento de posts em series
+posts (1:N)
+projects
+Projetos do portfolio
+project_tags (N:N)
+
+5.2 Schema: media_items
+Campo
+Tipo
+Descricao
+id
+UUID PK
+Identificador unico
+title
+VARCHAR(255)
+Titulo da obra
+type
+ENUM
+book | movie | series | anime
+status
+ENUM
+completed | watching | want
+rating
+DECIMAL(3,1)
+Nota de 1.0 a 10.0
+comment
+TEXT
+Comentario pessoal
+cover_url
+TEXT
+URL da capa
+external_id
+VARCHAR(100)
+ID na API externa (TMDB, etc)
+year
+INTEGER
+Ano de lancamento
+synopsis
+TEXT
+Sinopse da obra
+is_current
+BOOLEAN
+Exibir no widget "Atualmente"
+started_at
+TIMESTAMP
+Data de inicio
+finished_at
+TIMESTAMP
+Data de conclusao
+created_at
+TIMESTAMP
+Data de criacao do registro
+updated_at
+TIMESTAMP
+Data de atualizacao do registro
+
+5.3 Schema: posts
+Campo
+Tipo
+Descricao
+id
+UUID PK
+Identificador unico
+title
+VARCHAR(255)
+Titulo do post
+slug
+VARCHAR(255) UNIQUE
+URL amigavel (auto-gerado)
+content
+TEXT
+Conteudo em Markdown
+excerpt
+TEXT
+Resumo curto para listagem
+status
+ENUM
+draft | published
+reading_time
+INTEGER
+Tempo de leitura em minutos
+series_id
+UUID FK
+Serie de posts (opcional)
+series_order
+INTEGER
+Ordem dentro da serie
+published_at
+TIMESTAMP
+Data de publicacao
+created_at
+TIMESTAMP
+Data de criacao
+updated_at
+TIMESTAMP
+Data de atualizacao
+
+
+6. Contrato da API REST (Backend)
+6.1 Media
+Metodo
+Endpoint
+Descricao
+Auth
+GET
+/api/media
+Listar midias com filtros e paginacao
+Nao
+GET
+/api/media/:id
+Buscar midia por ID
+Nao
+POST
+/api/media
+Criar nova midia
+Sim
+PUT
+/api/media/:id
+Atualizar midia
+Sim
+DELETE
+/api/media/:id
+Excluir midia
+Sim
+GET
+/api/media/current
+Buscar item "Atualmente"
+Nao
+GET
+/api/media/stats
+Estatisticas do acervo
+Nao
+GET
+/api/external/search
+Buscar nas APIs externas
+Sim
+
+6.2 Blog
+Metodo
+Endpoint
+Descricao
+Auth
+GET
+/api/posts
+Listar posts publicados
+Nao
+GET
+/api/posts/:slug
+Buscar post por slug
+Nao
+GET
+/api/posts/rss
+Feed RSS em XML
+Nao
+GET
+/api/admin/posts
+Listar todos os posts (incl. rascunhos)
+Sim
+POST
+/api/admin/posts
+Criar post
+Sim
+PUT
+/api/admin/posts/:id
+Atualizar post
+Sim
+DELETE
+/api/admin/posts/:id
+Excluir post
+Sim
+PATCH
+/api/admin/posts/:id/publish
+Publicar rascunho
+Sim
+
+6.3 Auth
+Metodo
+Endpoint
+Descricao
+Auth
+POST
+/api/auth/login
+Login com e-mail e senha, retorna JWT
+Nao
+POST
+/api/auth/refresh
+Renovar token JWT
+Sim
+GET
+/api/auth/me
+Validar token e retornar dados do usuario
+Sim
+
+
+7. Estrutura de Pastas
+7.1 Frontend (Next.js)
+portfolio-frontend/
+├── app/
+│   ├── (public)/
+│   │   ├── page.tsx              # Home
+│   │   ├── shelf/page.tsx        # Media Tracker
+│   │   ├── blog/page.tsx         # Lista de posts
+│   │   ├── blog/[slug]/page.tsx  # Post individual
+│   │   ├── stats/page.tsx        # Dashboard stats
+│   │   └── contato/page.tsx      # Formulario
+│   └── admin/
+│       ├── layout.tsx            # Layout protegido
+│       ├── page.tsx              # Dashboard admin
+│       ├── media/...             # CRUD de midia
+│       └── posts/...             # CRUD de posts
+├── components/
+│   ├── ui/                       # shadcn/ui base
+│   ├── media/                    # Cards, filtros, modal
+│   ├── blog/                     # PostCard, Editor
+│   ├── portfolio/                # Hero, Skills, Projects
+│   └── stats/                    # Graficos, heatmap
+├── lib/
+│   ├── api.ts                    # Cliente HTTP
+│   └── utils.ts                  # Helpers
+└── types/                        # Tipos TypeScript globais
+
+7.2 Backend (Node + Fastify)
+portfolio-backend/
+├── src/
+│   ├── routes/
+│   │   ├── media.ts
+│   │   ├── posts.ts
+│   │   ├── auth.ts
+│   │   └── external.ts
+│   ├── services/
+│   │   ├── mediaService.ts
+│   │   ├── postService.ts
+│   │   ├── tmdbService.ts
+│   │   ├── jikanService.ts
+│   │   └── googleBooksService.ts
+│   ├── middlewares/
+│   │   ├── auth.ts               # Verificacao JWT
+│   │   └── rateLimit.ts
+│   ├── schemas/                  # Validacao Zod
+│   └── prisma/
+│       └── schema.prisma         # Schema do banco
+└── mcp-server/
+    ├── index.ts                  # Entry point MCP
+    ├── tools/
+    │   ├── media.ts              # Tools de midia
+    │   └── posts.ts              # Tools de blog
+    └── README.md                 # Documentacao de uso
+
+
+8. Track de Tarefas por Fase
+Fase 1 — Fundacao (Semana 1-2)
+#
+Tarefa
+Camada
+Status
+1.1
+Criar repositorios (frontend, backend)
+Ambos
+Pendente
+1.2
+Configurar Next.js 14 + TypeScript + Tailwind + shadcn/ui
+Frontend
+Pendente
+1.3
+Configurar Fastify + TypeScript + Prisma
+Backend
+Pendente
+1.4
+Provisionar PostgreSQL no Railway
+Banco
+Pendente
+1.5
+Definir schema Prisma completo e rodar migrations
+Banco
+Pendente
+1.6
+Configurar dark mode com next-themes
+Frontend
+Pendente
+1.7
+Implementar auth: login, JWT, middleware de protecao
+Backend
+Pendente
+1.8
+Configurar ESLint, Prettier e Conventional Commits
+Ambos
+Pendente
+
+Fase 2 — Portfolio + Blog (Semana 3-4)
+#
+Tarefa
+Camada
+Status
+2.1
+Implementar pagina Home com todas as secoes
+Frontend
+Pendente
+2.2
+CRUD de posts no backend + endpoints REST
+Backend
+Pendente
+2.3
+Pagina de listagem de posts com filtro por tags
+Frontend
+Pendente
+2.4
+Renderizacao de post individual com syntax highlight
+Frontend
+Pendente
+2.5
+Admin: editor Markdown com preview
+Frontend
+Pendente
+2.6
+Gerar RSS feed automaticamente
+Backend
+Pendente
+2.7
+Configurar OG tags e SEO
+Frontend
+Pendente
+
+Fase 3 — Media Tracker (Semana 5-6)
+#
+Tarefa
+Camada
+Status
+3.1
+CRUD de midias no backend
+Backend
+Pendente
+3.2
+Integrar TMDB API (filmes e series)
+Backend
+Pendente
+3.3
+Integrar Google Books API
+Backend
+Pendente
+3.4
+Integrar Jikan API (animes)
+Backend
+Pendente
+3.5
+Pagina publica /shelf com filtros e busca
+Frontend
+Pendente
+3.6
+Admin: gerenciar midias com busca em APIs externas
+Frontend
+Pendente
+3.7
+Widget "Atualmente" na Home
+Frontend
+Pendente
+
+Fase 4 — Stats + MCP (Semana 7-8)
+#
+Tarefa
+Camada
+Status
+4.1
+Endpoint de estatisticas no backend
+Backend
+Pendente
+4.2
+Pagina /stats com graficos (Recharts)
+Frontend
+Pendente
+4.3
+Implementar MCP Server com todas as tools
+Backend
+Pendente
+4.4
+Autenticacao do MCP via API Key
+Backend
+Pendente
+4.5
+Documentar o MCP (README com exemplos de uso)
+Backend
+Pendente
+4.6
+Testar MCP integrado ao Claude
+Backend
+Pendente
+
+Fase 5 — Polimento e Deploy (Semana 9-10)
+#
+Tarefa
+Camada
+Status
+5.1
+Responsividade mobile em todas as paginas
+Frontend
+Pendente
+5.2
+Loading states, skeletons e tratamento de erros
+Frontend
+Pendente
+5.3
+Testes de acessibilidade (WCAG AA basico)
+Frontend
+Pendente
+5.4
+Deploy frontend na Vercel + configurar dominio
+Frontend
+Pendente
+5.5
+Deploy backend + banco no Railway
+Backend
+Pendente
+5.6
+Configurar variaveis de ambiente em producao
+Ambos
+Pendente
+5.7
+Seed inicial de dados (projetos, skills, primeiras midias)
+Banco
+Pendente
+5.8
+Revisao final de SEO e performance (Lighthouse)
+Frontend
+Pendente
+
+Portfolio & Media Tracker  |  Documento de Requisitos v1.0  |  Junho 2025
