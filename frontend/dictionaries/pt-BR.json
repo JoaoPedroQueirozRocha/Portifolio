@@ -5,10 +5,14 @@
     "blog": "Blog",
     "stats": "Stats"
   },
+  "portrait": {
+    "available": "Aberto a propostas"
+  },
   "hero": {
     "eyebrow": "Desenvolvedor Full Stack",
     "available": "Disponível para projetos",
-    "bio": "Construo aplicações web com foco em experiência real — ferramentas que eu mesmo uso no dia a dia.",
+    "bio": "Engenheiro de software e desenvolvedor full stack. Construo aplicações robustas e escaláveis, sempre buscando a melhor solução para o problema e garantindo a melhor performance e usabilidade.",
+    "bio_short": "Violinista nas horas vagas, leitor nas horas de descanso e gamer nas horas de lazer.",
     "cta_projects": "Ver projetos",
     "cta_contact": "Entrar em contato",
     "facts": {

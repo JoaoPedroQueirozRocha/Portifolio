@@ -5,10 +5,14 @@
     "blog": "Blog",
     "stats": "Stats"
   },
+  "portrait": {
+    "available": "Open to proposals"
+  },
   "hero": {
     "eyebrow": "Full Stack Developer",
     "available": "Available for projects",
     "bio": "I build web applications focused on real experience — tools I actually use every day.",
+    "bio_short": "Violinist in my spare time, reader when resting, gamer when I need to decompress.",
     "cta_projects": "View projects",
     "cta_contact": "Get in touch",
     "facts": {

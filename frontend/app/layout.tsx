@@ -6,7 +6,7 @@ import {
   Cinzel,
   JetBrains_Mono,
 } from "next/font/google"
-import { ThemeProvider } from "next-themes"
+import Providers from "@/components/layout/Providers"
 import "./globals.css"
 
 /* ---------------------------------------------------------------
@@ -80,14 +80,7 @@ export default function RootLayout({
       ].join(" ")}
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange={false}
-        >
-          {children}
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

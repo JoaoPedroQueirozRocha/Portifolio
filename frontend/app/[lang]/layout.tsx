@@ -15,12 +15,10 @@ export default async function LangLayout({
   if (!isValidLocale(lang)) notFound()
 
   const dict = await getDictionary(lang)
-  
 
   return (
     <>
-    {/* TODO: fix this type error */}
-      <Header dict={dict.nav as any} />
+      <Header lang={lang} nav={dict.nav} themeLabel={dict.common.theme_toggle} />
       {children}
     </>
   )
