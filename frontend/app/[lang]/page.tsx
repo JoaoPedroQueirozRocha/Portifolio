@@ -11,7 +11,15 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
     <main className="content-container flex flex-col">
       {/* Hero sample */}
 
-      <section className="flex flex-row gap-10">
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "300px 1fr",
+          gap: "54px",
+          alignItems: "center",
+          padding: "76px 0 80px",
+        }}
+      >
         <Portrait portrait={dict.portrait} />
         <Bio hero={dict.hero} />
       </section>

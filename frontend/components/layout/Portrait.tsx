@@ -3,15 +3,62 @@ import Image from "next/image"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
 
 export default function Portrait({ portrait }: { portrait: Dictionary["portrait"] }) {
-    return (
-        <div className="flex flex-col gap-3">
-            <div className="border border-line rounded-sm">
-                <Image src="/profile.jpeg" alt="Portrait" width={300} height={300} />
-            </div>
-            <div className="border border-line px-2 py-1 rounded-sm text-center flex items-center justify-center gap-2">
-                <span className="lozenge" />
-                <p className="">{portrait.available}</p>
-            </div>
-        </div>
-    )
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "18px", position: "relative", zIndex: 1 }}>
+
+      {/* Retrato com cantos decorativos */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          aspectRatio: "4/5",
+          border: "1px solid var(--line)",
+          background: `repeating-linear-gradient(135deg, var(--line-soft) 0 1px, transparent 1px 13px), var(--surface)`,
+          display: "grid",
+          placeItems: "center",
+          overflow: "hidden",
+        }}
+      >
+        {/* Cantos decorativos */}
+        <span style={{ position: "absolute", top: "-1px", left: "-1px",   width: "13px", height: "13px", borderTop: "1px solid var(--accent)", borderLeft: "1px solid var(--accent)" }} />
+        <span style={{ position: "absolute", top: "-1px", right: "-1px",  width: "13px", height: "13px", borderTop: "1px solid var(--accent)", borderRight: "1px solid var(--accent)" }} />
+        <span style={{ position: "absolute", bottom: "-1px", left: "-1px",  width: "13px", height: "13px", borderBottom: "1px solid var(--accent)", borderLeft: "1px solid var(--accent)" }} />
+        <span style={{ position: "absolute", bottom: "-1px", right: "-1px", width: "13px", height: "13px", borderBottom: "1px solid var(--accent)", borderRight: "1px solid var(--accent)" }} />
+
+        {/* Imagem ou placeholder */}
+        
+        <Image src="/profile.jpeg" alt="Portrait" width={300} height={300} />
+      </div>
+
+      {/* Badge "Aberto a propostas" */}
+      <span
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "8px",
+          fontFamily: "var(--font-mono)",
+          fontSize: "11px",
+          letterSpacing: ".04em",
+          color: "var(--muted)",
+          justifyContent: "center",
+          padding: "8px",
+          border: "1px solid var(--line-soft)",
+          borderRadius: "3px",
+        }}
+      >
+        <span
+          style={{
+            width: "7px",
+            height: "7px",
+            borderRadius: "50%",
+            background: "oklch(0.72 0.13 150)",
+            boxShadow: "0 0 0 3px oklch(0.72 0.13 150 / 0.2)",
+            flexShrink: 0,
+          }}
+        />
+        {portrait.available}
+      </span>
+
+    </div>
+  )
 }

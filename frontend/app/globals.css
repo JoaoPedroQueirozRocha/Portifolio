@@ -256,7 +256,7 @@ html[data-theme="light"] {
   .content-container {
     max-width: var(--maxw);
     margin-inline: auto;
-    padding-inline: 2rem;
+    padding-inline: 1rem;
   }
 
   /* Losango decorativo */
@@ -323,6 +323,17 @@ html[data-theme="light"] {
     height: 1px;
     background: linear-gradient(90deg, var(--line), var(--line-soft));
     margin-top: 30px;
+  }
+
+  /* Drop cap da bio do hero */
+  .hero-bio::first-letter {
+    font-family: var(--font-display);
+    float: left;
+    font-size: 62px;
+    line-height: 0.74;
+    padding: 6px 12px 0 0;
+    margin-top: 6px;
+    color: var(--accent);
   }
 
   /* Grid com divisores via gap + background (padrão do design) */

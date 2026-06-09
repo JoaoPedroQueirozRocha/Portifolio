@@ -9,12 +9,13 @@
     "available": "Aberto a propostas"
   },
   "hero": {
-    "eyebrow": "Desenvolvedor Full Stack",
+    "eyebrow": "Engenheiro de Software · Full Stack",
     "available": "Disponível para projetos",
-    "bio": "Engenheiro de software e desenvolvedor full stack. Construo aplicações robustas e escaláveis, sempre buscando a melhor solução para o problema e garantindo a melhor performance e usabilidade.",
-    "bio_short": "Violinista nas horas vagas, leitor nas horas de descanso e gamer nas horas de lazer.",
-    "cta_projects": "Ver projetos",
-    "cta_contact": "Entrar em contato",
+    "bio": "Engenheiro full-stack com foco em back-end Node e TypeScript. Construo APIs e produtos de ponta a ponta — do modelo de dados à interface — com o cuidado de quem trata código como ofício.",
+    "bio_short": "Violinista nas horas vagas. Música clássica e épica, RPGs de mundo aberto e uma queda por tudo que é medieval.",
+    "cta_github": "GitHub",
+    "cta_linkedin": "LinkedIn",
+    "cta_cv": "Currículo",
     "facts": {
       "stack": "Stack",
       "location": "Localização",

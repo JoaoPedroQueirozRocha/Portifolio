@@ -1,3 +1,5 @@
+"use client"
+
 import type { Dictionary } from "@/app/[lang]/dictionaries"
 
 interface BioProps {
@@ -6,43 +8,155 @@ interface BioProps {
 
 export default function Bio({ hero }: BioProps) {
   return (
-    <div className="flex flex-col gap-3 max-w-[500px]">
-      <span className="eyebrow">
+    <div style={{ position: "relative", zIndex: 1 }}>
+
+      {/* Eyebrow */}
+      <span
+        className="eyebrow"
+        style={{ marginBottom: "18px", display: "inline-flex" }}
+      >
         <span className="lozenge" />
         {hero.eyebrow}
       </span>
+
+      {/* Nome */}
       <h1
-        className="text-[78px] leading-[0.96] tracking-[.01em]"
-        style={{ fontFamily: "var(--font-display)" }}
+        style={{
+          fontFamily: "var(--font-display)",
+          fontSize: "78px",
+          letterSpacing: ".01em",
+          lineHeight: "0.96",
+        }}
       >
         João Pedro
       </h1>
+
+      {/* Bio com drop cap via CSS first-letter */}
       <p
-        className="text-[20px] italic mt-2"
-        style={{ fontFamily: "var(--font-alt)", color: "var(--faint)" }}
+        className="hero-bio"
+        style={{
+          fontSize: "18px",
+          color: "var(--muted)",
+          maxWidth: "50ch",
+          marginTop: "22px",
+          lineHeight: "1.72",
+        }}
       >
         {hero.bio}
       </p>
+
+      {/* Tagline itálica */}
       <p
-        className="text-[16px] italic"
-        style={{ fontFamily: "var(--font-alt)", color: "var(--faint)" }}
+        style={{
+          fontFamily: "var(--font-alt)",
+          fontStyle: "italic",
+          fontSize: "20px",
+          color: "var(--faint)",
+          marginTop: "16px",
+          maxWidth: "48ch",
+          lineHeight: "1.4",
+        }}
       >
         {hero.bio_short}
       </p>
-      <div className="flex gap-3 mt-4">
-        <button
-          className="inline-flex items-center gap-2 px-[18px] py-[10px] rounded-sm text-[15px] font-medium tracking-[.01em] transition-all hover:-translate-y-px"
-          style={{ background: "var(--accent)", color: "var(--on-accent)", fontFamily: "var(--font-body)" }}
+
+      {/* CTAs */}
+      <div style={{ display: "flex", gap: "10px", marginTop: "30px", flexWrap: "wrap" }}>
+        <a
+          href="https://github.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            fontFamily: "var(--font-body)",
+            fontSize: "15px",
+            fontWeight: 500,
+            padding: "10px 18px",
+            borderRadius: "4px",
+            letterSpacing: ".01em",
+            background: "var(--accent)",
+            color: "var(--on-accent)",
+            transition: ".18s",
+            textDecoration: "none",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.background = "var(--accent-bright)"
+            ;(e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.background = "var(--accent)"
+            ;(e.currentTarget as HTMLElement).style.transform = "translateY(0)"
+          }}
         >
-          {hero.cta_projects}
-        </button>
-        <button
-          className="inline-flex items-center gap-2 px-[18px] py-[10px] rounded-sm text-[15px] tracking-[.01em] transition-all hover:text-[--accent-bright]"
-          style={{ border: "1px solid var(--line)", fontFamily: "var(--font-body)" }}
+          {hero.cta_github}
+        </a>
+
+        <a
+          href="https://linkedin.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            fontFamily: "var(--font-body)",
+            fontSize: "15px",
+            fontWeight: 500,
+            padding: "10px 18px",
+            borderRadius: "4px",
+            letterSpacing: ".01em",
+            border: "1px solid var(--line)",
+            color: "var(--text)",
+            transition: ".18s",
+            textDecoration: "none",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)"
+            ;(e.currentTarget as HTMLElement).style.color = "var(--accent-bright)"
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.borderColor = "var(--line)"
+            ;(e.currentTarget as HTMLElement).style.color = "var(--text)"
+          }}
         >
-          {hero.cta_contact}
-        </button>
+          {hero.cta_linkedin}
+        </a>
+
+        <a
+          href="/cv.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            fontFamily: "var(--font-body)",
+            fontSize: "15px",
+            fontWeight: 500,
+            padding: "10px 18px",
+            borderRadius: "4px",
+            letterSpacing: ".01em",
+            border: "1px solid var(--line)",
+            color: "var(--text)",
+            transition: ".18s",
+            textDecoration: "none",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)"
+            ;(e.currentTarget as HTMLElement).style.color = "var(--accent-bright)"
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.borderColor = "var(--line)"
+            ;(e.currentTarget as HTMLElement).style.color = "var(--text)"
+          }}
+        >
+          {hero.cta_cv}
+        </a>
       </div>
+
     </div>
   )
 }

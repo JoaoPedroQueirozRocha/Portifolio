@@ -273,3 +273,21 @@ Para um portfólio vitrine isso é aceitável no início, mas considere ao menos
 | 🟢 Baixa | 7.1 Script `typecheck` no package.json |
 | 🟢 Baixa | 7.2 Adicionar `.editorconfig` |
 | 🟢 Baixa | 3.4 Remover assets padrão do Next.js |
+
+---
+
+## 9. Hero / Bio — Pendências de Lógica
+
+> Ajustes visuais aplicados. Os itens abaixo envolvem comportamento e ficam para implementação futura.
+
+### 9.1 CTAs como `<Link>` com rotas reais
+Os botões "Ver projetos" e "Entrar em contato" são `<button>` sem `onClick`. Precisam se tornar `<Link href={...}>` apontando para `/${lang}/projects` e `/${lang}/contact` (ou âncora `#contact`).
+
+### 9.2 Scroll-reveal na seção hero
+O design original tem a bio entrando com uma animação sutil de fade+translate ao carregar. Implementar com `framer-motion` ou CSS `@keyframes` + `animation-fill-mode: both`.
+
+### 9.3 Badge "disponível para projetos" dinâmico
+O `portrait.available` está hardcoded no dicionário. No futuro esse status deve vir de uma variável de ambiente ou CMS para poder ser alterado sem redeploy.
+
+### 9.4 Nome hardcoded no `Bio`
+`"João Pedro"` está literal no JSX. Mover para o dicionário ou para uma constante de configuração do site (`lib/config.ts`), assim o componente é 100% data-driven.
