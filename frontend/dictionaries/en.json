@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "Home",
+    "shelf": "Shelf",
+    "blog": "Blog",
+    "stats": "Stats"
+  },
+  "hero": {
+    "eyebrow": "Full Stack Developer",
+    "available": "Available for projects",
+    "bio": "I build web applications focused on real experience — tools I actually use every day.",
+    "cta_projects": "View projects",
+    "cta_contact": "Get in touch",
+    "facts": {
+      "stack": "Stack",
+      "location": "Location",
+      "status": "Status"
+    }
+  },
+  "shelf": {
+    "title": "Shelf",
+    "subtitle": "Books, movies, series and anime I've read, watched or want to.",
+    "tabs": {
+      "all": "All",
+      "book": "Books",
+      "movie": "Movies",
+      "series": "Series",
+      "anime": "Anime"
+    },
+    "filters": {
+      "search_placeholder": "Search by title...",
+      "status": "Status",
+      "sort": "Sort",
+      "status_all": "All",
+      "status_completed": "Completed",
+      "status_watching": "In progress",
+      "status_want": "Want to",
+      "sort_rating": "Rating",
+      "sort_date": "Date",
+      "sort_title": "Title"
+    },
+    "status": {
+      "completed": "Completed",
+      "watching": "In progress",
+      "want": "Want to"
+    },
+    "empty": "No items found.",
+    "rating_empty": "no rating",
+    "panel": {
+      "note_label": "My note",
+      "synopsis": "Synopsis"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Technical articles about web development.",
+    "search_placeholder": "Search posts...",
+    "read_more": "Read more",
+    "reading_time": "min read"
+  },
+  "stats": {
+    "title": "Stats",
+    "subtitle": "My media consumption history."
+  },
+  "footer": {
+    "made_with": "Made with",
+    "cv": "Resume"
+  },
+  "common": {
+    "theme_toggle": "Toggle theme",
+    "lang_toggle": "Mudar para Português",
+    "not_found": "Page not found",
+    "back_home": "Back to home"
+  }
+}

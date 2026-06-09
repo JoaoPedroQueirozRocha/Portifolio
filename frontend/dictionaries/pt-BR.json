@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "Início",
+    "shelf": "Estante",
+    "blog": "Blog",
+    "stats": "Stats"
+  },
+  "hero": {
+    "eyebrow": "Desenvolvedor Full Stack",
+    "available": "Disponível para projetos",
+    "bio": "Construo aplicações web com foco em experiência real — ferramentas que eu mesmo uso no dia a dia.",
+    "cta_projects": "Ver projetos",
+    "cta_contact": "Entrar em contato",
+    "facts": {
+      "stack": "Stack",
+      "location": "Localização",
+      "status": "Status"
+    }
+  },
+  "shelf": {
+    "title": "Estante",
+    "subtitle": "Livros, filmes, séries e animes que li, assisti ou quero ver.",
+    "tabs": {
+      "all": "Todos",
+      "book": "Livros",
+      "movie": "Filmes",
+      "series": "Séries",
+      "anime": "Animes"
+    },
+    "filters": {
+      "search_placeholder": "Buscar por título...",
+      "status": "Status",
+      "sort": "Ordenar",
+      "status_all": "Todos",
+      "status_completed": "Concluído",
+      "status_watching": "Em andamento",
+      "status_want": "Quero ver",
+      "sort_rating": "Nota",
+      "sort_date": "Data",
+      "sort_title": "Título"
+    },
+    "status": {
+      "completed": "Concluído",
+      "watching": "Em andamento",
+      "want": "Quero ver"
+    },
+    "empty": "Nenhum item encontrado.",
+    "rating_empty": "sem nota",
+    "panel": {
+      "note_label": "Minha nota",
+      "synopsis": "Sinopse"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Artigos técnicos sobre desenvolvimento web.",
+    "search_placeholder": "Buscar posts...",
+    "read_more": "Ler mais",
+    "reading_time": "min de leitura"
+  },
+  "stats": {
+    "title": "Stats",
+    "subtitle": "Meu histórico de consumo de mídia."
+  },
+  "footer": {
+    "made_with": "Feito com",
+    "cv": "Currículo"
+  },
+  "common": {
+    "theme_toggle": "Alternar tema",
+    "lang_toggle": "Switch to English",
+    "not_found": "Página não encontrada",
+    "back_home": "Voltar ao início"
+  }
+}

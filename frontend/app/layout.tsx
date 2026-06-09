@@ -10,13 +10,8 @@ import { ThemeProvider } from "next-themes"
 import "./globals.css"
 
 /* ---------------------------------------------------------------
-   Fontes — exatamente as do design
-
-   --font-display : IM Fell English   → títulos principais
-   --font-alt     : Cormorant Garamond → display suave, itálicos
-   --font-body    : EB Garamond        → corpo de texto
-   --font-caps    : Cinzel             → small-caps / labels
-   --font-mono    : JetBrains Mono     → tags, metadados, código
+   Fontes carregadas uma única vez no root layout.
+   As variáveis CSS são herdadas por todo o app via className no <html>.
 --------------------------------------------------------------- */
 const imFell = IM_Fell_English({
   subsets: ["latin"],
@@ -56,9 +51,6 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 })
 
-/* ---------------------------------------------------------------
-   Metadata base
---------------------------------------------------------------- */
 export const metadata: Metadata = {
   title: {
     template: "%s | João Pedro",
@@ -69,14 +61,15 @@ export const metadata: Metadata = {
 }
 
 /* ---------------------------------------------------------------
-   Root Layout
+   Root Layout — casca mínima.
+   O atributo lang="..." é definido no layout de [lang],
+   que sobrescreve o <html> via Next.js nested layouts.
 --------------------------------------------------------------- */
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="pt-BR"
       suppressHydrationWarning
       className={[
         imFell.variable,
