@@ -76,5 +76,51 @@
     "lang_toggle": "Mudar para Português",
     "not_found": "Page not found",
     "back_home": "Back to home"
+  },
+  "tech": {
+    "languages": {
+      "javascript": "JavaScript",
+      "typescript": "TypeScript",
+      "java": "Java",
+      "csharp": "C#"
+    },
+    "backend": {
+      "nodejs": "Node.js",
+      "nestjs": "Nest.js",
+      "express": "Express",
+      "apiRest": "REST API",
+      "microservices": "Microservices"
+    },
+    "frontend": {
+      "react": "React",
+      "nextjs": "Next.js",
+      "vuejs": "Vue.js",
+      "nuxtjs": "Nuxt.js",
+      "tailwind": "Tailwind CSS",
+      "html5": "HTML5",
+      "css3": "CSS3"
+    },
+    "database": {
+      "sql": "SQL",
+      "postgresql": "PostgreSQL",
+      "typeorm": "TypeORM"
+    },
+    "devops": {
+      "docker": "Docker",
+      "cicd": "CI/CD",
+      "gcp": "Google Cloud Platform (GCP)",
+      "cloudflare": "Cloudflare",
+      "linux": "Linux"
+    },
+    "versionControl": {
+      "git": "Git",
+      "github": "GitHub",
+      "gitlab": "GitLab"
+    },
+    "methodologies": {
+      "agile": "Agile Methodologies",
+      "dataModeling": "Data Modeling",
+      "analytics": "Analytics"
+    }
   }
 }

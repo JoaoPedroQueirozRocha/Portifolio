@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { getDictionary, isValidLocale } from "./dictionaries"
 import Portrait from "@/components/layout/Portrait"
 import Bio from "@/components/layout/Bio"
+import TechDetails from "@/components/layout/TechDetails"
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params
   if (!isValidLocale(lang)) notFound()
@@ -22,6 +23,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       >
         <Portrait portrait={dict.portrait} />
         <Bio hero={dict.hero} />
+      </section>
+      <section>
+        <TechDetails tech={dict.tech} />
       </section>
 
 

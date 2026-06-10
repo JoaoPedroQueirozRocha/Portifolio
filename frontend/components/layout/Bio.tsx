@@ -156,7 +156,10 @@ export default function Bio({ hero }: BioProps) {
           {hero.cta_cv}
         </a>
       </div>
-
+      {/* Details */}
+      <div className="flex flex-row">
+        
+      </div>
     </div>
   )
 }
