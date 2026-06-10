@@ -349,6 +349,19 @@ html[data-theme="light"] {
 }
 
 /* =====================================================================
+   ASTROLABE — animações das camadas giratórias
+   Os nomes de classe são prefixados com astro- para evitar colisões.
+===================================================================== */
+@keyframes astro-cw-slow   { to { transform: rotate(360deg);  } }
+@keyframes astro-ccw-slow  { to { transform: rotate(-360deg); } }
+@keyframes astro-cw-medium { to { transform: rotate(360deg);  } }
+@keyframes astro-ccw-fast  { to { transform: rotate(-360deg); } }
+@keyframes astro-pulse {
+  0%, 100% { opacity: .9; transform: rotate(45deg) scale(1);  }
+  50%       { opacity: .5; transform: rotate(45deg) scale(.7); }
+}
+
+/* =====================================================================
    EXPERIENCE TIMELINE (Variant A)
    CSS extraído do design original — experience.css
 ===================================================================== */
@@ -403,13 +416,13 @@ html[data-theme="light"] {
 }
 .xp-detail.open .xp-stack { opacity: 1; }
 
-/* chevron */
+/* chevron — ícone trocado no JSX (→ fechado, ↓ aberto), só anima a cor */
 .xp-chev {
   color: var(--faint);
-  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s;
+  transition: color 0.2s;
   flex-shrink: 0;
 }
-.xp-item.open .xp-chev { transform: rotate(90deg); color: var(--accent-bright); }
+.xp-item.open .xp-chev { color: var(--accent-bright); }
 
 /* --- Variant A: Timeline --- */
 .xp-timeline { list-style: none; position: relative; padding-left: 2px; }

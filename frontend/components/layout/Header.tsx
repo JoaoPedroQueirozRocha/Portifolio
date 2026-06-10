@@ -26,9 +26,17 @@ export default function Header({ lang, nav, themeLabel }: HeaderProps) {
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+
+    function onScroll() {
+      setScrolled(window.scrollY > 10)
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   function toggleTheme() {
@@ -37,9 +45,13 @@ export default function Header({ lang, nav, themeLabel }: HeaderProps) {
 
   return (
     <header
-      className="sticky top-0 z-50 transition-[background,border-color,backdrop-filter] duration-300 mb-10"
-      style={{ borderBottom: "1px solid transparent" }}
-      // o scroll behavior será adicionado quando implementarmos o JS de scroll
+      className="sticky top-0 z-50"
+      style={{
+        borderBottom: `1px solid ${scrolled ? "var(--line-soft)" : "transparent"}`,
+        background: scrolled ? "color-mix(in oklab, var(--bg) 84%, transparent)" : "transparent",
+        backdropFilter: scrolled ? "blur(16px) saturate(1.2)" : "none",
+        transition: "background .3s, border-color .3s, backdrop-filter .3s",
+      }}
     >
       <div
         className="max-w-[--maxw] mx-auto px-8 py-[18px] flex items-center justify-between gap-6"

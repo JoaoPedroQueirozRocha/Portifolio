@@ -6,17 +6,31 @@ import SectionHeader from "@/components/ui/SectionHeader"
 import ExperienceTimeline from "@/components/ui/ExperienceTimeline"
 import { EXPERIENCE } from "@/lib/experience"
 import TechDetails from "@/components/layout/TechDetails"
+import Astrolabe from "@/components/layout/Astrolabe"
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params
   if (!isValidLocale(lang)) notFound()
   const dict = await getDictionary(lang)
 
   return (
-    <main className="content-container flex flex-col">
-      {/* Hero sample */}
+    <main className="content-container flex flex-col" style={{ position: "relative" }}>
 
+      {/* Astrolábio — posicionado no canto sup-dir da main, atrás de tudo */}
+      <Astrolabe
+        style={{
+          position: "absolute",
+          top: "-30px",
+          right: "-300px",
+          opacity: 0.28,
+          zIndex: 0,
+        }}
+      />
+
+      {/* Hero */}
       <section
         style={{
+          position: "relative",
+          zIndex: 1,
           display: "grid",
           gridTemplateColumns: "300px 1fr",
           gap: "54px",
@@ -27,7 +41,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Portrait portrait={dict.portrait} />
         <Bio hero={dict.hero} />
       </section>
-      <section style={{ padding: "64px 0", borderTop: "1px solid var(--line-soft)" }}>
+      <section style={{ position: "relative", zIndex: 1, padding: "64px 0", borderTop: "1px solid var(--line-soft)" }}>
         <SectionHeader
           numeral="I"
           label={dict.sections.stack.label}
@@ -36,7 +50,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <TechDetails tech={dict.tech} />
       </section>
 
-      <section style={{ padding: "64px 0", borderTop: "1px solid var(--line-soft)" }}>
+      <section style={{ position: "relative", zIndex: 1, padding: "64px 0", borderTop: "1px solid var(--line-soft)" }}>
         <SectionHeader
           numeral="II"
           label={dict.sections.experience.label}
