@@ -89,13 +89,6 @@ export default function TechDetails({ tech }: TechDetailsProps) {
 
     return (
         <div className="flex flex-col gap-4">
-            <div className="flex flex-row gap-2">
-                <div>
-                    <h3 className="text-faint">Detalhes Técnicos</h3>
-                    <h1 className="text-2xl font-bold">Meu stack técnico</h1>
-                </div>
-                <hr />
-            </div>
             <div className="flex flex-row">
                 {elements.map((element) => (
                     <div key={element.name} className="flex flex-col border border-line-soft p-4 w-full">

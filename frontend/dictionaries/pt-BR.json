@@ -67,6 +67,13 @@
     "title": "Stats",
     "subtitle": "Meu histórico de consumo de mídia."
   },
+  "sections": {
+    "stack":      { "label": "Domínio técnico",       "title": "A forja" },
+    "experience": { "label": "Trajetória profissional","title": "Experiência" },
+    "projects":   { "label": "Trabalhos selecionados", "title": "Projetos" },
+    "now":        { "label": "Estante de mídia",       "title": "No momento" },
+    "blog":       { "label": "Notas & artigos",        "title": "Crônicas" }
+  },
   "footer": {
     "made_with": "Feito com",
     "cv": "Currículo"

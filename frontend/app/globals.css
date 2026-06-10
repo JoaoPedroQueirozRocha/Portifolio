@@ -347,3 +347,198 @@ html[data-theme="light"] {
     background-color: var(--bg);
   }
 }
+
+/* =====================================================================
+   EXPERIENCE TIMELINE (Variant A)
+   CSS extraído do design original — experience.css
+===================================================================== */
+
+/* --- shared: detail reveal --- */
+.xp-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.xp-detail.open { grid-template-rows: 1fr; }
+.xp-detail-inner { overflow: hidden; min-height: 0; }
+
+.xp-desc {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.68;
+  max-width: 66ch;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.45s ease 0.06s, transform 0.45s ease 0.06s;
+}
+.xp-detail.open .xp-desc { opacity: 1; transform: none; }
+
+.xp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-top: 16px;
+}
+.xp-bullet {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15.5px;
+  line-height: 1.62;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.xp-detail.open .xp-bullet { opacity: 1; transform: none; }
+.xp-bullet .lozenge { position: absolute; left: 2px; top: 9px; }
+
+.xp-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.18s;
+}
+.xp-detail.open .xp-stack { opacity: 1; }
+
+/* chevron */
+.xp-chev {
+  color: var(--faint);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s;
+  flex-shrink: 0;
+}
+.xp-item.open .xp-chev { transform: rotate(90deg); color: var(--accent-bright); }
+
+/* --- Variant A: Timeline --- */
+.xp-timeline { list-style: none; position: relative; padding-left: 2px; }
+.xp-timeline .xp-item { position: relative; padding-left: 34px; }
+
+/* faint ink line */
+.xp-timeline .xp-item::before {
+  content: "";
+  position: absolute;
+  left: 6px; top: 24px; bottom: -1px; width: 1px;
+  background: var(--line-soft);
+}
+.xp-timeline .xp-item:last-child::before { bottom: auto; height: 18px; }
+
+/* gilded thread — draws down as panel opens */
+.xp-timeline .xp-item::after {
+  content: "";
+  position: absolute;
+  left: 5.5px; top: 24px; bottom: -1px; width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(var(--accent-bright), var(--accent) 45%, transparent);
+  box-shadow: 0 0 7px var(--accent-soft);
+  transform: scaleY(0); transform-origin: top; opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+}
+.xp-timeline .xp-item.open::after { transform: scaleY(1); opacity: 1; }
+
+/* marker */
+.xp-timeline .xp-marker {
+  position: absolute;
+  left: 0; top: 20px;
+  width: 13px; height: 13px;
+  display: grid; place-items: center;
+  background: var(--bg); z-index: 1;
+}
+.xp-timeline .xp-marker::before {
+  content: "";
+  position: absolute; inset: -5px;
+  border: 1px solid var(--accent); border-radius: 50%;
+  opacity: 0; transform: scale(0.35);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+}
+.xp-timeline .xp-item.open .xp-marker::before { opacity: 1; transform: scale(1); }
+.xp-timeline .xp-marker .lozenge {
+  width: 7px; height: 7px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s, box-shadow 0.3s;
+}
+.xp-timeline .xp-row:hover .xp-marker .lozenge { transform: rotate(45deg) scale(1.2); }
+.xp-timeline .xp-item.open .xp-marker .lozenge {
+  transform: rotate(45deg) scale(1.3);
+  background: var(--accent-bright);
+  box-shadow: 0 0 9px var(--accent);
+}
+
+/* row */
+.xp-timeline .xp-row {
+  width: 100%; text-align: left;
+  display: flex; align-items: flex-start; gap: 18px;
+  padding: 14px 10px 14px 8px;
+  border-radius: 3px;
+  transition: background 0.25s ease;
+}
+.xp-timeline .xp-row:hover {
+  background: linear-gradient(90deg, var(--accent-soft), transparent 58%);
+}
+.xp-timeline .xp-head {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
+}
+.xp-timeline .xp-role {
+  font-family: var(--font-display);
+  font-size: 21px; line-height: 1.08;
+  position: relative; display: inline-block;
+  transition: color 0.2s ease;
+}
+.xp-timeline .xp-role::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -3px; height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.xp-timeline .xp-row:hover .xp-role,
+.xp-timeline .xp-item.open .xp-role { color: var(--accent-bright); }
+.xp-timeline .xp-row:hover .xp-role::after,
+.xp-timeline .xp-item.open .xp-role::after { transform: scaleX(1); }
+
+.xp-timeline .xp-co {
+  font-family: var(--font-alt);
+  font-style: italic; font-size: 16px;
+  color: var(--accent-bright);
+}
+.xp-timeline .xp-when {
+  display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+}
+.xp-timeline .xp-period {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.04em;
+  color: var(--faint); white-space: nowrap;
+  transition: color 0.25s ease;
+}
+.xp-timeline .xp-item.open .xp-period { color: var(--accent-bright); }
+.xp-timeline .xp-detail-inner { padding: 2px 0 22px; }
+.xp-timeline .xp-loc {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--faint);
+  margin-top: 16px;
+  display: flex; align-items: center; gap: 7px;
+}
+
+/* mono-tag (shared) */
+.mono-tag {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.06em;
+  color: var(--muted);
+  border: 1px solid var(--line-soft);
+  padding: 3px 8px; border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-detail, .xp-desc, .xp-bullet, .xp-stack, .xp-chev,
+  .xp-timeline .xp-item::after, .xp-timeline .xp-marker::before,
+  .xp-timeline .xp-marker .lozenge, .xp-timeline .xp-role,
+  .xp-timeline .xp-role::after, .xp-timeline .xp-row {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .xp-timeline .xp-row { flex-direction: column; gap: 6px; }
+  .xp-timeline .xp-when { gap: 8px; }
+}

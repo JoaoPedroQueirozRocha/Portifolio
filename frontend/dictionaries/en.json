@@ -67,6 +67,13 @@
     "title": "Stats",
     "subtitle": "My media consumption history."
   },
+  "sections": {
+    "stack":      { "label": "Technical domain",      "title": "The forge" },
+    "experience": { "label": "Professional journey",  "title": "Experience" },
+    "projects":   { "label": "Selected works",        "title": "Projects" },
+    "now":        { "label": "Media shelf",           "title": "Right now" },
+    "blog":       { "label": "Notes & articles",      "title": "Chronicles" }
+  },
   "footer": {
     "made_with": "Made with",
     "cv": "Resume"
