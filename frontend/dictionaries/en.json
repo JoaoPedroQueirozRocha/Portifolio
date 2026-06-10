@@ -84,6 +84,13 @@
     "not_found": "Page not found",
     "back_home": "Back to home"
   },
+  "tech_groups": {
+    "languages":     "Languages",
+    "backend":       "Back-end & DB",
+    "frontend":      "Front-end",
+    "devops":        "DevOps & Cloud",
+    "methodologies": "Methodologies"
+  },
   "tech": {
     "languages": {
       "javascript": "JavaScript",

@@ -11,19 +11,16 @@ export default function Bio({ hero }: BioProps) {
     <div style={{ position: "relative", zIndex: 1 }}>
 
       {/* Eyebrow */}
-      <span
-        className="eyebrow"
-        style={{ marginBottom: "18px", display: "inline-flex" }}
-      >
+      <span className="eyebrow" style={{ marginBottom: "14px", display: "inline-flex" }}>
         <span className="lozenge" />
         {hero.eyebrow}
       </span>
 
-      {/* Nome */}
+      {/* Nome — escala de 38px (mobile) a 78px (desktop) */}
       <h1
+        className="text-[38px] sm:text-[56px] lg:text-[78px]"
         style={{
           fontFamily: "var(--font-display)",
-          fontSize: "78px",
           letterSpacing: ".01em",
           lineHeight: "0.96",
         }}
@@ -31,28 +28,27 @@ export default function Bio({ hero }: BioProps) {
         João Pedro
       </h1>
 
-      {/* Bio com drop cap via CSS first-letter */}
+      {/* Bio com drop cap */}
       <p
-        className="hero-bio"
+        className="hero-bio text-[15px] sm:text-[17px] lg:text-[18px]"
         style={{
-          fontSize: "18px",
           color: "var(--muted)",
           maxWidth: "50ch",
-          marginTop: "22px",
+          marginTop: "18px",
           lineHeight: "1.72",
         }}
       >
         {hero.bio}
       </p>
 
-      {/* Tagline itálica */}
+      {/* Tagline — visível em todas as telas, menor no mobile */}
       <p
+        className="text-[14px] sm:text-[17px] lg:text-[20px]"
         style={{
           fontFamily: "var(--font-alt)",
           fontStyle: "italic",
-          fontSize: "20px",
           color: "var(--faint)",
-          marginTop: "16px",
+          marginTop: "12px",
           maxWidth: "48ch",
           lineHeight: "1.4",
         }}
@@ -61,34 +57,24 @@ export default function Bio({ hero }: BioProps) {
       </p>
 
       {/* CTAs */}
-      <div style={{ display: "flex", gap: "10px", marginTop: "30px", flexWrap: "wrap" }}>
+      <div className="flex flex-wrap gap-[10px] mt-5 lg:mt-[30px]">
         <a
           href="https://github.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-primary"
+          className="inline-flex items-center gap-2 rounded-sm text-[13px] sm:text-[14px] lg:text-[15px] font-medium tracking-[.01em] transition-all duration-[180ms] hover:-translate-y-px"
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
+            padding: "8px 14px",
             fontFamily: "var(--font-body)",
-            fontSize: "15px",
-            fontWeight: 500,
-            padding: "10px 18px",
-            borderRadius: "4px",
-            letterSpacing: ".01em",
             background: "var(--accent)",
             color: "var(--on-accent)",
-            transition: ".18s",
             textDecoration: "none",
           }}
           onMouseEnter={e => {
             (e.currentTarget as HTMLElement).style.background = "var(--accent-bright)"
-            ;(e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"
           }}
           onMouseLeave={e => {
             (e.currentTarget as HTMLElement).style.background = "var(--accent)"
-            ;(e.currentTarget as HTMLElement).style.transform = "translateY(0)"
           }}
         >
           {hero.cta_github}
@@ -98,19 +84,12 @@ export default function Bio({ hero }: BioProps) {
           href="https://linkedin.com"
           target="_blank"
           rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-sm text-[13px] sm:text-[14px] lg:text-[15px] font-medium tracking-[.01em] transition-all duration-[180ms] hover:-translate-y-px"
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
+            padding: "8px 14px",
             fontFamily: "var(--font-body)",
-            fontSize: "15px",
-            fontWeight: 500,
-            padding: "10px 18px",
-            borderRadius: "4px",
-            letterSpacing: ".01em",
             border: "1px solid var(--line)",
             color: "var(--text)",
-            transition: ".18s",
             textDecoration: "none",
           }}
           onMouseEnter={e => {
@@ -129,19 +108,12 @@ export default function Bio({ hero }: BioProps) {
           href="/cv.pdf"
           target="_blank"
           rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-sm text-[13px] sm:text-[14px] lg:text-[15px] font-medium tracking-[.01em] transition-all duration-[180ms] hover:-translate-y-px"
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
+            padding: "8px 14px",
             fontFamily: "var(--font-body)",
-            fontSize: "15px",
-            fontWeight: 500,
-            padding: "10px 18px",
-            borderRadius: "4px",
-            letterSpacing: ".01em",
             border: "1px solid var(--line)",
             color: "var(--text)",
-            transition: ".18s",
             textDecoration: "none",
           }}
           onMouseEnter={e => {
@@ -155,10 +127,6 @@ export default function Bio({ hero }: BioProps) {
         >
           {hero.cta_cv}
         </a>
-      </div>
-      {/* Details */}
-      <div className="flex flex-row">
-        
       </div>
     </div>
   )

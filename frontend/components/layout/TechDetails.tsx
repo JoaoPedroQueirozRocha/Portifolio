@@ -1,26 +1,17 @@
 "use client"
 
 import type { Dictionary } from "@/app/[lang]/dictionaries"
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "../ui/table"
 
 interface TechDetailsProps {
     tech: Dictionary["tech"]
+    labels: Dictionary["tech_groups"]
 }
 
-export default function TechDetails({ tech }: TechDetailsProps) {
+export default function TechDetails({ tech, labels }: TechDetailsProps) {
 
     const elements = [
         {
-            name: 'Languages',
+            key: "languages" as const,
             technologies: [
                 'tech.languages.javascript',
                 'tech.languages.typescript',
@@ -29,7 +20,7 @@ export default function TechDetails({ tech }: TechDetailsProps) {
             ]
         },
         {
-            name: 'Backend & Database',
+            key: "backend" as const,
             technologies: [
                 'tech.backend.nodejs',
                 'tech.backend.nestjs',
@@ -42,7 +33,7 @@ export default function TechDetails({ tech }: TechDetailsProps) {
             ]
         },
         {
-            name: 'Frontend',
+            key: "frontend" as const,
             technologies: [
                 'tech.frontend.react',
                 'tech.frontend.nextjs',
@@ -54,7 +45,7 @@ export default function TechDetails({ tech }: TechDetailsProps) {
             ]
         },
         {
-            name: 'DevOps & Cloud',
+            key: "devops" as const,
             technologies: [
                 'tech.devops.docker',
                 'tech.devops.cicd',
@@ -64,7 +55,7 @@ export default function TechDetails({ tech }: TechDetailsProps) {
             ]
         },
         {
-            name: 'Methodologies',
+            key: "methodologies" as const,
             technologies: [
                 'tech.methodologies.agile',
                 'tech.methodologies.dataModeling',
@@ -72,10 +63,6 @@ export default function TechDetails({ tech }: TechDetailsProps) {
             ]
         }
     ]
-
-
-
-
 
     const getTechTranslation = (key: string) => {
         const parts = key.split('.')
@@ -88,19 +75,59 @@ export default function TechDetails({ tech }: TechDetailsProps) {
     }
 
     return (
-        <div className="flex flex-col gap-4">
-            <div className="flex flex-row">
-                {elements.map((element) => (
-                    <div key={element.name} className="flex flex-col border border-line-soft p-4 w-full">
-                        <h2 className="text-lg text-center text-gold">{element.name}</h2>
-                        <ul>
-                            {element.technologies.map((technology) => (
-                                <li key={technology}>{getTechTranslation(technology)}</li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-            </div>
+        <div
+            className="tech-grid"
+            style={{
+                display: "grid",
+                gap: "1px",
+                background: "var(--line-soft)",
+                border: "1px solid var(--line-soft)",
+            }}
+        >
+            {elements.map((element) => (
+                <div
+                    key={element.key}
+                    className="flex flex-col gap-3 p-4 sm:p-5"
+                    style={{ background: "var(--bg)" }}
+                >
+                    {/* Cabeçalho do grupo */}
+                    <h3
+                        className="text-[11px] uppercase tracking-[.18em]"
+                        style={{
+                            fontFamily: "var(--font-caps)",
+                            color: "var(--gold)",
+                            borderBottom: "1px solid var(--line-soft)",
+                            paddingBottom: "8px",
+                        }}
+                    >
+                        {labels[element.key]}
+                    </h3>
+
+                    {/* Lista de tecnologias */}
+                    <ul className="flex flex-col gap-[6px]">
+                        {element.technologies.map((technology) => (
+                            <li
+                                key={technology}
+                                className="flex items-center gap-2 text-[13px] sm:text-[14px]"
+                                style={{ color: "var(--muted)", lineHeight: "1.4" }}
+                            >
+                                <span
+                                    aria-hidden="true"
+                                    style={{
+                                        width: "4px",
+                                        height: "4px",
+                                        background: "var(--accent)",
+                                        transform: "rotate(45deg)",
+                                        flexShrink: 0,
+                                        opacity: 0.7,
+                                    }}
+                                />
+                                {getTechTranslation(technology)}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
         </div>
     )
 }

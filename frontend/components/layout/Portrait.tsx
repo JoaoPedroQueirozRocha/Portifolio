@@ -2,7 +2,25 @@
 import Image from "next/image"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
 
-export default function Portrait({ portrait }: { portrait: Dictionary["portrait"] }) {
+interface PortraitProps {
+  portrait: Dictionary["portrait"]
+  /** Em modo compact só exibe a foto, sem cantos decorativos nem badge */
+  compact?: boolean
+}
+
+export default function Portrait({ portrait, compact = false }: PortraitProps) {
+  if (compact) {
+    return (
+      <Image
+        src="/profile.jpeg"
+        alt="Portrait"
+        fill
+        sizes="80px"
+        style={{ objectFit: "cover" }}
+      />
+    )
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "18px", position: "relative", zIndex: 1 }}>
 
@@ -25,8 +43,7 @@ export default function Portrait({ portrait }: { portrait: Dictionary["portrait"
         <span style={{ position: "absolute", bottom: "-1px", left: "-1px",  width: "13px", height: "13px", borderBottom: "1px solid var(--accent)", borderLeft: "1px solid var(--accent)" }} />
         <span style={{ position: "absolute", bottom: "-1px", right: "-1px", width: "13px", height: "13px", borderBottom: "1px solid var(--accent)", borderRight: "1px solid var(--accent)" }} />
 
-        {/* Imagem ou placeholder */}
-        
+        {/* Imagem */}
         <Image src="/profile.jpeg" alt="Portrait" width={300} height={300} />
       </div>
 

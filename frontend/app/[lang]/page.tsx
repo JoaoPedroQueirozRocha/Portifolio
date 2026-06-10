@@ -7,6 +7,7 @@ import ExperienceTimeline from "@/components/ui/ExperienceTimeline"
 import { EXPERIENCE } from "@/lib/experience"
 import TechDetails from "@/components/layout/TechDetails"
 import Astrolabe from "@/components/layout/Astrolabe"
+
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params
   if (!isValidLocale(lang)) notFound()
@@ -20,37 +21,89 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         style={{
           position: "absolute",
           top: "-30px",
-          right: "-300px",
+          right: "-100px",
           opacity: 0.28,
           zIndex: 0,
         }}
       />
 
-      {/* Hero */}
-      <section
-        style={{
-          position: "relative",
-          zIndex: 1,
-          display: "grid",
-          gridTemplateColumns: "300px 1fr",
-          gap: "54px",
-          alignItems: "center",
-          padding: "76px 0 80px",
-        }}
-      >
-        <Portrait portrait={dict.portrait} />
-        <Bio hero={dict.hero} />
+      {/* ── HERO ───────────────────────────────────────────────────────────
+          Mobile  : Bio em cima (nome grande), Portrait abaixo como card
+          Desktop : Portrait à esq (coluna fixa), Bio à dir               */}
+      <section className="relative z-[1] py-8 sm:py-14 lg:py-[76px] lg:pb-[80px]">
+
+        {/* Desktop: grid de 2 colunas — aparece somente em md+ */}
+        <div className="hidden md:grid md:grid-cols-[280px_1fr] lg:grid-cols-[300px_1fr] gap-10 lg:gap-[54px] items-center">
+          <Portrait portrait={dict.portrait} />
+          <Bio hero={dict.hero} />
+        </div>
+
+        {/* Mobile: empilhado, portrait menor embaixo */}
+        <div className="flex flex-col gap-6 md:hidden">
+          {/* Bio primeiro — nome e CTAs são o conteúdo principal */}
+          <Bio hero={dict.hero} />
+
+          {/* Portrait compacto abaixo — menor, sem badge, lado a lado com available */}
+          <div className="flex items-center gap-4 mt-2">
+            {/* Foto pequena */}
+            <div
+              className="shrink-0"
+              style={{
+                width: "80px",
+                height: "80px",
+                borderRadius: "4px",
+                border: "1px solid var(--line)",
+                overflow: "hidden",
+                position: "relative",
+              }}
+            >
+              <Portrait portrait={dict.portrait} compact />
+            </div>
+
+            {/* Badge "Aberto a propostas" */}
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                fontFamily: "var(--font-mono)",
+                fontSize: "11px",
+                letterSpacing: ".04em",
+                color: "var(--muted)",
+                padding: "8px 12px",
+                border: "1px solid var(--line-soft)",
+                borderRadius: "3px",
+              }}
+            >
+              <span
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  borderRadius: "50%",
+                  background: "oklch(0.72 0.13 150)",
+                  boxShadow: "0 0 0 3px oklch(0.72 0.13 150 / 0.2)",
+                  flexShrink: 0,
+                }}
+              />
+              {dict.portrait.available}
+            </span>
+          </div>
+        </div>
+
       </section>
-      <section style={{ position: "relative", zIndex: 1, padding: "64px 0", borderTop: "1px solid var(--line-soft)" }}>
+
+      {/* ── STACK ──────────────────────────────────────────────────────── */}
+      <section className="relative z-[1] py-8 sm:py-12 lg:py-[64px]" style={{ borderTop: "1px solid var(--line-soft)" }}>
         <SectionHeader
           numeral="I"
           label={dict.sections.stack.label}
           title={dict.sections.stack.title}
         />
-        <TechDetails tech={dict.tech} />
+        <TechDetails tech={dict.tech} labels={dict.tech_groups} />
       </section>
 
-      <section style={{ position: "relative", zIndex: 1, padding: "64px 0", borderTop: "1px solid var(--line-soft)" }}>
+      {/* ── EXPERIÊNCIA ────────────────────────────────────────────────── */}
+      <section className="relative z-[1] py-8 sm:py-12 lg:py-[64px]" style={{ borderTop: "1px solid var(--line-soft)" }}>
         <SectionHeader
           numeral="II"
           label={dict.sections.experience.label}
@@ -58,7 +111,6 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         />
         <ExperienceTimeline entries={EXPERIENCE} defaultOpen={0} />
       </section>
-
 
     </main>
   )

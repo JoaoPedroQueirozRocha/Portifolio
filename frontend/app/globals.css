@@ -252,11 +252,17 @@ html[data-theme="light"] {
    UTILITÁRIOS GLOBAIS
 ===================================================================== */
 @layer utilities {
-  /* Container padrão — max 1080px, padding 32px */
+  /* Container padrão — max 1080px, padding responsivo */
   .content-container {
     max-width: var(--maxw);
     margin-inline: auto;
-    padding-inline: 1rem;
+    padding-inline: 1rem;        /* mobile: 16px */
+  }
+  @media (min-width: 640px) {
+    .content-container { padding-inline: 1.5rem; }
+  }
+  @media (min-width: 1024px) {
+    .content-container { padding-inline: 2rem; }  /* desktop: 32px */
   }
 
   /* Losango decorativo */
@@ -551,7 +557,27 @@ html[data-theme="light"] {
   }
 }
 
-@media (max-width: 560px) {
-  .xp-timeline .xp-row { flex-direction: column; gap: 6px; }
+@media (max-width: 640px) {
+  /* Timeline — menos padding lateral no mobile */
+  .xp-timeline .xp-item { padding-left: 26px; }
+  .xp-timeline .xp-row { flex-direction: column; align-items: flex-start; gap: 4px; }
   .xp-timeline .xp-when { gap: 8px; }
+  .xp-timeline .xp-role { font-size: 18px; }
+  .xp-timeline .xp-co   { font-size: 14px; }
+  .xp-desc { font-size: 14px; }
+  .xp-bullet { font-size: 13.5px; }
+}
+
+/* =====================================================================
+   TECH GRID — grade responsiva de habilidades técnicas
+   2 col mobile → 3 col tablet → 5 col desktop
+===================================================================== */
+.tech-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 640px) {
+  .tech-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1024px) {
+  .tech-grid { grid-template-columns: repeat(5, 1fr); }
 }
