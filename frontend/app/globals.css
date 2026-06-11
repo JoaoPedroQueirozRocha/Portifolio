@@ -368,6 +368,20 @@ html[data-theme="light"] {
 }
 
 /* =====================================================================
+   TECH GRID — grade responsiva de habilidades técnicas
+   2 col mobile → 3 col tablet → 5 col desktop
+===================================================================== */
+.tech-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 640px) {
+  .tech-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1024px) {
+  .tech-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* =====================================================================
    EXPERIENCE TIMELINE (Variant A)
    CSS extraído do design original — experience.css
 ===================================================================== */
@@ -568,16 +582,90 @@ html[data-theme="light"] {
   .xp-bullet { font-size: 13.5px; }
 }
 
+
 /* =====================================================================
-   TECH GRID — grade responsiva de habilidades técnicas
-   2 col mobile → 3 col tablet → 5 col desktop
+   ACADEMIC INFO — apenas o que Tailwind não cobre
+   (hover em filho, text-shadow, gradientes radiais, grid-rows animation)
 ===================================================================== */
-.tech-grid {
-  grid-template-columns: repeat(2, 1fr);
+
+/* cantos decorativos — posição + bordas, hover gerenciado via CSS pai→filho */
+.ph-corner {
+  position: absolute;
+  width: 11px; height: 11px;
+  opacity: .55;
+  transition: opacity .25s;
 }
-@media (min-width: 640px) {
-  .tech-grid { grid-template-columns: repeat(3, 1fr); }
+.edu-card:hover .ph-corner { opacity: 1; }
+.ph-corner.tl { top: -1px;    left: -1px;   border-top: 1px solid var(--accent);    border-left:   1px solid var(--accent); }
+.ph-corner.tr { top: -1px;    right: -1px;  border-top: 1px solid var(--accent);    border-right:  1px solid var(--accent); }
+.ph-corner.bl { bottom: -1px; left: -1px;   border-bottom: 1px solid var(--accent); border-left:   1px solid var(--accent); }
+.ph-corner.br { bottom: -1px; right: -1px;  border-bottom: 1px solid var(--accent); border-right:  1px solid var(--accent); }
+
+/* hover no selo filho do card — seletor pai→filho, não expressável em Tailwind */
+.edu-card:hover .edu-seal { border-color: var(--accent); }
+
+/* paletas de tom — variáveis CSS das ceras */
+.seal-rubric { --wax: oklch(0.50 0.15 32); --wax-hi: oklch(0.62 0.16 34); --wax-lo: oklch(0.34 0.12 30); --wax-glow: oklch(0.62 0.15 33 / 0.5); }
+.seal-celest { --wax: oklch(0.46 0.10 262); --wax-hi: oklch(0.58 0.11 264); --wax-lo: oklch(0.32 0.08 260); --wax-glow: oklch(0.60 0.10 262 / 0.5); }
+.seal-gold   { --wax: oklch(0.60 0.09 78);  --wax-hi: oklch(0.74 0.10 82);  --wax-lo: oklch(0.42 0.07 70);  --wax-glow: oklch(0.72 0.10 80 / 0.5); }
+
+/* disco — transform/transition com cubic-bezier personalizado */
+.seal-disc {
+  position: relative; width: 74px; height: 74px;
+  display: grid; place-items: center;
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1), filter .3s;
 }
-@media (min-width: 1024px) {
-  .tech-grid { grid-template-columns: repeat(5, 1fr); }
+.seal:hover .seal-disc { transform: translateY(-4px); }
+.seal.active .seal-disc { transform: translateY(-3px) scale(1.05); }
+
+/* variante cera — gradiente radial + box-shadow interna */
+.col-wax .seal-disc {
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 30%, var(--wax-hi), var(--wax) 52%, var(--wax-lo) 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.20),
+    inset 0 -5px 11px rgba(0,0,0,.42),
+    inset 0 0 0 1px rgba(0,0,0,.18),
+    0 5px 14px rgba(0,0,0,.40);
+}
+.col-wax .seal-ring {
+  position: absolute; inset: 7px; border-radius: 50%; z-index: 1;
+  border: 1px dashed oklch(0.96 0.04 85 / 0.28);
+}
+.col-wax .seal.active .seal-disc {
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.22),
+    inset 0 -5px 11px rgba(0,0,0,.42),
+    inset 0 0 0 1px rgba(0,0,0,.18),
+    0 8px 22px var(--wax-glow);
+}
+
+/* letra do selo — text-shadow não suportado em Tailwind */
+.seal-init {
+  position: relative; z-index: 2;
+  font-family: var(--font-display); font-size: 25px; line-height: 1;
+  color: oklch(0.96 0.04 85 / 0.92);
+  text-shadow: 0 1px 1px rgba(0,0,0,.55), 0 -1px 1px rgba(255,255,255,.18);
+}
+
+/* painel de detalhe — animação grid-template-rows (não suportada em Tailwind) */
+.relic-detail {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .45s cubic-bezier(.4,0,.2,1);
+  margin-top: 8px;
+}
+.relic-detail.open { grid-template-rows: 1fr; }
+.relic-detail-inner { overflow: hidden; min-height: 0; }
+
+/* fade-in do corpo do detalhe */
+.relic-body {
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .35s ease .08s, transform .35s ease .08s;
+}
+.relic-detail.open .relic-body { opacity: 1; transform: none; }
+
+/* mobile — tamanho do disco muda */
+@media (max-width: 640px) {
+  .seal-disc { width: 62px; height: 62px; }
+  .seal-init { font-size: 20px; }
 }

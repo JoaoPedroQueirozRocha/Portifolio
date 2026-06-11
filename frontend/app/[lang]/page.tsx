@@ -113,8 +113,14 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <ExperienceTimeline entries={EXPERIENCE} defaultOpen={0} />
       </section>
 
-      <section>
-        <AcademicInfo/>
+      {/* ── FORMAÇÃO ────────────────────────────────────────────────── */}
+      <section className="relative z-[1] py-8 sm:py-12 lg:py-[64px]" style={{ borderTop: "1px solid var(--line-soft)" }}>
+        <SectionHeader
+          numeral="III"
+          label={dict.sections.education.label}
+          title={dict.sections.education.title}
+        />
+        <AcademicInfo />
       </section>
 
     </main>

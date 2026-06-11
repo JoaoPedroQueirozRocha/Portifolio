@@ -1,0 +1,303 @@
+# AstrolabeLoader — Especificação do Componente React
+
+## Visão geral
+
+Componente de loading animado para o portfolio. Renderiza um astrolábio complexo em Canvas 2D com órbitas planetárias, poeira cósmica e ponteiros giratórios. Suporta dark/light mode automaticamente.
+
+---
+
+## Arquivo a criar
+
+```
+components/ui/AstrolabeLoader.tsx
+```
+
+---
+
+## Props
+
+```ts
+interface AstrolabeLoaderProps {
+  /** Tamanho do canvas em px. Default: 380 */
+  size?: number
+  /** Texto exibido abaixo. Default: "Carregando" */
+  label?: string
+  /** Mostra barra de progresso. Default: true */
+  showProgress?: boolean
+  /** Duração da barra de progresso em ms. Default: 3500 */
+  duration?: number
+  /** Callback chamado quando a barra chega a 100% */
+  onComplete?: () => void
+}
+```
+
+---
+
+## Estrutura do componente
+
+```tsx
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+
+export function AstrolabeLoader({
+  size = 380,
+  label = 'Carregando',
+  showProgress = true,
+  duration = 3500,
+  onComplete,
+}: AstrolabeLoaderProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const rafRef    = useRef<number>()
+  const [progress, setProgress] = useState(0)
+  const [dots, setDots]         = useState('')
+
+  useEffect(() => {
+    // lógica de animação via requestAnimationFrame
+    // ver seção "Lógica de animação" abaixo
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+  }, [size])
+
+  useEffect(() => {
+    if (progress >= 100) onComplete?.()
+  }, [progress, onComplete])
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <canvas ref={canvasRef} width={size} height={size} />
+      <p className="astrolabe-label">{label}{dots}</p>
+      {showProgress && (
+        <div className="astrolabe-bar-track">
+          <div className="astrolabe-bar-fill" style={{ width: `${progress}%` }} />
+        </div>
+      )}
+    </div>
+  )
+}
+```
+
+---
+
+## Lógica de animação (dentro do useEffect)
+
+Usar `useRef` para estado mutável da animação — **não** usar `useState` para variáveis do loop (performance).
+
+### Detecção de tema
+
+```ts
+const isDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches
+```
+
+Chamar `getColors()` a cada frame para responder a mudanças de tema em tempo real.
+
+### Paleta de cores (getColors)
+
+| Token        | Light mode                    | Dark mode                     |
+|--------------|-------------------------------|-------------------------------|
+| `ring`       | `rgba(0,0,0,0.13)`            | `rgba(255,255,255,0.18)`      |
+| `ringDim`    | `rgba(0,0,0,0.05)`            | `rgba(255,255,255,0.07)`      |
+| `tick`       | `rgba(0,0,0,0.28)`            | `rgba(255,255,255,0.35)`      |
+| `needle`     | `rgba(0,0,0,0.85)`            | `rgba(255,255,255,0.9)`       |
+| `jewel`      | `#7f77dd` (purple-400)        | `#a89fff`                     |
+| `jewel2`     | `#1d9e75` (teal-400)          | `#5dcaa5`                     |
+| `jewel3`     | `#d85a30` (coral-400)         | `#f0997b`                     |
+| `orbit`      | `rgba(0,0,0,0.07)`            | `rgba(255,255,255,0.10)`      |
+| `planet`     | `rgba(0,0,0,0.40)`            | `rgba(255,255,255,0.55)`      |
+| `dust`       | `rgba(80,70,120,{opacity})`   | `rgba(255,255,255,{opacity})` |
+| `center`     | `#534ab7` (purple-600)        | `#c8c4ff`                     |
+
+---
+
+### Poeira cósmica (particles)
+
+Inicializar **uma única vez** (fora do loop de animação), com 110 partículas:
+
+```ts
+type Particle = {
+  angle: number       // ângulo orbital atual (radianos)
+  dist: number        // distância do centro (30–185px)
+  baseOpacity: number // opacidade base (0.08–0.53)
+  size: number        // raio em px (0.5–2.1)
+  speed: number       // velocidade angular — range: ±0.0012 rad/frame
+  drift: number       // fase do drift senoidal
+  driftSpeed: number  // velocidade do drift (0.009–0.031)
+}
+```
+
+**Por frame:** `p.angle += p.speed`, `p.drift += p.driftSpeed`.  
+Posição com wobble: `x = cx + (dist + sin(drift)*3) * cos(angle)`.  
+Opacidade com flicker: `baseOpacity * (0.5 + 0.5 * sin(drift*1.7 + angle*3))`.
+
+---
+
+### Anéis (rings)
+
+4 anéis concêntricos, cada um com ângulo acumulado a cada frame:
+
+| Índice | Raio | Espessura | Ticks maiores | Sub-ticks | Velocidade (rad/frame) |
+|--------|------|-----------|---------------|-----------|------------------------|
+| 0      | 155  | 1.2       | 36            | 4         | +0.00045               |
+| 1      | 138  | 0.8       | 24            | 0         | −0.0009                |
+| 2      | 118  | 1.0       | 48            | 2         | +0.0006                |
+| 3      | 48   | 0.7       | 16            | 0         | −0.0018                |
+
+**Ticks maiores:** comprimento 7px, lineWidth 0.8, globalAlpha 0.6.  
+**Sub-ticks:** comprimento 3px, lineWidth 0.5, globalAlpha 0.3.
+
+---
+
+### Órbitas e joias (orbits)
+
+3 órbitas com trajetória tracejada (`setLineDash([3, 5])`):
+
+| Índice | Raio | Velocidade (rad/frame) | Raio da joia | Cor      | Satélites                                |
+|--------|------|------------------------|--------------|----------|------------------------------------------|
+| 0      | 62   | +0.0055                | 4.5          | jewel    | 1 satélite, raio órbita 10px, vel +0.036 |
+| 1      | 95   | −0.0033                | 3.5          | jewel2   | 2 satélites, raio órbita 14px, vel −0.054 |
+| 2      | 130  | +0.0021                | 5.0          | jewel3   | nenhum                                   |
+
+**Joia:** círculo preenchido com cor + highlight interno de raio `r*0.45` em `rgba(255,255,255,0.35)`.  
+**Satélites:** círculo de raio 1.8px na cor `planet`, orbitando a joia (não o centro).
+
+---
+
+### Ponteiros (needles)
+
+2 ponteiros girando sobre o centro:
+
+| Ponteiro | Comprimento | Velocidade (rad/frame) | lineWidth | globalAlpha |
+|----------|-------------|------------------------|-----------|-------------|
+| Principal | 110px      | +0.0042                | 1.2       | 0.75        |
+| Secundário | 80px      | −0.0027                | 0.8       | 0.45        |
+
+**Forma:** linha de `-len*0.2` até `+len` (em coordenadas locais, após translate+rotate), com ponta triangular de `±3px` de largura nas coordenadas `-len*0.6` a `-len*0.9`.
+
+---
+
+### Centro
+
+- Círculo externo: raio 7px, cor `center`
+- Círculo interno (brilho): raio 3px, `rgba(255,255,255,0.7)`
+
+---
+
+### Ordem de desenho (painter's algorithm)
+
+1. `clearRect`
+2. Partículas de poeira
+3. Anéis + ticks
+4. Anel interno de referência (r=30, `ringDim`, 0.5px)
+5. Órbitas tracejadas + joias + satélites
+6. Ponteiros
+7. Centro
+
+---
+
+### Progresso e dots
+
+```ts
+// Barra: incremento por frame
+const increment = 100 / (duration / (1000 / 60))  // ~0.28 para 3500ms a 60fps
+setProgress(prev => Math.min(100, prev + increment))
+
+// Dots: atualizar a cada 22 frames
+if (frameCount % 22 === 0) {
+  setDots(prev => prev.length >= 3 ? '' : prev + '.')
+}
+```
+
+---
+
+## CSS (Tailwind ou módulo CSS)
+
+```css
+.astrolabe-label {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);  /* ou text-muted-foreground em shadcn */
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.astrolabe-bar-track {
+  width: 180px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.astrolabe-bar-fill {
+  height: 100%;
+  background: var(--foreground);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+```
+
+---
+
+## Uso — Splash screen (primeira visita)
+
+```tsx
+// app/layout.tsx  ou  components/SplashGate.tsx
+'use client'
+
+import { useEffect, useState } from 'react'
+import { AstrolabeLoader } from '@/components/ui/AstrolabeLoader'
+
+export function SplashGate({ children }: { children: React.ReactNode }) {
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    const seen = sessionStorage.getItem('splash-seen')
+    if (seen) setReady(true)
+  }, [])
+
+  if (!ready) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+        <AstrolabeLoader
+          duration={3000}
+          onComplete={() => {
+            sessionStorage.setItem('splash-seen', '1')
+            setReady(true)
+          }}
+        />
+      </div>
+    )
+  }
+
+  return <>{children}</>
+}
+```
+
+> Usar `sessionStorage` (não `localStorage`) para mostrar apenas uma vez por sessão, sem bloquear visitas recorrentes.
+
+---
+
+## Uso — loading.tsx do App Router
+
+```tsx
+// app/loading.tsx
+import { AstrolabeLoader } from '@/components/ui/AstrolabeLoader'
+
+export default function Loading() {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+      <AstrolabeLoader showProgress={false} label="Carregando" />
+    </div>
+  )
+}
+```
+
+---
+
+## Notas de implementação
+
+- O `useEffect` deve retornar o cancelamento do `requestAnimationFrame` para evitar memory leak.
+- Todo estado mutável do loop (ângulos, partículas, `t`) deve ficar em `useRef`, não em `useState`, para evitar re-renders por frame.
+- O `setProgress` e `setDots` (React state) podem ser chamados com menos frequência — a cada N frames — para não pressionar o reconciliador.
+- O canvas deve ter `style={{ imageRendering: 'crisp-edges' }}` em displays de alta densidade; alternativamente, usar `devicePixelRatio` para escalar o canvas internamente.

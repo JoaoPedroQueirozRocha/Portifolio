@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design Tokens — Portfólio</title>
+<style>
+  /* ── Tokens (espelho de globals.css) ── */
+  :root {
+    --accent:        oklch(0.78 0.10 84);
+    --accent-bright: oklch(0.86 0.11 86);
+    --accent-soft:   oklch(0.78 0.10 84 / 0.14);
+    --gold:          oklch(0.80 0.10 85);
+    --rubric:        oklch(0.58 0.16 32);
+    --celest:        oklch(0.66 0.10 258);
+    --on-accent:     oklch(0.17 0.02 58);
+  }
+
+  [data-theme="dark"] {
+    --bg:        oklch(0.165 0.018 58);
+    --bg-2:      oklch(0.205 0.022 54);
+    --surface:   oklch(0.215 0.022 54);
+    --surface-2: oklch(0.255 0.024 52);
+    --text:      oklch(0.91 0.030 82);
+    --muted:     oklch(0.74 0.030 76);
+    --faint:     oklch(0.56 0.028 70);
+    --line:      oklch(0.80 0.06 82 / 0.20);
+    --line-soft: oklch(0.80 0.06 82 / 0.11);
+    --rule-tint: oklch(0.80 0.06 82 / 0.05);
+    --shadow:    0 2px 8px oklch(0 0 0 / 0.34), 0 16px 50px oklch(0 0 0 / 0.44);
+    --shadow-lg: 0 30px 90px oklch(0 0 0 / 0.62);
+  }
+
+  [data-theme="light"] {
+    --accent:        oklch(0.58 0.10 72);
+    --accent-bright: oklch(0.50 0.11 64);
+    --accent-soft:   oklch(0.58 0.10 72 / 0.12);
+    --gold:          oklch(0.60 0.10 72);
+    --on-accent:     oklch(0.98 0.01 86);
+    --bg:        oklch(0.935 0.028 86);
+    --bg-2:      oklch(0.905 0.032 82);
+    --surface:   oklch(0.965 0.022 86);
+    --surface-2: oklch(0.895 0.03 84);
+    --text:      oklch(0.27 0.03 50);
+    --muted:     oklch(0.42 0.034 54);
+    --faint:     oklch(0.55 0.03 60);
+    --line:      oklch(0.40 0.05 60 / 0.28);
+    --line-soft: oklch(0.40 0.05 60 / 0.16);
+    --rule-tint: oklch(0.40 0.05 60 / 0.06);
+    --shadow:    0 2px 6px oklch(0.3 0.04 60 / 0.07), 0 14px 40px oklch(0.3 0.04 60 / 0.10);
+    --shadow-lg: 0 24px 70px oklch(0.3 0.04 60 / 0.20);
+  }
+
+  /* ── Reset & base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Georgia, serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 40px 24px 100px;
+    max-width: 1060px;
+    margin: 0 auto;
+    transition: background .3s, color .3s;
+  }
+
+  /* ── Layout ── */
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 4px;
+  }
+
+  h1 {
+    font-family: "IM Fell English", Georgia, serif;
+    font-size: 40px;
+    letter-spacing: .01em;
+    line-height: .96;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-top: 10px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 52px;
+    margin-bottom: 20px;
+  }
+  .section-numeral {
+    font-family: "IM Fell English", Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--accent);
+    min-width: 20px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: "IM Fell English", Georgia, serif;
+    font-size: 26px;
+    letter-spacing: .01em;
+    line-height: 1;
+  }
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--line), transparent);
+  }
+
+  /* ── Swatches grid ── */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+  }
+  .swatches.wide  { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  .swatches.wider { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+  /* ── Color swatch ── */
+  .color-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+  }
+  .color-block {
+    height: 64px;
+    border-radius: 3px;
+    border: 1px solid var(--line-soft);
+    transition: transform .15s;
+  }
+  .color-card:hover .color-block { transform: translateY(-2px); }
+  .color-name {
+    font-family: Georgia, serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .color-var {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: .03em;
+    color: var(--faint);
+    transition: color .2s;
+  }
+  .color-card:hover .color-var { color: var(--accent-bright); }
+  .color-desc {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--faint);
+    opacity: .75;
+  }
+  .copied-badge {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--accent-bright);
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .copied-badge.show { opacity: 1; }
+
+  /* ── Text swatches ── */
+  .text-card {
+    padding: 16px;
+    border: 1px solid var(--line-soft);
+    border-radius: 3px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .text-sample { font-family: Georgia, serif; font-size: 17px; line-height: 1.5; }
+  .text-meta { border-top: 1px solid var(--line-soft); padding-top: 10px; display: flex; flex-direction: column; gap: 3px; }
+  .text-meta-row { display: flex; align-items: center; gap: 8px; }
+  .text-dot { width: 12px; height: 12px; border-radius: 2px; border: 1px solid var(--line-soft); flex-shrink: 0; }
+
+  /* ── Border swatches ── */
+  .border-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .border-preview {
+    height: 52px;
+    border-radius: 3px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--faint);
+    transition: transform .15s;
+  }
+  .border-card:hover .border-preview { transform: translateY(-2px); }
+
+  /* comparativo de bordas */
+  .border-compare {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: 4px;
+  }
+  .border-compare-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--faint);
+    margin-bottom: 6px;
+  }
+  .border-row {
+    height: 38px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── Text-color rows ── */
+  .text-color-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 20px;
+    border: 1px solid var(--line-soft);
+    border-radius: 3px;
+    background: var(--surface);
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .text-color-row:hover { border-color: var(--line); }
+  .text-color-samples {
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 20px;
+    min-width: 0;
+  }
+  .text-color-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 160px;
+    flex-shrink: 0;
+    border-left: 1px solid var(--line-soft);
+    padding-left: 20px;
+  }
+
+  /* ── Shadow swatches ── */
+  .shadow-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .shadow-preview {
+    height: 80px;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--faint);
+    transition: transform .15s;
+  }
+  .shadow-card:hover .shadow-preview { transform: translateY(-2px); }
+
+  /* ── Typography swatches ── */
+  .type-card {
+    padding: 18px;
+    border: 1px solid var(--line-soft);
+    border-radius: 3px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .type-sample { font-size: 24px; color: var(--text); line-height: 1.2; }
+  .type-meta { border-top: 1px solid var(--line-soft); padding-top: 10px; display: flex; flex-direction: column; gap: 3px; }
+
+  /* ── Composition examples ── */
+  .comp-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .comp-code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: .03em;
+    line-height: 1.7;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    border-radius: 3px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: default;
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    border-radius: 3px;
+    border: 1px solid var(--line);
+    color: var(--text);
+    background: none;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: default;
+  }
+  .demo-card {
+    padding: 18px 22px;
+    border-radius: 3px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 180px;
+  }
+  .demo-card-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .demo-card-title {
+    font-family: "IM Fell English", Georgia, serif;
+    font-size: 20px;
+    color: var(--text);
+  }
+  .demo-card-body {
+    font-family: Georgia, serif;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .mono-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: .05em;
+    color: var(--muted);
+    border: 1px solid var(--line-soft);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+  .tags-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* ── Theme toggle ── */
+  #theme-toggle {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--muted);
+    cursor: pointer;
+    background: none;
+    flex-shrink: 0;
+    margin-top: 6px;
+    transition: border-color .2s, color .2s;
+  }
+  #theme-toggle:hover { border-color: var(--accent); color: var(--accent-bright); }
+
+  /* ── Footer ── */
+  .page-footer {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>Design Tokens</h1>
+    <p class="subtitle">Clique em qualquer token para copiar var(--nome) &nbsp;·&nbsp; Portfólio</p>
+  </div>
+  <button id="theme-toggle">☀ Light</button>
+</div>
+
+<!-- ── I. ACCENT ── -->
+<div class="section-head">
+  <span class="section-numeral">I</span>
+  <h2 class="section-title">Accent</h2>
+  <div class="section-rule"></div>
+</div>
+<div class="swatches">
+  <div class="color-card" onclick="copyVar('--accent')">
+    <div class="color-block" style="background:var(--accent)"></div>
+    <span class="color-name">accent</span>
+    <span class="color-var">--accent</span>
+    <span class="color-desc">Principal — botões, links</span>
+    <span class="copied-badge" id="cb--accent">✓ copiado</span>
+  </div>
+  <div class="color-card" onclick="copyVar('--accent-bright')">
+    <div class="color-block" style="background:var(--accent-bright)"></div>
+    <span class="color-name">accent-bright</span>
+    <span class="color-var">--accent-bright</span>
+    <span class="color-desc">Hover / destaque ativo</span>
+    <span class="copied-badge" id="cb--accent-bright">✓ copiado</span>
+  </div>
+  <div class="color-card" onclick="copyVar('--accent-soft')">
+    <div class="color-block" style="background:var(--accent-soft); border: 1px solid var(--line)"></div>
+    <span class="color-name">accent-soft</span>
+    <span class="color-var">--accent-soft</span>
+    <span class="color-desc">Fundo suave / seleção</span>
+    <span class="copied-badge" id="cb--accent-soft">✓ copiado</span>
+  </div>
+  <div class="color-card" onclick="copyVar('--on-accent')">
+    <div class="color-block" style="background:var(--accent); display:grid; place-items:center;">
+      <span style="background:var(--on-accent); width:60%; height:8px; border-radius:2px; opacity:.8"></span>
+    </div>
+    <span class="color-name">on-accent</span>
+    <span class="color-var">--on-accent</span>
+    <span class="color-desc">Texto sobre accent</span>
+    <span class="copied-badge" id="cb--on-accent">✓ copiado</span>
+  </div>
+</div>
+
+<!-- ── II. DESTAQUE FIXO ── -->
+<div class="section-head">
+  <span class="section-numeral">II</span>
+  <h2 class="section-title">Cores de destaque</h2>
+  <div class="section-rule"></div>
+</div>
+<div class="swatches">
+  <div class="color-card" onclick="copyVar('--gold')">
+    <div class="color-block" style="background:var(--gold)"></div>
+    <span class="color-name">gold</span>
+    <span class="color-var">--gold</span>
+    <span class="color-desc">Notas / rating</span>
+    <span class="copied-badge" id="cb--gold">✓ copiado</span>
+  </div>
+  <div class="color-card" onclick="copyVar('--rubric')">
+    <div class="color-block" style="background:var(--rubric)"></div>
+    <span class="color-name">rubric</span>
+    <span class="color-var">--rubric</span>
+    <span class="color-desc">Vermelho manuscrito — "Quero ver"</span>
+    <span class="copied-badge" id="cb--rubric">✓ copiado</span>
+  </div>
+  <div class="color-card" onclick="copyVar('--celest')">
+    <div class="color-block" style="background:var(--celest)"></div>
+    <span class="color-name">celest</span>
+    <span class="color-var">--celest</span>
+    <span class="color-desc">Índigo astrolábio — "Em andamento"</span>
+    <span class="copied-badge" id="cb--celest">✓ copiado</span>
+  </div>
+</div>
+
+<!-- ── III. BACKGROUNDS ── -->
+<div class="section-head">
+  <span class="section-numeral">III</span>
+  <h2 class="section-title">Backgrounds</h2>
+  <div class="section-rule"></div>
+</div>
+<div class="swatches">
+  <div class="color-card" onclick="copyVar('--bg')">
+    <div class="color-block" style="background:var(--bg); border:1px solid var(--line)"></div>
+    <span class="color-name">bg</span>
+    <span class="color-var">--bg</span>
+    <span class="color-desc">Fundo base da página</span>
+    <span class="copied-badge" id="cb--bg">✓ copiado</span>
+  </div>
+  <div class="color-card" onclick="copyVar('--bg-2')">
+    <div class="color-block" style="background:var(--bg-2); border:1px solid var(--line)"></div>
+    <span class="color-name">bg-2</span>
+    <span class="color-var">--bg-2</span>
+    <span class="color-desc">Fundo alternativo</span>
+    <span class="copied-badge" id="cb--bg-2">✓ copiado</span>
+  </div>
+  <div class="color-card" onclick="copyVar('--surface')">
+    <div class="color-block" style="background:var(--surface); border:1px solid var(--line)"></div>
+    <span class="color-name">surface</span>
+    <span class="color-var">--surface</span>
+    <span class="color-desc">Cards / painéis</span>
+    <span class="copied-badge" id="cb--surface">✓ copiado</span>
+  </div>
+  <div class="color-card" onclick="copyVar('--surface-2')">
+    <div class="color-block" style="background:var(--surface-2); border:1px solid var(--line)"></div>
+    <span class="color-name">surface-2</span>
+    <span class="color-var">--surface-2</span>
+    <span class="color-desc">Superfície elevada</span>
+    <span class="copied-badge" id="cb--surface-2">✓ copiado</span>
+  </div>
+</div>
+
+<!-- ── IV. TEXTO ── -->
+<div class="section-head">
+  <span class="section-numeral">IV</span>
+  <h2 class="section-title">Texto</h2>
+  <div class="section-rule"></div>
+</div>
+<div class="swatches wide">
+  <div class="text-card" onclick="copyVar('--text')">
+    <p class="text-sample" style="color:var(--text)">O engenheiro constrói com cuidado e ofício.</p>
+    <div class="text-meta">
+      <div class="text-meta-row">
+        <div class="text-dot" style="background:var(--text)"></div>
+        <span style="font-size:13px; font-weight:600">text</span>
+      </div>
+      <span class="color-var">--text</span>
+      <span class="color-desc">Texto principal</span>
+      <span class="copied-badge" id="cb--text">✓ copiado</span>
+    </div>
+  </div>
+  <div class="text-card" onclick="copyVar('--muted')">
+    <p class="text-sample" style="color:var(--muted)">O engenheiro constrói com cuidado e ofício.</p>
+    <div class="text-meta">
+      <div class="text-meta-row">
+        <div class="text-dot" style="background:var(--muted)"></div>
+        <span style="font-size:13px; font-weight:600">muted</span>
+      </div>
+      <span class="color-var">--muted</span>
+      <span class="color-desc">Texto secundário / corpo</span>
+      <span class="copied-badge" id="cb--muted">✓ copiado</span>
+    </div>
+  </div>
+  <div class="text-card" onclick="copyVar('--faint')">
+    <p class="text-sample" style="color:var(--faint)">O engenheiro constrói com cuidado e ofício.</p>
+    <div class="text-meta">
+      <div class="text-meta-row">
+        <div class="text-dot" style="background:var(--faint)"></div>
+        <span style="font-size:13px; font-weight:600">faint</span>
+      </div>
+      <span class="color-var">--faint</span>
+      <span class="color-desc">Placeholder / metadata</span>
+      <span class="copied-badge" id="cb--faint">✓ copiado</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── V. CORES COMO TEXTO ── -->
+<div class="section-head">
+  <span class="section-numeral">V</span>
+  <h2 class="section-title">Cores como texto</h2>
+  <div class="section-rule"></div>
+</div>
+
+<!-- grade de amostras: cada token mostrado em tamanhos reais de uso -->
+<div style="display:flex; flex-direction:column; gap:12px;">
+
+  <!-- accent -->
+  <div class="text-color-row" onclick="copyVar('--accent')">
+    <div class="text-color-samples">
+      <span style="color:var(--accent); font-family:'IM Fell English',Georgia,serif; font-size:38px; line-height:1">Título</span>
+      <span style="color:var(--accent); font-family:'IM Fell English',Georgia,serif; font-size:22px; line-height:1">Subtítulo</span>
+      <span style="color:var(--accent); font-family:Georgia,serif; font-size:15px">Texto normal com a cor accent aplicada em linha.</span>
+      <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase">LABEL MONO</span>
+    </div>
+    <div class="text-color-meta">
+      <span class="color-name">accent</span>
+      <span class="color-var">--accent</span>
+      <span class="color-desc">Títulos principais, links, eyebrow</span>
+      <span class="copied-badge" id="cb--accent-text">✓ copiado</span>
+    </div>
+  </div>
+
+  <!-- accent-bright -->
+  <div class="text-color-row" onclick="copyVar('--accent-bright')">
+    <div class="text-color-samples">
+      <span style="color:var(--accent-bright); font-family:'IM Fell English',Georgia,serif; font-size:38px; line-height:1">Título</span>
+      <span style="color:var(--accent-bright); font-family:'IM Fell English',Georgia,serif; font-size:22px; line-height:1">Subtítulo</span>
+      <span style="color:var(--accent-bright); font-family:Georgia,serif; font-size:15px">Texto normal com accent-bright — hover e estados ativos.</span>
+      <span style="color:var(--accent-bright); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase">LABEL MONO</span>
+    </div>
+    <div class="text-color-meta">
+      <span class="color-name">accent-bright</span>
+      <span class="color-var">--accent-bright</span>
+      <span class="color-desc">Hover, company name na timeline, período ativo</span>
+      <span class="copied-badge" id="cb--accent-bright-text">✓ copiado</span>
+    </div>
+  </div>
+
+  <!-- gold -->
+  <div class="text-color-row" onclick="copyVar('--gold')">
+    <div class="text-color-samples">
+      <span style="color:var(--gold); font-family:'IM Fell English',Georgia,serif; font-size:38px; line-height:1">★ 9.2</span>
+      <span style="color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:15px">nota: 9.2 / 10</span>
+      <span style="color:var(--gold); font-family:Georgia,serif; font-size:15px">Texto descritivo com a cor ouro aplicada.</span>
+      <span style="color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase">LANGUAGES</span>
+    </div>
+    <div class="text-color-meta">
+      <span class="color-name">gold</span>
+      <span class="color-var">--gold</span>
+      <span class="color-desc">Notas, ratings, cabeçalhos de grupo de tech</span>
+      <span class="copied-badge" id="cb--gold-text">✓ copiado</span>
+    </div>
+  </div>
+
+  <!-- rubric -->
+  <div class="text-color-row" onclick="copyVar('--rubric')">
+    <div class="text-color-samples">
+      <span style="color:var(--rubric); font-family:'IM Fell English',Georgia,serif; font-size:38px; line-height:1; font-style:italic">Quero ver</span>
+      <span style="color:var(--rubric); font-family:'Cormorant Garamond',Georgia,serif; font-size:22px; font-style:italic">Status — quero assistir</span>
+      <span style="color:var(--rubric); font-family:Georgia,serif; font-size:15px">Anotação rubric usada em marcações de status.</span>
+      <span style="color:var(--rubric); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase">WANT TO WATCH</span>
+    </div>
+    <div class="text-color-meta">
+      <span class="color-name">rubric</span>
+      <span class="color-var">--rubric</span>
+      <span class="color-desc">Status "Quero ver", anotações em vermelho</span>
+      <span class="copied-badge" id="cb--rubric-text">✓ copiado</span>
+    </div>
+  </div>
+
+  <!-- celest -->
+  <div class="text-color-row" onclick="copyVar('--celest')">
+    <div class="text-color-samples">
+      <span style="color:var(--celest); font-family:'IM Fell English',Georgia,serif; font-size:38px; line-height:1">Em andamento</span>
+      <span style="color:var(--celest); font-family:'Cormorant Garamond',Georgia,serif; font-size:22px; font-style:italic">Status — assistindo</span>
+      <span style="color:var(--celest); font-family:Georgia,serif; font-size:15px">Texto com celest — índigo astrolábio para estados ativos.</span>
+      <span style="color:var(--celest); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase">WATCHING</span>
+    </div>
+    <div class="text-color-meta">
+      <span class="color-name">celest</span>
+      <span class="color-var">--celest</span>
+      <span class="color-desc">Status "Em andamento", elementos do astrolábio</span>
+      <span class="copied-badge" id="cb--celest-text">✓ copiado</span>
+    </div>
+  </div>
+
+  <!-- faint — já existe em IV mas vale ver como label -->
+  <div class="text-color-row" onclick="copyVar('--faint')">
+    <div class="text-color-samples">
+      <span style="color:var(--faint); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.04em">jan 2024 — mai 2026</span>
+      <span style="color:var(--faint); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase">TRAJETÓRIA PROFISSIONAL</span>
+      <span style="color:var(--faint); font-family:Georgia,serif; font-size:15px">Metadata, períodos, labels secundários com faint.</span>
+      <span style="color:var(--faint); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.06em">São Paulo, SP · Remoto</span>
+    </div>
+    <div class="text-color-meta">
+      <span class="color-name">faint</span>
+      <span class="color-var">--faint</span>
+      <span class="color-desc">Períodos, localização, labels terciários</span>
+      <span class="copied-badge" id="cb--faint-text">✓ copiado</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── VI. BORDAS ── -->
+<div class="section-head">
+  <span class="section-numeral">VI</span>
+  <h2 class="section-title">Bordas</h2>
+  <div class="section-rule"></div>
+</div>
+<div class="swatches wide">
+  <div class="border-card" onclick="copyVar('--line')">
+    <div class="border-preview" style="border:1px solid var(--line)">border: 1px solid var(--line)</div>
+    <span class="color-name">line</span>
+    <span class="color-var">--line</span>
+    <span class="color-desc">Borda padrão — dividers, cards</span>
+    <span class="copied-badge" id="cb--line">✓ copiado</span>
+  </div>
+  <div class="border-card" onclick="copyVar('--line-soft')">
+    <div class="border-preview" style="border:1px solid var(--line-soft)">border: 1px solid var(--line-soft)</div>
+    <span class="color-name">line-soft</span>
+    <span class="color-var">--line-soft</span>
+    <span class="color-desc">Borda suave — internos, grids</span>
+    <span class="copied-badge" id="cb--line-soft">✓ copiado</span>
+  </div>
+  <div class="border-card" onclick="copyVar('--rule-tint')">
+    <div class="border-preview" style="border:1px solid var(--rule-tint)">border: 1px solid var(--rule-tint)</div>
+    <span class="color-name">rule-tint</span>
+    <span class="color-var">--rule-tint</span>
+    <span class="color-desc">Linha de pauta — body::before</span>
+    <span class="copied-badge" id="cb--rule-tint">✓ copiado</span>
+  </div>
+</div>
+
+<!-- comparativo de bordas sobre bg atual -->
+<div class="border-compare">
+  <p class="border-compare-label">Comparativo sobre o fundo atual</p>
+  <div class="border-row" style="border:1px solid var(--line)">var(--line)</div>
+  <div class="border-row" style="border:1px solid var(--line-soft)">var(--line-soft)</div>
+  <div class="border-row" style="border:1px solid var(--rule-tint)">var(--rule-tint)</div>
+</div>
+
+<!-- ── VII. SOMBRAS ── -->
+<div class="section-head">
+  <span class="section-numeral">VII</span>
+  <h2 class="section-title">Sombras</h2>
+  <div class="section-rule"></div>
+</div>
+<div class="swatches wider">
+  <div class="shadow-card" onclick="copyVar('--shadow')">
+    <div class="shadow-preview" style="box-shadow:var(--shadow)">box-shadow: var(--shadow)</div>
+    <span class="color-name">shadow</span>
+    <span class="color-var">--shadow</span>
+    <span class="color-desc">Sombra padrão — cards</span>
+    <span class="copied-badge" id="cb--shadow">✓ copiado</span>
+  </div>
+  <div class="shadow-card" onclick="copyVar('--shadow-lg')">
+    <div class="shadow-preview" style="box-shadow:var(--shadow-lg)">box-shadow: var(--shadow-lg)</div>
+    <span class="color-name">shadow-lg</span>
+    <span class="color-var">--shadow-lg</span>
+    <span class="color-desc">Sombra grande — modais</span>
+    <span class="copied-badge" id="cb--shadow-lg">✓ copiado</span>
+  </div>
+</div>
+
+<!-- ── VIII. TIPOGRAFIA ── -->
+<div class="section-head">
+  <span class="section-numeral">VIII</span>
+  <h2 class="section-title">Tipografia</h2>
+  <div class="section-rule"></div>
+</div>
+<div class="swatches wide">
+  <div class="type-card" onclick="copyVar('--font-display')">
+    <span class="type-sample" style="font-family:'IM Fell English',Georgia,serif; font-size:28px">IM Fell English — Títulos</span>
+    <div class="type-meta">
+      <span class="color-name">font-display</span>
+      <span class="color-var">--font-display</span>
+    </div>
+    <span class="copied-badge" id="cb--font-display">✓ copiado</span>
+  </div>
+  <div class="type-card" onclick="copyVar('--font-body')">
+    <span class="type-sample" style="font-family:'EB Garamond',Georgia,serif; font-size:22px">EB Garamond — Corpo de texto</span>
+    <div class="type-meta">
+      <span class="color-name">font-body</span>
+      <span class="color-var">--font-body</span>
+    </div>
+    <span class="copied-badge" id="cb--font-body">✓ copiado</span>
+  </div>
+  <div class="type-card" onclick="copyVar('--font-alt')">
+    <span class="type-sample" style="font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-size:24px">Cormorant Garamond — Itálico alternativo</span>
+    <div class="type-meta">
+      <span class="color-name">font-alt</span>
+      <span class="color-var">--font-alt</span>
+    </div>
+    <span class="copied-badge" id="cb--font-alt">✓ copiado</span>
+  </div>
+  <div class="type-card" onclick="copyVar('--font-caps')">
+    <span class="type-sample" style="font-family:'Cinzel',Georgia,serif; font-size:18px; letter-spacing:.08em">CINZEL — VERSAIS</span>
+    <div class="type-meta">
+      <span class="color-name">font-caps</span>
+      <span class="color-var">--font-caps</span>
+    </div>
+    <span class="copied-badge" id="cb--font-caps">✓ copiado</span>
+  </div>
+  <div class="type-card" onclick="copyVar('--font-mono')">
+    <span class="type-sample" style="font-family:'JetBrains Mono',monospace; font-size:15px">JetBrains Mono — código e labels</span>
+    <div class="type-meta">
+      <span class="color-name">font-mono</span>
+      <span class="color-var">--font-mono</span>
+    </div>
+    <span class="copied-badge" id="cb--font-mono">✓ copiado</span>
+  </div>
+</div>
+
+<!-- ── IX. COMPOSIÇÃO ── -->
+<div class="section-head">
+  <span class="section-numeral">IX</span>
+  <h2 class="section-title">Composição</h2>
+  <div class="section-rule"></div>
+</div>
+
+<div class="comp-row">
+  <div class="btn-primary">Botão primário</div>
+  <code class="comp-code">background: var(--accent)<br>color: var(--on-accent)</code>
+</div>
+
+<div class="comp-row">
+  <div class="btn-ghost">Botão ghost</div>
+  <code class="comp-code">border: 1px solid var(--line)<br>color: var(--text)</code>
+</div>
+
+<div class="comp-row">
+  <div class="demo-card">
+    <span class="demo-card-label">Label</span>
+    <span class="demo-card-title">Título do Card</span>
+    <p class="demo-card-body">Texto descritivo com cor --muted.</p>
+  </div>
+  <code class="comp-code">background: var(--surface-2)<br>border: 1px solid var(--line)<br>box-shadow: var(--shadow)</code>
+</div>
+
+<div class="comp-row">
+  <div class="tags-row">
+    <span class="mono-tag">TypeScript</span>
+    <span class="mono-tag">Node.js</span>
+    <span class="mono-tag">PostgreSQL</span>
+    <span class="mono-tag">Docker</span>
+  </div>
+  <code class="comp-code">.mono-tag<br>border: 1px solid var(--line-soft)<br>color: var(--muted)</code>
+</div>
+
+<p class="page-footer">portfolio design tokens · atualizar em globals.css ao modificar variáveis</p>
+
+<script>
+  // Toggle de tema
+  const toggle = document.getElementById('theme-toggle')
+  const html   = document.documentElement
+
+  toggle.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+    html.setAttribute('data-theme', next)
+    toggle.textContent = next === 'dark' ? '☀ Light' : '☾ Dark'
+  })
+
+  // Copia var(--nome) para clipboard
+  function copyVar(name) {
+    navigator.clipboard.writeText('var(' + name + ')').then(() => {
+      const badge = document.getElementById('cb' + name)
+      if (!badge) return
+      badge.classList.add('show')
+      setTimeout(() => badge.classList.remove('show'), 1400)
+    })
+  }
+</script>
+</body>
+</html>
