@@ -136,5 +136,16 @@
       "dataModeling": "Modelagem de dados",
       "analytics": "Analytics"
     }
+  },
+  "academicInfo": {
+    "bacharelorSoftware": "Bacharelado em engenharia de software",
+    "puc": "Puc Minas"
+  },
+  "status": {
+    "completed": "Concluído",
+    "inProgress": "Em andamento",
+    "onHold": "Em espera",
+    "dropped": "Cancelado",
+    "inCourse": "Em curso"
   }
 }

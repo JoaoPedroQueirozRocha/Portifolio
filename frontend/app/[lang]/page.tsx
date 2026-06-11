@@ -7,6 +7,7 @@ import ExperienceTimeline from "@/components/ui/ExperienceTimeline"
 import { EXPERIENCE } from "@/lib/experience"
 import TechDetails from "@/components/layout/TechDetails"
 import Astrolabe from "@/components/layout/Astrolabe"
+import AcademicInfo from "@/components/layout/AcademicInfo"
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params
@@ -110,6 +111,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           title={dict.sections.experience.title}
         />
         <ExperienceTimeline entries={EXPERIENCE} defaultOpen={0} />
+      </section>
+
+      <section>
+        <AcademicInfo/>
       </section>
 
     </main>
