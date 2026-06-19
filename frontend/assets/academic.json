@@ -1,0 +1,66 @@
+{
+  "education": [
+    {
+      "seal": "P",
+      "degree": "Bacharelado em Engenharia de Software",
+      "school": "PUC Minas",
+      "schoolFull": "Pontifícia Universidade Católica de Minas Gerais",
+      "location": "Belo Horizonte, MG",
+      "period": "jan 2023 — dez 2026",
+      "status": "Em curso",
+      "statusNote": "previsão de conclusão"
+    },
+    {
+      "seal": "C",
+      "degree": "Técnico em Desenvolvimento Web e Mobile",
+      "school": "Colégio COTEMIG",
+      "schoolFull": "Ensino Médio Técnico integrado",
+      "location": "Belo Horizonte, MG",
+      "period": "fev 2020 — nov 2022",
+      "status": "Concluído",
+      "statusNote": null
+    }
+  ],
+  "accolades": [
+    {
+      "tone": "celest",
+      "kind": "Certificação",
+      "seal": "RH",
+      "title": "Red Hat System Administration I",
+      "code": "RH124",
+      "issuer": "Red Hat",
+      "year": "",
+      "desc": "Fundamentos de administração de sistemas Linux corporativos, gerenciamento de processos e automações de infraestrutura."
+    },
+    {
+      "tone": "rubric",
+      "kind": "Distinção",
+      "seal": "V",
+      "title": "Melhores Trabalhos — 5º Período",
+      "code": "Trabalho Interdisciplinar de Software",
+      "issuer": "PUC Minas",
+      "year": "2025",
+      "desc": "Reconhecimento de melhor trabalho da disciplina entre as turmas do período."
+    },
+    {
+      "tone": "rubric",
+      "kind": "Distinção",
+      "seal": "IV",
+      "title": "Melhores Trabalhos — 4º Período",
+      "code": "Trabalho Interdisciplinar de Software",
+      "issuer": "PUC Minas",
+      "year": "mar 2025",
+      "desc": "Reconhecimento de melhor trabalho da disciplina entre as turmas do período."
+    },
+    {
+      "tone": "rubric",
+      "kind": "Distinção",
+      "seal": "II",
+      "title": "Melhores Trabalhos — 2º Período",
+      "code": "Trabalho Interdisciplinar de Software",
+      "issuer": "PUC Minas",
+      "year": "abr 2024",
+      "desc": "Reconhecimento de melhor trabalho da disciplina entre as turmas do período."
+    }
+  ]
+}
