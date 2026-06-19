@@ -1,1 +1,2 @@
 @AGENTS.md
+@COLOR_GUIDE.md

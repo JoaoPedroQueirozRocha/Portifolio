@@ -8,6 +8,7 @@ import { EXPERIENCE } from "@/lib/experience"
 import TechDetails from "@/components/layout/TechDetails"
 import Astrolabe from "@/components/layout/Astrolabe"
 import AcademicInfo from "@/components/layout/AcademicInfo"
+import Reliquary from "@/components/layout/Reliquary"
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params
@@ -121,6 +122,16 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           title={dict.sections.education.title}
         />
         <AcademicInfo />
+      </section>
+
+      {/* ── RELICÁRIO ───────────────────────────────────────────────── */}
+      <section className="relative z-[1] py-8 sm:py-12 lg:py-[64px]" style={{ borderTop: "1px solid var(--line-soft)" }}>
+        <SectionHeader
+          numeral="IV"
+          label={dict.sections.accolades.label}
+          title={dict.sections.accolades.title}
+        />
+        <Reliquary />
       </section>
 
     </main>

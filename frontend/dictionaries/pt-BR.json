@@ -71,6 +71,7 @@
     "stack":      { "label": "Domínio técnico",       "title": "A forja" },
     "experience": { "label": "Trajetória profissional","title": "Experiência" },
     "education":  { "label": "Formação acadêmica",    "title": "Estudos" },
+    "accolades":  { "label": "Certificados & distinções", "title": "Relicário" },
     "projects":   { "label": "Trabalhos selecionados", "title": "Projetos" },
     "now":        { "label": "Estante de mídia",       "title": "No momento" },
     "blog":       { "label": "Notas & artigos",        "title": "Crônicas" }

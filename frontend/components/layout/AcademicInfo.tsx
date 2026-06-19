@@ -2,7 +2,6 @@
 
 import { MapPin } from "lucide-react"
 import Sigil from "./Sigil"
-import Reliquary from "./Reliquary"
 import academicData from "@/assets/academic.json"
 
 type EducationStatus = "Em curso" | "Concluído"
@@ -113,7 +112,6 @@ export default function AcademicInfo() {
       {EDUCATION.map((e, i) => (
         <EduCard key={i} e={e} />
       ))}
-      <Reliquary />
     </div>
   )
 }

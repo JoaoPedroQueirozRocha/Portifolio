@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useRef } from "react"
-import Sigil from "./Sigil"
 import academicData from "@/assets/academic.json"
 
 type Tone = "celest" | "rubric" | "gold"
@@ -69,13 +68,13 @@ function RelicDetail({ item }: { item: Accolade }) {
       </span>
 
       <span
-        className="italic text-[14px] text-muted"
+        className="italic text-[15px] text-accent-bright"
         style={{ fontFamily: "var(--font-alt)" }}
       >
         {item.issuer}
       </span>
 
-      <p className="text-[14px] text-muted leading-[1.6] mt-[4px] max-w-[58ch]">
+      <p className="text-[15px] text-text leading-[1.6] mt-[4px] max-w-[58ch]">
         {item.desc}
       </p>
     </div>
@@ -89,27 +88,7 @@ export default function Reliquary() {
   const shown = ACCOLADES[open >= 0 ? open : lastOpen.current]
 
   return (
-    <div className="mt-[40px]">
-
-      <div className="flex items-center gap-[14px] mb-[26px]">
-        <Sigil />
-        <span
-          className="text-[11px] uppercase tracking-[.2em] text-muted whitespace-nowrap"
-          style={{ fontFamily: "var(--font-caps)" }}
-        >
-          Selos &amp; reconhecimentos
-        </span>
-        <span
-          className="hidden sm:inline italic text-[14px] text-faint whitespace-nowrap"
-          style={{ fontFamily: "var(--font-alt)" }}
-        >
-          toque um selo para revelar
-        </span>
-        <span
-          className="flex-1 h-px"
-          style={{ background: "linear-gradient(90deg, var(--line-soft), transparent)" }}
-        />
-      </div>
+    <div>
 
       <div className="col-wax flex flex-wrap gap-x-[34px] gap-y-[30px] py-[6px]">
         {ACCOLADES.map((a, i) => {
