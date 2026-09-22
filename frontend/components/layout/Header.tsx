@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { Sun, Moon, Menu, X } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useSyncExternalStore } from "react"
 import Logo from "./Logo"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
 
@@ -21,22 +21,22 @@ const NAV_ROUTES = [
   { key: "stats", path: "/stats" },
 ] as const
 
+const noopSubscribe = () => () => {};
+
 export default function Header({ lang, nav, themeLabel }: HeaderProps) {
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
-  const [mounted, setMounted]   = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
+  const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
+
   useEffect(() => {
-    setMounted(true)
     function onScroll() { setScrolled(window.scrollY > 10) }
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  // Fecha menu ao navegar
-  useEffect(() => { setMenuOpen(false) }, [pathname])
 
   // Trava scroll do body quando menu está aberto
   useEffect(() => {
@@ -80,6 +80,7 @@ export default function Header({ lang, nav, themeLabel }: HeaderProps) {
               <Link
                 key={key}
                 href={href}
+                onClick={() => setMenuOpen(false)}
                 className="relative px-[15px] py-2 rounded text-[15px] font-medium tracking-[.01em] transition-colors duration-[180ms]"
                 style={{
                   fontFamily: "var(--font-body)",

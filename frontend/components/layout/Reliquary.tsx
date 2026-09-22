@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import academicData from "@/assets/academic.json"
 
 type Tone = "celest" | "rubric" | "gold"
@@ -83,9 +83,9 @@ function RelicDetail({ item }: { item: Accolade }) {
 
 export default function Reliquary() {
   const [open, setOpen] = useState(-1)
-  const lastOpen = useRef(0)
-  if (open >= 0) lastOpen.current = open
-  const shown = ACCOLADES[open >= 0 ? open : lastOpen.current]
+  const [lastOpen, setLastOpen] = useState(0);
+
+  const shown = ACCOLADES[open >= 0 ? open : lastOpen]
 
   return (
     <div>
@@ -97,7 +97,14 @@ export default function Reliquary() {
             <button
               key={i}
               className={"seal seal-" + a.tone + (active ? " active" : "")}
-              onClick={() => setOpen(active ? -1 : i)}
+              onClick={() => {
+                if(active){
+                  setOpen(-1)
+                }else{
+                  setOpen(i);
+                  setLastOpen(i);
+                }
+              }}
               aria-expanded={active}
               aria-label={`${a.kind}: ${a.title}`}
               style={{ width: 84, display: "flex", flexDirection: "column", alignItems: "center", gap: 11, background: "none", border: "none", cursor: "pointer" }}

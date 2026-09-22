@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, useSyncExternalStore } from 'react'
 
 /* -----------------------------------------------------------------------
    Types
@@ -529,40 +529,32 @@ interface SplashGateProps {
   loaderLabel?: string
 }
 
+const noopSubscribe = () => () => {}
+
 export function SplashGate({ children, loaderSize = 280, loaderLabel = 'Carregando' }: SplashGateProps) {
-  const [ready, setReady] = useState<boolean | null>(null)
 
-  useEffect(() => {
-    const seen = sessionStorage.getItem('splash-seen')
-    setReady(seen ? true : false)
-  }, [])
+  const seen = useSyncExternalStore(
+    noopSubscribe,
+    () => sessionStorage.getItem('splash-seen') !== null,
+    () => null,
+  )
+  const [done, setDone] = useState(false)
 
-  // Evita flash: null = não sabe ainda
-  if (ready === null) return null
-
-  if (!ready) {
-    return (
-      <div
-        style={{
-          display:        'flex',
-          alignItems:     'center',
-          justifyContent: 'center',
-          minHeight:      '100dvh',
-          background:     'var(--bg)',
+  if (seen === null) return null   // evita o flash, igual antes
+  if (seen || done) return <>{children}</>
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh', background: 'var(--bg)' }}>
+      <AstrolabeLoader
+        size={loaderSize}
+        label={loaderLabel}
+        duration={2800}
+        onComplete={() => {
+          sessionStorage.setItem('splash-seen', '1')
+          setDone(true)
         }}
-      >
-        <AstrolabeLoader
-          size={loaderSize}
-          label={loaderLabel}
-          duration={2800}
-          onComplete={() => {
-            sessionStorage.setItem('splash-seen', '1')
-            setReady(true)
-          }}
-        />
-      </div>
-    )
-  }
+      />
+    </div>
+  )
 
   return <>{children}</>
 }

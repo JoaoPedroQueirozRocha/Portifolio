@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/ci.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/ci.yml'
+
+concurrency:
+  group: 'ci-${{ github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend - typecheck, lint, build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: frontend/package.json
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Lint
+        if: ${{ !cancelled() }}
+        run: pnpm run lint
