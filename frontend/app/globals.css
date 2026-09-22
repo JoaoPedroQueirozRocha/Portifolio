@@ -415,6 +415,12 @@ html[data-theme="light"] {
   .tech-grid { grid-template-columns: repeat(5, 1fr); }
 }
 
+@media (max-width: 640px) {
+  .tech-grid > :nth-child(odd):last-child {
+    grid-column: 1 / -1;
+  }
+}
+
 /* =====================================================================
    EXPERIENCE TIMELINE (Variant A)
    CSS extraído do design original — experience.css
