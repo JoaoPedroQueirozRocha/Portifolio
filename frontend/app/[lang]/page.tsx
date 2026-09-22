@@ -18,16 +18,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   return (
     <main className="content-container flex flex-col" style={{ position: "relative" }}>
 
-      {/* Astrolábio — posicionado no canto sup-dir da main, atrás de tudo */}
-      <Astrolabe
-        style={{
-          position: "absolute",
-          top: "-30px",
-          right: "-100px",
-          opacity: 0.28,
-          zIndex: 0,
-        }}
-      />
+      {/* Astrolábio — canto sup-dir da main, atrás de tudo.
+          Tamanho e sangria por breakpoint em .astrolabe-hero (globals.css) */}
+      <Astrolabe className="astrolabe-hero" />
 
       {/* ── HERO ───────────────────────────────────────────────────────────
           Mobile  : Bio em cima (nome grande), Portrait abaixo como card

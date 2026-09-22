@@ -184,6 +184,9 @@ html[data-theme="light"] {
 
   html, body {
     height: 100%;
+    /* Ornamentos decorativos sangram para fora do container; `clip` impede
+       scroll horizontal sem quebrar o position:sticky do header. */
+    overflow-x: clip;
   }
 
   html {
@@ -355,9 +358,40 @@ html[data-theme="light"] {
 }
 
 /* =====================================================================
-   ASTROLABE — animações das camadas giratórias
+   ASTROLABE — tamanho, posição e animações das camadas giratórias
    Os nomes de classe são prefixados com astro- para evitar colisões.
 ===================================================================== */
+
+/* Wrapper do SVG — quadrado, dimensionado por --astro-size */
+.astrolabe {
+  width: var(--astro-size, 480px);
+  aspect-ratio: 1;
+  flex-shrink: 0;
+}
+
+/* Marca-d'água do topo da main — sangra para a direita.
+   O clip em html/body evita que a sangria vire scroll horizontal. */
+.astrolabe-hero {
+  position: absolute;
+  z-index: 0;
+  opacity: 0.28;
+  --astro-size: 480px;
+  top: -30px;
+  right: -100px;
+}
+@media (max-width: 1023px) {
+  .astrolabe-hero { --astro-size: 400px; top: -24px; right: -80px; }
+}
+@media (max-width: 639px) {
+  /* Mobile — acompanha a largura da tela e sangra pouco, para o
+     núcleo do astrolábio continuar visível atrás do hero. */
+  .astrolabe-hero {
+    --astro-size: min(90vw, 340px);
+    top: -12px;
+    right: -18vw;
+  }
+}
+
 @keyframes astro-cw-slow   { to { transform: rotate(360deg);  } }
 @keyframes astro-ccw-slow  { to { transform: rotate(-360deg); } }
 @keyframes astro-cw-medium { to { transform: rotate(360deg);  } }

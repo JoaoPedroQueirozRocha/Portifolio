@@ -2,6 +2,9 @@
  * Astrolabe — marca-d'água decorativa SVG.
  * Server Component puro (sem hooks). Animações via globals.css.
  * Usar com position:absolute/fixed no elemento pai.
+ *
+ * Tamanho: fluido. O wrapper (.astrolabe) lê --astro-size, que o consumidor
+ * ajusta por breakpoint; o SVG escala junto via viewBox + width/height 100%.
  */
 
 const S  = 480
@@ -94,11 +97,17 @@ export default function Astrolabe({
 }) {
   return (
     <div
-      className={`pointer-events-none select-none ${className}`}
+      className={`astrolabe pointer-events-none select-none ${className}`}
       aria-hidden="true"
-      style={{ width: S, height: S, ...style }}
+      style={style}
     >
-      <svg viewBox={`0 0 ${S} ${S}`} width={S} height={S} style={{ color: "var(--gold)" }}>
+      <svg
+        viewBox={`0 0 ${S} ${S}`}
+        width="100%"
+        height="100%"
+        preserveAspectRatio="xMidYMid meet"
+        style={{ display: "block", color: "var(--gold)" }}
+      >
 
         {/* Camada 1 — anel externo + marcações — gira horário 120s */}
         <g style={layerStyle("astro-cw-slow", "120s")} opacity={0.55}>
