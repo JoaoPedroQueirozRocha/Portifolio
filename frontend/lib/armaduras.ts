@@ -189,20 +189,54 @@ export function options(n: number, range: number) {
 }
 
 /* ---------------------------------------------------------------
+   Grafia das casas e dedo de cada uma
+--------------------------------------------------------------- */
+export interface Spelling { l: number; alt: Alt }
+
+const sp = (pairs: [number, Alt][]): Spelling[] => pairs.map(([l, alt]) => ({ l, alt }))
+const SHARP_SP = sp([[0, 0], [0, 1], [1, 0], [1, 1], [2, 0], [3, 0], [3, 1], [4, 0], [4, 1], [5, 0], [5, 1], [6, 0]])
+const FLAT_SP = sp([[0, 0], [1, -1], [1, 0], [2, -1], [2, 0], [3, 0], [4, -1], [4, 0], [5, -1], [5, 0], [6, -1], [6, 0]])
+// sem armadura: grafia mais comum de cada tecla preta
+const PLAIN_SP = sp([[0, 0], [0, 1], [1, 0], [2, -1], [2, 0], [3, 0], [3, 1], [4, 0], [4, 1], [5, 0], [6, -1], [6, 0]])
+
+/** Grafia de uma altura MIDI conforme a armadura (♯ com sustenidos, ♭ com bemóis) */
+export const spellPitch = (midi: number, n: number) =>
+  (n > 0 ? SHARP_SP : n < 0 ? FLAT_SP : PLAIN_SP)[((midi % 12) + 12) % 12]
+
+/** A altura pertence à escala da armadura `n`? */
+export function inScale(midi: number, n: number) {
+  const pc = ((midi % 12) + 12) % 12
+  const acc = keyAcc(n)
+  return NAT.some((v, l) => (v + acc[l] + 12) % 12 === pc)
+}
+
+/** MIDI da corda solta (Sol³ = 55) */
+export const openMidi = (s: ViolinString) => (s.oct + 1) * 12 + NAT[s.l]
+
+/**
+ * Dedo que toca esta altura nesta corda e posição, pela letra da grafia:
+ * na corda Sol (1ª posição) Lá e Lá♯ são 1º dedo, Si♭ é 2º. null fora dos dedos 1–4.
+ */
+export function fingerFor(s: ViolinString, p: number, midi: number, n: number) {
+  const g = spellPitch(midi, n)
+  const oct = Math.round((midi - g.alt - NAT[g.l]) / 12) - 1
+  const steps = (oct + 1) * 7 + g.l - ((s.oct + 1) * 7 + s.l) // distância em letras desde a corda solta
+  const k = steps - (p - 1)
+  return k >= 1 && k <= 4 ? k : null
+}
+
+/* ---------------------------------------------------------------
    Nomes de notas — dependem do idioma (Dó, Ré… / C, D…)
 --------------------------------------------------------------- */
 export function makeNoteNames(letters: readonly string[]) {
-  const L = letters
-  const sharps = [L[0], L[0] + "♯", L[1], L[1] + "♯", L[2], L[3], L[3] + "♯", L[4], L[4] + "♯", L[5], L[5] + "♯", L[6]]
-  const flats = [L[0], L[1] + "♭", L[1], L[2] + "♭", L[2], L[3], L[4] + "♭", L[4], L[5] + "♭", L[5], L[6] + "♭", L[6]]
-  // sem armadura: grafia mais comum de cada tecla preta
-  const plain = [L[0], L[0] + "♯", L[1], L[2] + "♭", L[2], L[3], L[3] + "♯", L[4], L[4] + "♯", L[5], L[6] + "♭", L[6]]
+  const note = (l: number, a: number = 0) => letters[l] + sym(a)
+  const pitch = (midi: number, n: number) => { const g = spellPitch(midi, n); return note(g.l, g.alt) }
   return {
-    note: (l: number, a: number = 0) => L[l] + sym(a),
-    /** Nome cromático de uma casa, com a grafia (♯/♭) da armadura */
-    casa: (s: ViolinString, f: number, n: number) => (n < 0 ? flats : sharps)[(NAT[s.l] + f) % 12],
+    note,
     /** Nome de uma altura MIDI qualquer, grafada conforme a armadura */
-    pitch: (midi: number, n: number) => (n > 0 ? sharps : n < 0 ? flats : plain)[((midi % 12) + 12) % 12],
+    pitch,
+    /** Nome da casa `f` (semitons desde a corda solta), grafada conforme a armadura */
+    casa: (s: ViolinString, f: number, n: number) => pitch(openMidi(s) + f, n),
   }
 }
 

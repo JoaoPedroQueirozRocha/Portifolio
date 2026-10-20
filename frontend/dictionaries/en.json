@@ -283,6 +283,7 @@
         "hint": "read in time"
       }
     },
+    "fret": { "open": "open", "finger": "finger" },
     "sound": {
       "off": "Sound off",
       "loading": "Loading sound…",
@@ -433,7 +434,8 @@
       "high 2",
       "3",
       "high 3",
-      "4"
+      "4",
+      "high 4"
     ],
     "cols_long": [
       "open",
@@ -443,7 +445,8 @@
       "high 2nd finger",
       "3rd finger",
       "high 3rd finger",
-      "4th finger"
+      "4th finger",
+      "high 4th finger"
     ],
     "cell_aria": "{string} string, {pos}",
     "was_here": "it was here",

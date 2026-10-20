@@ -2,9 +2,10 @@
 
 import { useState, type PointerEvent } from "react"
 import {
-  base, fret, fingerLetter, fretsFor, halfPairs,
+  base, fret, fingerFor, fingerLetter, fretsFor, halfPairs, inScale, openMidi,
   type Alt, type StringAnswer, type ViolinString,
 } from "@/lib/armaduras"
+import { FretCell } from "../shared/Fret"
 import { fmt, useArmText } from "./text"
 
 const ALT_GLYPH: Record<Alt, string> = { [-1]: "♭", 0: "♮", 1: "♯" }
@@ -103,31 +104,36 @@ export default function StringRow({ s, p, n, alts, onSetAlt, checked, ans, showH
 
       <div className="arm-board">
         <div className="arm-casas">
-          {cols.map((f, i) => (
-            <div
-              key={f}
-              className={
-                "arm-casa" +
-                (p === 1 && i === 0 ? " is-nut" : "") +
-                (p !== 1 && i === 0 ? " is-ref" : "") +
-                (snapCol === i ? " is-target" : "")
-              }
-            >
-              <span className="arm-casa-n">{nn.casa(s, f, n)}</span>
-            </div>
-          ))}
+          {cols.map((f, i) => {
+            const open = p === 1 && i === 0
+            const m = openMidi(s) + f
+            // antes de conferir as casas ficam neutras — destacar a escala entregaria a resposta
+            const tone = !checked ? "neutral" : inScale(m, n) ? "scale" : "out"
+            return (
+              <div
+                key={f}
+                className={
+                  "arm-casa" +
+                  (open ? " is-nut" : "") +
+                  (p !== 1 && i === 0 ? " is-ref" : "") +
+                  (snapCol === i ? " is-target" : "")
+                }
+              >
+                <FretCell
+                  name={open ? stringName : nn.casa(s, f, n)}
+                  tone={tone}
+                  number={f}
+                  open={open}
+                  finger={open ? null : fingerFor(s, p, m, n)}
+                  struck={open && checked && ans.openOut}
+                  dotClassName="arm-ghost"
+                  title={open ? (checked && ans.openOut ? t.open_out : t.open_string) : undefined}
+                />
+              </div>
+            )
+          })}
         </div>
         <span className="arm-wire" />
-
-        {p === 1 && (
-          <span
-            className={"arm-open" + (checked && ans.openOut ? " is-out" : "")}
-            style={{ left: left(0) }}
-            title={checked && ans.openOut ? t.open_out : t.open_string}
-          >
-            <i>0</i><b>{stringName}</b>
-          </span>
-        )}
 
         {halves.map((k) => {
           if (dragging && (dragging.k === k || dragging.k === k + 1)) return null

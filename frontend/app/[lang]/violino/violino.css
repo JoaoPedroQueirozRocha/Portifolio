@@ -96,6 +96,26 @@ html[data-theme="light"] .vl {
 .vl-msg.is-bad { color: var(--bad); }
 .vl-msg.is-help { color: var(--muted); }
 
+/* ---- casas do braço (componente FretCell, os dois minijogos) ----
+   número no canto, círculo com a nota sobre a corda, rótulo embaixo.
+   Mesma paleta nos dois jogos: escala clara, fora da escala apagada,
+   acidente na cor da nota; dourado só nos avisos. */
+.vl-fret-n { position: absolute; top: 5px; left: 7px; font-family: var(--font-mono); font-size: 10px; line-height: 1; color: var(--faint); pointer-events: none; }
+.vl-dot { width: 58px; height: 58px; border-radius: 50%; border: 1px solid var(--line); background: color-mix(in oklab, var(--surface-2) 75%, transparent); display: flex; align-items: center; justify-content: center; font-family: var(--font-body); font-weight: 600; font-size: 14px; line-height: 1; color: var(--muted); white-space: nowrap; transition: background .15s, border-color .15s, color .15s; }
+.vl-dot.is-scale { color: var(--text); }
+.vl-dot.is-out { color: var(--faint); }
+.vl-dot.is-neutral { color: var(--muted); }
+.vl-dot.is-open { border-style: dashed; background: var(--bg); color: var(--text); }
+.vl-dot.is-struck { opacity: .45; text-decoration: line-through; text-decoration-color: var(--bad); text-decoration-thickness: 1.5px; }
+.vl-acc { color: inherit; }
+button.vl-dot:hover:not(:disabled) { border-color: var(--accent-bright); color: var(--accent-bright); background: var(--accent-soft); }
+button.vl-dot:disabled { cursor: default; }
+.vl-dot.is-ok { border: 1px solid var(--ok); background: var(--ok-soft); color: var(--ok); }
+.vl-dot.is-bad { border: 1px solid var(--bad); background: var(--bad-soft); color: var(--bad); }
+.vl-dot.is-fix, .vl-dot.is-alt { border: 1px dashed var(--gold); color: var(--gold); }
+.vl-fret-lab { position: absolute; left: 0; right: 0; bottom: 5px; text-align: center; font-family: var(--font-mono); font-size: 11px; line-height: 1; color: var(--faint); white-space: nowrap; pointer-events: none; }
+.vl-fret-lab.is-note { color: var(--gold); }
+
 @media (max-width: 560px) {
   .vl { padding-top: 20px; }
   .vl-main { padding-top: 24px; }
@@ -108,4 +128,8 @@ html[data-theme="light"] .vl {
   .vl-score > div { flex: 1; min-width: 0; padding: 10px 8px 8px; }
   .vl-score dd { font-size: 30px; }
   .vl-tools { position: relative; width: 100%; }
+  .vl-dot { width: 30px; height: 42px; border-radius: 15px; font-size: 10px; }
+  .vl-fret-n { top: 3px; left: 3px; font-size: 8px; }
+  .vl-fret-lab { font-size: 9px; bottom: 3px; }
+  .vl-fret-word { display: none; } /* no celular, só o número do dedo */
 }

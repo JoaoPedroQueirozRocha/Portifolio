@@ -294,6 +294,7 @@
         "hint": "leia no tempo"
       }
     },
+    "fret": { "open": "solta", "finger": "dedo" },
     "sound": {
       "off": "Som desligado",
       "loading": "Carregando som…",
@@ -444,7 +445,8 @@
       "2 alto",
       "3",
       "3 alto",
-      "4"
+      "4",
+      "4 alto"
     ],
     "cols_long": [
       "solta",
@@ -454,7 +456,8 @@
       "2º dedo alto",
       "3º dedo",
       "3º dedo alto",
-      "4º dedo"
+      "4º dedo",
+      "4º dedo alto"
     ],
     "cell_aria": "Corda {string}, {pos}",
     "was_here": "era aqui",

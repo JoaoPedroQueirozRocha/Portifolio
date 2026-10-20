@@ -51,30 +51,18 @@
 .ot-actions { margin-top: 0; min-height: 46px; }
 .ot-actions .vl-msg { flex: 1; min-width: min(320px, 100%); }
 
-/* ---- braço ---- */
+/* ---- braço ---- (casas: .vl-dot / .vl-fret-* em violino.css) */
 .ot-board { display: flex; flex-direction: column; }
-.ot-board-head, .ot-row { display: grid; grid-template-columns: 72px repeat(8, minmax(0, 1fr)); }
-.ot-board-head { padding-bottom: 8px; }
-.ot-board-head span { text-align: center; font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
-.ot-row { align-items: center; border-top: 1px solid var(--line-soft); height: 74px; }
+.ot-row { display: grid; grid-template-columns: 72px repeat(9, minmax(0, 1fr)); align-items: center; border-top: 1px solid var(--line-soft); height: 100px; }
 .ot-row:last-child { border-bottom: 1px solid var(--line-soft); }
 .ot-row.is-off { opacity: .35; }
 .ot-sname { display: flex; flex-direction: column; line-height: 1.05; }
 .ot-sname span { font-family: var(--font-caps); font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
 .ot-sname b { font-family: var(--font-display); font-weight: 400; font-size: 26px; color: var(--text); }
-.ot-cell { position: relative; height: 74px; border-left: 1px solid var(--line-soft); display: grid; place-items: center; }
-.ot-cell.is-open { background: var(--rule-tint); }
-.ot-wire { position: absolute; left: 0; right: 0; top: 36px; height: 1.5px; background: var(--muted); opacity: .5; }
-.ot-spot { position: relative; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background: color-mix(in oklab, var(--surface-2) 60%, transparent); color: var(--faint); font-family: var(--font-body); font-weight: 600; font-size: 13.5px; white-space: nowrap; transition: background .15s, border-color .15s, color .15s; }
-.ot-cell.is-open .ot-spot { border-style: dashed; background: var(--bg); }
-.ot-spot.is-scale { color: var(--text); }
-.ot-spot.is-out { color: color-mix(in oklab, var(--faint) 85%, transparent); }
-.ot-spot:hover:not(:disabled) { border-color: var(--accent-bright); color: var(--accent-bright); background: var(--accent-soft); }
-.ot-spot:disabled { cursor: default; }
-.ot-spot.is-ok { border: 1px solid var(--ok); background: var(--ok-soft); color: var(--ok); }
-.ot-spot.is-bad { border: 1px solid var(--bad); background: var(--bad-soft); color: var(--bad); }
-.ot-spot.is-fix, .ot-spot.is-alt { border: 1px dashed var(--gold); color: var(--gold); }
-.ot-cell-note { position: absolute; bottom: 2px; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: 10px; color: var(--gold); white-space: nowrap; }
+.ot-cell { position: relative; height: 100px; border-left: 1px solid var(--line-soft); display: grid; place-items: center; }
+.ot-cell.is-open { background: color-mix(in oklab, var(--surface-2) 45%, transparent); }
+.ot-wire { position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: var(--muted); opacity: .5; }
+.ot-spot { position: relative; }
 
 /* ---- "por quê" ao errar uma nota com acidente ---- */
 .ot-rule { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px dashed var(--gold); border-radius: 3px; }
@@ -90,14 +78,10 @@
 @media (max-width: 560px) {
   .ot-panel { grid-template-columns: 1fr; }
   .ot-folio { padding: 24px 12px 20px; }
-  .ot-board-head, .ot-row { grid-template-columns: 34px repeat(8, minmax(0, 1fr)); }
-  .ot-board-head span { font-size: 8px; }
-  .ot-row, .ot-cell { height: 64px; }
-  .ot-wire { top: 31px; }
+  .ot-row { grid-template-columns: 34px repeat(9, minmax(0, 1fr)); }
+  .ot-row, .ot-cell { height: 72px; }
   .ot-sname span { display: none; }
   .ot-sname b { font-size: 17px; }
-  .ot-spot { width: 30px; height: 42px; border-radius: 15px; font-size: 10px; }
-  .ot-cell-note { font-size: 8px; bottom: 0; }
   .ot-rule { grid-template-columns: 1fr; }
   .ot-rule > div + div { border-left: 0; border-top: 1px dashed color-mix(in oklab, var(--gold) 50%, transparent); }
 }

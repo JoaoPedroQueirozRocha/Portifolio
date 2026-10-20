@@ -14,8 +14,8 @@ export const NOTES_PER_LINE = 8
 /** Tamanhos da partitura: pequena (1 linha), média (2), grande (4) */
 export const LENGTHS = [8, 16, 32] as const
 export type ScoreLength = (typeof LENGTHS)[number]
-/** Casas do braço: corda solta + 7 semitons (1ª posição) */
-export const FINGER_COLS = 8
+/** Casas do braço: corda solta + 8 semitons (1ª posição, até o 4º dedo alto) */
+export const FINGER_COLS = 9
 
 /** MIDI de cada corda solta: Sol³ 55, Ré⁴ 62, Lá⁴ 69, Mi⁵ 76 */
 export const OPEN_MIDI = STRINGS.map((s) => (s.oct + 1) * 12 + NAT[s.l])
@@ -100,37 +100,40 @@ export function bestPlace(m: number, on: readonly boolean[]) {
   return p.length ? p[p.length - 1] : null
 }
 
-export function inScale(m: number, n: number) {
-  const pc = ((m % 12) + 12) % 12
-  const acc = keyAcc(n)
-  return NAT.some((v, l) => (v + acc[l] + 12) % 12 === pc)
-}
+export { inScale } from "./armaduras"
 
-function stepBounds(cfg: Config) {
+/** Passos da pauta que soam tocáveis nas cordas ligadas, já com a alteração da armadura */
+function playableSteps(cfg: Config, key: number) {
+  const acc = keyAcc(key)
   const lo = cfg.range ? -5 : -1
   const hi = cfg.range ? 11 : 9
   const ok: number[] = []
   for (let s = lo; s <= hi; s++) {
-    if ([0, 1, -1].some((a) => places(midiOfStep(s, a), cfg.strings).length)) ok.push(s)
+    if (places(midiOfStep(s, acc[letterOf(s)]), cfg.strings).length) ok.push(s)
   }
-  if (!ok.length) ok.push(3)
-  return { lo: ok[0], hi: ok[ok.length - 1] }
+  return ok
 }
 
-/** Passeio melódico: cada nota sai da anterior; nunca 3 iguais seguidas */
-function walk(cfg: Config) {
-  const b = stepBounds(cfg)
+/** Passeio melódico: cada nota sai da anterior; nunca 3 iguais seguidas. null se não há notas tocáveis */
+function walk(cfg: Config, key: number) {
+  const ok = playableSteps(cfg, key)
+  if (!ok.length) return null
+  const allowed = new Set(ok)
+  const lo = ok[0]
+  const hi = ok[ok.length - 1]
+  // passo fora da lista (buraco raro na extensão): vai para o tocável mais próximo
+  const nearest = (x: number) => ok.reduce((b, v) => (Math.abs(v - x) < Math.abs(b - x) ? v : b), ok[0])
   const pool = STEP_POOLS[cfg.leaps]
-  let s = rnd(b.lo, b.hi)
+  let s = pick(ok)
   const out: number[] = []
   for (let i = 0; i < cfg.length; i++) {
     out.push(s)
     const st = pick(pool)
     let ns = s + st
-    if (ns < b.lo || ns > b.hi) ns = s - st
-    ns = Math.min(b.hi, Math.max(b.lo, ns))
-    if (out.length >= 2 && ns === out[out.length - 1] && ns === out[out.length - 2]) ns = ns > b.lo ? ns - 1 : ns + 1
-    s = ns
+    if (ns < lo || ns > hi) ns = s - st
+    ns = Math.min(hi, Math.max(lo, ns))
+    if (out.length >= 2 && ns === out[out.length - 1] && ns === out[out.length - 2]) ns = ns > lo ? ns - 1 : ns + 1
+    s = allowed.has(ns) ? ns : nearest(ns)
   }
   return out
 }
@@ -190,7 +193,8 @@ export function generate(cfg: Config, depth = 0): Score {
   for (let tries = 0; tries < maxTries; tries++) {
     const key = pick(keys)
     const acc = keyAcc(key)
-    const steps = walk(cfg)
+    const steps = walk(cfg, key)
+    if (!steps) continue
     const written: (Alt | null)[] = Array(cfg.length).fill(null)
     let ok = true
     for (let start = 0; start < cfg.length && ok; start += NOTES_PER_LINE) {
