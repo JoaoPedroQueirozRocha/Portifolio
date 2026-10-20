@@ -79,7 +79,7 @@ export default function Explanation({ n, mode, p, onClose }: ExplanationProps) {
       <header className="arm-explain-head">
         <span className="eyebrow"><Lozenge /> {ex.eyebrow}</span>
         <h3>{keyName(n, "major")} <span>· {fmt(ex.relative, { key: keyName(n, "minor") })}</span></h3>
-        <button type="button" className="arm-x" onClick={onClose} aria-label={ex.close}><X size={16} /></button>
+        <button type="button" className="vl-x" onClick={onClose} aria-label={ex.close}><X size={16} /></button>
       </header>
 
       <div className="arm-explain-grid">

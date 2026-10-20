@@ -2,21 +2,22 @@
 
 import { createContext, Fragment, useContext } from "react"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
-import { keyTonic, type Mode, type NoteNames } from "@/lib/armaduras"
 
-export type ArmDict = Dictionary["armaduras"]
+/* ---------------------------------------------------------------
+   Textos comuns do Caderno de Violino (abas, som) — fornecidos pelo
+   layout de /violino para todos os modos.
+--------------------------------------------------------------- */
+export type ViolinoDict = Dictionary["violino"]
 
-interface ArmText {
-  t: ArmDict
-  nn: NoteNames
-  keyName: (n: number, mode: Mode) => string
+const ViolinoTextContext = createContext<ViolinoDict | null>(null)
+
+export function ViolinoProvider({ t, children }: { t: ViolinoDict; children: React.ReactNode }) {
+  return <ViolinoTextContext.Provider value={t}>{children}</ViolinoTextContext.Provider>
 }
 
-export const ArmTextContext = createContext<ArmText | null>(null)
-
-export function useArmText() {
-  const ctx = useContext(ArmTextContext)
-  if (!ctx) throw new Error("useArmText must be used inside ArmTextContext")
+export function useViolinoText() {
+  const ctx = useContext(ViolinoTextContext)
+  if (!ctx) throw new Error("useViolinoText must be used inside ViolinoProvider")
   return ctx
 }
 
@@ -38,11 +39,4 @@ export function Rich({ text, as: Tag = "b" }: { text: string; as?: "b" | "strong
 
 export function Lozenge() {
   return <span className="lozenge" aria-hidden="true" />
-}
-
-export function buildKeyName(t: ArmDict, nn: NoteNames) {
-  return (n: number, mode: Mode) => {
-    const k = keyTonic(n, mode)
-    return fmt(t.key_name, { note: nn.note(k.l, k.alt), mode: t.modes[mode] })
-  }
 }

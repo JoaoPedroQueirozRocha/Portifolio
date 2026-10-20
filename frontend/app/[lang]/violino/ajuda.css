@@ -1,0 +1,45 @@
+/* =====================================================================
+   AJUDA "COMO LER UMA ARMADURA" — botão "?" e balão, usados em
+   todos os modos do caderno (HelpButton). Inclui a pauta pequena
+   (KeyStaff) desenhada nos exemplos.
+===================================================================== */
+.arm-help-wrap { position: relative; }
+.arm-help-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--accent); color: var(--accent-bright); font-family: var(--font-display); font-size: 22px; line-height: 1; display: grid; place-items: center; transition: .16s; }
+.arm-help-btn:hover, .arm-help-btn.on { background: var(--accent-soft); }
+.arm-help { position: absolute; right: 0; top: 52px; z-index: 40; width: min(470px, calc(100vw - 36px)); max-height: min(72vh, 680px); overflow: auto; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-lg); padding: 22px 24px 20px; border-radius: 4px; }
+.arm-help::before { content: ""; position: absolute; top: -6px; right: 15px; width: 11px; height: 11px; background: var(--surface); border-left: 1px solid var(--line); border-top: 1px solid var(--line); transform: rotate(45deg); }
+.arm-help-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.arm-help h4 { font-family: var(--font-display); font-size: 23px; font-weight: 400; }
+.arm-help h5 { font-family: var(--font-caps); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-bright); font-weight: 500; margin: 18px 0 8px; }
+.arm-rules { list-style: none; display: flex; flex-direction: column; gap: 5px; font-size: 15.5px; color: var(--muted); }
+.arm-rules li { padding-left: 16px; position: relative; }
+.arm-rules li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 5px; height: 5px; background: var(--accent); transform: rotate(45deg); }
+.arm-rules b { color: var(--text); font-weight: 600; }
+.arm-help-ex { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line-soft); margin-top: 12px; font-size: 15px; color: var(--muted); }
+.arm-help-ex + .arm-help-ex { margin-top: 0; }
+.arm-help-ex b { color: var(--text); }
+.arm-forms { display: flex; flex-direction: column; }
+.arm-form { display: grid; grid-template-columns: 54px 1fr; column-gap: 10px; padding: 7px 0; border-top: 1px solid var(--line-soft); font-size: 14.5px; }
+.arm-form .arm-shape-badge { grid-row: span 2; align-self: start; justify-self: start; }
+.arm-form-pair { color: var(--text); }
+.arm-form-ex { color: var(--faint); font-style: italic; }
+.arm-rel { border-top: 1px solid var(--line-soft); margin-top: 12px; }
+.arm-rel h5 { margin-top: 14px; }
+.arm-rel-pick { display: flex; flex-direction: column; gap: 7px; margin-top: 12px; }
+.arm-rel-chips { display: flex; flex-wrap: wrap; gap: 3px; }
+.arm-rel-chips .vl-tab { padding: 6px 9px; min-width: 44px; min-height: 36px; font-size: 12px; }
+.arm-rel-out { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; padding: 12px 14px; border: 1px dashed var(--line); border-radius: 3px; font-size: 15px; color: var(--muted); }
+.arm-rel-out b { color: var(--text); font-weight: 600; }
+.arm-rel-same { font-family: var(--font-alt); font-style: italic; font-size: 16px; }
+.arm-rel-key { padding-left: 14px; position: relative; }
+.arm-rel-key::before { content: ""; position: absolute; left: 1px; top: .62em; width: 5px; height: 5px; background: var(--accent); transform: rotate(45deg); }
+.arm-tip { display: flex; gap: 10px; align-items: baseline; margin-top: 14px; font-family: var(--font-alt); font-style: italic; font-size: 17px; color: var(--muted); }
+.key-staff { display: block; width: calc(var(--vw) * 2.7px); max-width: 100%; height: auto; overflow: visible; }
+.key-staff.is-mini { width: calc(var(--vw) * 0.9px); }
+.key-clef { font-family: var(--font-music), serif; font-size: 40px; }
+.arm-shape-badge { font-family: var(--font-mono); font-size: 11px; color: var(--accent-bright); border: 1px solid var(--accent); padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+
+@media (max-width: 560px) {
+  .arm-help-wrap { position: static; }
+  .arm-help { right: 0; left: 0; width: auto; }
+}

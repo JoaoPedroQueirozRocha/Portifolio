@@ -2,32 +2,8 @@
 
 import type { CSSProperties } from "react"
 import { FLAT_STEPS, SHARP_STEPS } from "@/lib/armaduras"
+import { FlatGlyph, SharpGlyph } from "../shared/Glyphs"
 import { fmt, useArmText } from "./text"
-
-function SharpGlyph({ x, y }: { x: number; y: number }) {
-  const bar = (yc: number) => `${x - 5},${yc + 2.6} ${x + 5},${yc - 0.4} ${x + 5},${yc - 2.6} ${x - 5},${yc + 0.4}`
-  return (
-    <g>
-      <line x1={x - 2} y1={y - 11} x2={x - 2} y2={y + 13} stroke="currentColor" strokeWidth="1.1" />
-      <line x1={x + 2} y1={y - 13} x2={x + 2} y2={y + 11} stroke="currentColor" strokeWidth="1.1" />
-      <polygon points={bar(y - 3.5)} fill="currentColor" />
-      <polygon points={bar(y + 3.5)} fill="currentColor" />
-    </g>
-  )
-}
-
-// a barriga do bemol fica centrada em y (na linha/espaço da nota)
-function FlatGlyph({ x, y }: { x: number; y: number }) {
-  return (
-    <g>
-      <line x1={x - 3} y1={y - 17} x2={x - 3} y2={y + 4.6} stroke="currentColor" strokeWidth="1.2" />
-      <path
-        d={`M${x - 3},${y + 4.6} C${x + 1},${y + 2} ${x + 6.5},${y - 1.5} ${x + 3.5},${y - 4} C${x + 1.5},${y - 5.6} ${x - 1},${y - 3.6} ${x - 3},${y - 1.2}`}
-        fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round"
-      />
-    </g>
-  )
-}
 
 /** Pauta com clave de Sol e a armadura de `n` acidentes */
 export default function KeyStaff({ n, mini }: { n: number; mini?: boolean }) {

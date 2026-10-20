@@ -24,7 +24,8 @@ export interface StringAnswer {
   openOut: boolean  // corda solta fora da escala
 }
 
-const NAT = [0, 2, 4, 5, 7, 9, 11]
+/** Semitons de cada letra natural a partir de Dó */
+export const NAT = [0, 2, 4, 5, 7, 9, 11]
 const SHARP_ORDER = [3, 0, 4, 1, 5, 2, 6]
 const FLAT_ORDER = [6, 2, 5, 1, 4, 0, 3]
 
@@ -69,6 +70,29 @@ export function relMinor(n: number) {
 }
 
 export const keyTonic = (n: number, mode: Mode) => (mode === "minor" ? relMinor(n) : tonic(n))
+
+/** Classe de altura (0 = Dó … 11 = Si) de uma letra com alteração */
+export const pitchClass = (l: number, alt: number) => (((NAT[l] + alt) % 12) + 12) % 12
+
+/** Nomes da mesma altura com no máximo um acidente — Fá♯ e Sol♭ (enarmonia) */
+export function spellings(pc: number) {
+  const out: { l: number; alt: Alt }[] = []
+  for (const alt of [0, 1, -1] as Alt[]) {
+    for (let l = 0; l < 7; l++) if (pitchClass(l, alt) === pc) out.push({ l, alt })
+  }
+  return out
+}
+
+/** Armaduras (até 7 acidentes) cuja tônica maior soa nesta altura; a mais simples primeiro */
+export function keysForPitch(pc: number) {
+  const out: number[] = []
+  for (let n = -7; n <= 7; n++) {
+    const t = tonic(n)
+    if (pitchClass(t.l, t.alt) === pc) out.push(n)
+  }
+  // menos acidentes primeiro; no empate (Fá♯/Sol♭), sustenidos antes
+  return out.sort((a, b) => Math.abs(a) - Math.abs(b) || b - a)
+}
 
 export function scale(n: number) {
   const t = tonic(n)
@@ -171,10 +195,14 @@ export function makeNoteNames(letters: readonly string[]) {
   const L = letters
   const sharps = [L[0], L[0] + "♯", L[1], L[1] + "♯", L[2], L[3], L[3] + "♯", L[4], L[4] + "♯", L[5], L[5] + "♯", L[6]]
   const flats = [L[0], L[1] + "♭", L[1], L[2] + "♭", L[2], L[3], L[4] + "♭", L[4], L[5] + "♭", L[5], L[6] + "♭", L[6]]
+  // sem armadura: grafia mais comum de cada tecla preta
+  const plain = [L[0], L[0] + "♯", L[1], L[2] + "♭", L[2], L[3], L[3] + "♯", L[4], L[4] + "♯", L[5], L[6] + "♭", L[6]]
   return {
     note: (l: number, a: number = 0) => L[l] + sym(a),
     /** Nome cromático de uma casa, com a grafia (♯/♭) da armadura */
     casa: (s: ViolinString, f: number, n: number) => (n < 0 ? flats : sharps)[(NAT[s.l] + f) % 12],
+    /** Nome de uma altura MIDI qualquer, grafada conforme a armadura */
+    pitch: (midi: number, n: number) => (n > 0 ? sharps : n < 0 ? flats : plain)[((midi % 12) + 12) % 12],
   }
 }
 

@@ -1,16 +1,18 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { ArrowRight, Volume2, VolumeX } from "lucide-react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { ArrowRight } from "lucide-react"
 import {
   STRINGS, TOTAL_ITEMS, makeNoteNames, midiOf, options, pickKey, scale, stringAnswer,
   type Alt, type Mode,
 } from "@/lib/armaduras"
-import { enableViolinSound, playMidi } from "@/lib/violinSound"
+import { playMidi } from "@/lib/violinSound"
+import { ScoreBoard, Seg, SoundButton } from "../shared/Controls"
+import { useViolinoText } from "../shared/text"
 import KeyStaff from "./KeyStaff"
 import StringRow from "./StringRow"
 import Explanation from "./Explanation"
-import HelpBalloon, { HalfRuler } from "./HelpBalloon"
+import { HalfRuler, HelpButton } from "./HelpBalloon"
 import { ArmTextContext, buildKeyName, fmt, Lozenge, type ArmDict } from "./text"
 
 /* ---------------------------------------------------------------
@@ -58,42 +60,14 @@ function scrollToEl(el: HTMLElement | null) {
 }
 
 /* ---------------------------------------------------------------
-   Seletor segmentado
---------------------------------------------------------------- */
-function Seg<T extends string | number>({ label, value, options, onChange }: {
-  label: string
-  value: T
-  options: { v: T; l: string }[]
-  onChange: (v: T) => void
-}) {
-  return (
-    <div className="arm-seg" role="group" aria-label={label}>
-      <span className="arm-seg-l">{label}</span>
-      <div className="arm-seg-o">
-        {options.map((o) => (
-          <button
-            key={o.v}
-            type="button"
-            className={"arm-tab" + (value === o.v ? " active" : "")}
-            aria-pressed={value === o.v}
-            onClick={() => value !== o.v && onChange(o.v)}
-          >
-            {o.l}
-          </button>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ---------------------------------------------------------------
    Página do jogo
 --------------------------------------------------------------- */
 export default function ArmadurasGame({ t }: { t: ArmDict }) {
+  const { letters } = useViolinoText()
   const text = useMemo(() => {
-    const nn = makeNoteNames(t.letters)
+    const nn = makeNoteNames(letters)
     return { t, nn, keyName: buildKeyName(t, nn) }
-  }, [t])
+  }, [t, letters])
   const { keyName, nn } = text
 
   const [saved] = useState(loadSaved)
@@ -106,9 +80,6 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
   const [result, setResult] = useState<{ ok: number; perfect: boolean } | null>(null)
   const [explainUsed, setExplainUsed] = useState(false)
   const [explainOpen, setExplainOpen] = useState(false)
-  const [helpOpen, setHelpOpen] = useState(false)
-  // som começa sempre desligado (não persiste entre visitas)
-  const [sound, setSound] = useState<"off" | "loading" | "on" | "error">("off")
   const topRef = useRef<HTMLDivElement>(null)
   const explainRef = useRef<HTMLDivElement>(null)
 
@@ -139,19 +110,7 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
 
   function setAlt(si: number, k: number, v: Alt) {
     setAlts((st) => st.map((row, i) => (i === si ? row.map((a, j) => (j === k ? v : a)) : row)))
-    if (sound === "on") playMidi(midiOf(STRINGS[si], p, k + 1, v))
-  }
-
-  async function toggleSound() {
-    if (sound === "on") return setSound("off")
-    if (sound === "loading") return
-    setSound("loading")
-    try {
-      await enableViolinSound()
-      setSound("on")
-    } catch {
-      setSound("error")
-    }
+    playMidi(midiOf(STRINGS[si], p, k + 1, v))
   }
 
   function check() {
@@ -175,7 +134,6 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
     scrollToEl(topRef.current)
   }
 
-  const closeHelp = useCallback(() => setHelpOpen(false), [])
 
   const total = TOTAL_ITEMS
   const msg = !result
@@ -188,22 +146,25 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
 
   return (
     <ArmTextContext.Provider value={text}>
-      <main className="content-container arm">
-        <header className="arm-head">
+      <main className="vl-main arm">
+        <header className="vl-head">
           <div>
             <span className="eyebrow"><Lozenge /> {t.eyebrow}</span>
-            <h1 className="arm-title">{t.title}</h1>
-            <p className="arm-sub">{t.subtitle}</p>
+            <h1 className="vl-title">{t.title}</h1>
+            <p className="vl-sub">{t.subtitle}</p>
           </div>
-          <dl className="arm-score" aria-label={t.score.label}>
-            <div><dt>{t.score.hits}</dt><dd>{score.hits}</dd></div>
-            <div><dt>{t.score.streak}</dt><dd>{score.streak}</dd></div>
-            <div><dt>{t.score.rounds}</dt><dd>{score.rounds}</dd></div>
-          </dl>
+          <ScoreBoard
+            label={t.score.label}
+            items={[
+              { label: t.score.hits, value: score.hits },
+              { label: t.score.streak, value: score.streak },
+              { label: t.score.rounds, value: score.rounds },
+            ]}
+          />
         </header>
 
-        <div className="arm-toolbar" ref={topRef}>
-          <div className="arm-settings">
+        <div className="vl-toolbar" ref={topRef}>
+          <div className="vl-settings">
             <Seg
               label={t.settings.range}
               value={settings.range}
@@ -226,52 +187,31 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
               ]}
             />
           </div>
-          <div className="arm-tools">
-            <button type="button" className="arm-btn arm-btn-ghost arm-nowrap" onClick={next} title={checked ? undefined : t.actions.skip_title}>
+          <div className="vl-tools">
+            <button type="button" className="vl-btn vl-btn-ghost vl-nowrap" onClick={next} title={checked ? undefined : t.actions.skip_title}>
               {skipLabel} <ArrowRight size={15} />
             </button>
             <button
               type="button"
-              className={"arm-btn arm-btn-ghost arm-nowrap arm-half-btn" + (halves ? " on" : "")}
+              className={"vl-btn vl-btn-ghost vl-nowrap" + (halves ? " on" : "")}
               onClick={() => setHalves(!halves)}
               aria-pressed={halves}
             >
               {halves ? t.actions.hide_halves : t.actions.show_halves}
             </button>
-            <button
-              type="button"
-              className={"arm-btn arm-btn-ghost arm-nowrap arm-sound-btn" + (sound === "on" ? " on" : "")}
-              onClick={toggleSound}
-              aria-pressed={sound === "on"}
-              aria-busy={sound === "loading"}
-              title={sound === "error" ? t.sound.error : undefined}
-            >
-              {sound === "on" ? <Volume2 size={16} /> : <VolumeX size={16} />}
-              {t.sound[sound]}
-            </button>
-            <div className="arm-help-wrap">
-              <button
-                type="button"
-                className={"arm-help-btn" + (helpOpen ? " on" : "")}
-                onClick={() => setHelpOpen(!helpOpen)}
-                aria-label={t.actions.help}
-                aria-expanded={helpOpen}
-              >
-                ?
-              </button>
-              {helpOpen && <HelpBalloon onClose={closeHelp} />}
-            </div>
+            <SoundButton />
+            <HelpButton t={t} />
           </div>
         </div>
 
-        <section className="arm-folio">
-          <span className="arm-corner tl" /><span className="arm-corner tr" />
-          <span className="arm-corner bl" /><span className="arm-corner br" />
+        <section className="vl-folio">
+          <span className="vl-corner tl" /><span className="vl-corner tr" />
+          <span className="vl-corner bl" /><span className="vl-corner br" />
 
           <div className="arm-q1">
             <div className="arm-plate"><KeyStaff n={round.n} /></div>
             <div className="arm-q1-body">
-              <h2 className="arm-q">{fmt(t.q1, { mode: t.modes[round.mode] })}</h2>
+              <h2 className="vl-q">{fmt(t.q1, { mode: t.modes[round.mode] })}</h2>
               <div className="arm-opts">
                 {round.opts.map((o) => {
                   let st = ""
@@ -298,7 +238,7 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
 
           <div className="arm-q2">
             <div className="arm-q2-head">
-              <h2 className="arm-q">{t.q2}</h2>
+              <h2 className="vl-q">{t.q2}</h2>
               <p className="arm-instr">{t.instructions}</p>
               {halves && <HalfRuler />}
               {checked && (
@@ -331,14 +271,14 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
             </div>
           </div>
 
-          <div className={"arm-actions" + (checked ? " is-checked" : "")}>
-            {msg && <p className={"arm-msg " + msgKind}>{msg}</p>}
-            {explainUsed && !checked && <p className="arm-msg is-help">{t.msg.help_used}</p>}
-            <div className="arm-actions-btns">
+          <div className={"vl-actions" + (checked ? " is-checked" : "")}>
+            {msg && <p className={"vl-msg " + msgKind}>{msg}</p>}
+            {explainUsed && !checked && <p className="vl-msg is-help">{t.msg.help_used}</p>}
+            <div className="vl-actions-btns">
               {!checked ? (
                 <button
                   type="button"
-                  className="arm-btn arm-btn-primary"
+                  className="vl-btn vl-btn-primary"
                   onClick={check}
                   disabled={pick === null}
                   title={pick === null ? t.actions.check_title : undefined}
@@ -346,15 +286,15 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
                   {t.actions.check}
                 </button>
               ) : (
-                <button type="button" className="arm-btn arm-btn-primary" onClick={next}>
+                <button type="button" className="vl-btn vl-btn-primary" onClick={next}>
                   {t.actions.next} <ArrowRight size={15} />
                 </button>
               )}
               {!explainOpen && (
-                <button type="button" className="arm-btn arm-btn-ghost" onClick={openExplain}>{t.actions.explain}</button>
+                <button type="button" className="vl-btn vl-btn-ghost" onClick={openExplain}>{t.actions.explain}</button>
               )}
               {!checked && (
-                <button type="button" className="arm-btn arm-btn-ghost" onClick={next} title={t.actions.skip_title}>
+                <button type="button" className="vl-btn vl-btn-ghost" onClick={next} title={t.actions.skip_title}>
                   {t.actions.skip} <ArrowRight size={15} />
                 </button>
               )}
