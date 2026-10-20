@@ -32,7 +32,7 @@ const cormorant = Cormorant_Garamond({
 const ebGaramond = EB_Garamond({
   subsets: ["latin"],
   variable: "--font-body",
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
 })

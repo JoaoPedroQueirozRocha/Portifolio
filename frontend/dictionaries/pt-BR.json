@@ -2,6 +2,7 @@
   "nav": {
     "home": "Início",
     "shelf": "Estante",
+    "armaduras": "Armaduras",
     "blog": "Blog",
     "stats": "Stats"
   },
@@ -11,7 +12,7 @@
   "hero": {
     "eyebrow": "Engenheiro de Software · Full Stack",
     "available": "Disponível para projetos",
-    "bio": "Engenheiro full-stack com foco em back-end Node e TypeScript. Construo APIs e produtos de ponta a ponta — do modelo de dados à interface — com o cuidado de quem trata código como ofício.",
+    "bio": "Engenheiro full-stack com foco em back-end Node e TypeScript. Construo APIs e produtos de ponta a ponta do modelo de dados à interface com o cuidado de quem trata código como ofício.",
     "bio_short": "Violinista nas horas vagas. Música clássica e épica, RPGs de mundo aberto e uma queda por tudo que é medieval.",
     "cta_github": "GitHub",
     "cta_linkedin": "LinkedIn",
@@ -149,5 +150,119 @@
     "onHold": "Em espera",
     "dropped": "Cancelado",
     "inCourse": "Em curso"
+  },
+  "armaduras": {
+    "meta_title": "Treino de Armaduras",
+    "meta_description": "Mini jogo para violino: leia a armadura, diga a tonalidade e posicione os dedos em cada corda.",
+    "eyebrow": "Mini jogo · Violino",
+    "title": "Treino de Armaduras",
+    "subtitle": "Veja a armadura, diga a tonalidade e posicione os dedos em cada corda. Para quem já lê partitura e quer ligar a armadura à mão.",
+    "loading": "Afinando o violino…",
+    "letters": ["Dó", "Ré", "Mi", "Fá", "Sol", "Lá", "Si"],
+    "score": {
+      "label": "Placar",
+      "hits": "Acertos",
+      "streak": "Sequência",
+      "rounds": "Rodadas"
+    },
+    "settings": {
+      "range": "Acidentes",
+      "range_opt": "até {n}",
+      "pos": "Posição",
+      "pos_opt": "{n}ª",
+      "mode": "Tonalidade",
+      "mode_major": "Só maior",
+      "mode_both": "Maior e menor"
+    },
+    "modes": {
+      "major": "maior",
+      "minor": "menor"
+    },
+    "key_name": "{note} {mode}",
+    "actions": {
+      "skip": "Pular armadura",
+      "skip_title": "Sorteia outra armadura sem pontuar",
+      "next": "Próxima armadura",
+      "show_halves": "Mostrar meios tons",
+      "hide_halves": "Ocultar meios tons",
+      "help": "Como jogar",
+      "check": "Conferir",
+      "check_title": "Escolha a tonalidade primeiro",
+      "explain": "Explicar esta armadura",
+      "close": "Fechar"
+    },
+    "sound": {
+      "off": "Som desligado",
+      "loading": "Carregando som…",
+      "on": "Som ligado",
+      "error": "Som indisponível"
+    },
+    "q1": "1. Qual é a tonalidade {mode}?",
+    "q2": "2. Notas e forma em cada corda",
+    "instructions": "Cada casa é meio tom. Toque num dedo para trocar a alteração (♮ → ♯ → ♭) ou arraste-o para a casa vizinha. Dedos em casas vizinhas ficam juntos.",
+    "scale_of": "Escala de {key}",
+    "string": "Corda",
+    "open_string": "Corda solta",
+    "open_out": "Corda solta fora da escala",
+    "finger_aria": "Dedo {k}: {name}. Alteração {alt}. Toque ou arraste para mudar.",
+    "shape": "Forma",
+    "fingers_ok": "{n}/4 dedos",
+    "ruler_aria": "Régua de meios tons",
+    "staff_aria_sharps": "Armadura com {n} sustenido(s)",
+    "staff_aria_flats": "Armadura com {n} bemol(is)",
+    "msg": {
+      "perfect": "Perfeito: {total}/{total}.",
+      "perfect_help": "Tudo certo ({total}/{total}), com ajuda da explicação.",
+      "partial": "{ok} de {total} itens certos. As correções aparecem em amarelo.",
+      "help_used": "Explicação aberta — esta rodada não soma ponto."
+    },
+    "explain": {
+      "aria": "Explicação da armadura",
+      "eyebrow": "Explicação",
+      "close": "Fechar explicação",
+      "relative": "relativa {key}",
+      "how_to_read": "Como ler a armadura",
+      "rel_minor_note": "A relativa menor está na 6ª nota da escala maior: **{key}**, com a mesma armadura.",
+      "scale_notes": "Notas da escala",
+      "scale_note": "Destacadas: notas alteradas pela armadura. A 6ª ({note}) é a tônica da relativa menor. Cada acidente vale para todas as oitavas e cordas.",
+      "on_violin": "No violino ({pos})",
+      "pos_name": "{n}ª posição",
+      "open_out_alert": "Corda solta fora da escala: não toque {string} solta — a escala pede {note}.",
+      "stretch_alert": "1 tom e meio entre os dedos {a} e {b}: o dedo {b} fica estendido."
+    },
+    "read": {
+      "none_1": "Nenhum acidente na armadura.",
+      "none_2": "Sem sustenidos nem bemóis → {key}.",
+      "sharp_one": "sustenido",
+      "sharp_many": "sustenidos",
+      "sharps_1": "{n} {word}, na ordem Fá, Dó, Sol, Ré…: {list}.",
+      "sharps_2": "O último sustenido é {last}. Meio tom acima dele está {tonic} → {key}.",
+      "flat_one_1": "1 bemol: {list}.",
+      "flat_one_2": "Um bemol só é a exceção a decorar → {key}.",
+      "flats_1": "{n} bemóis, na ordem Si, Mi, Lá, Ré…: {list}.",
+      "flats_2": "O penúltimo bemol é {penult} → {key}."
+    },
+    "help": {
+      "title": "Como ler uma armadura",
+      "rules": [
+        "**Sem acidentes** = Dó maior.",
+        "**Sustenidos:** último sustenido + meio tom = tônica.",
+        "**Bemóis:** o penúltimo bemol é a tônica.",
+        "**Um bemol só** = Fá maior.",
+        "**Notas da escala:** a partir da tônica, aplicando todos os acidentes da armadura.",
+        "**Relativa menor:** a 6ª nota da escala maior, mesma armadura."
+      ],
+      "example_sharps": "**3♯** → Fá♯, Dó♯, Sol♯ → **Lá maior** → Lá, Si, Dó♯, Ré, Mi, Fá♯, Sol♯ → relativa Fá♯ menor.",
+      "example_flats": "**2♭** → Si♭, Mi♭ → **Si♭ maior** → Si♭, Dó, Ré, Mi♭, Fá, Sol, Lá → relativa Sol menor.",
+      "forms": "Formas da mão",
+      "tip": "Dica: leia o bemol pela “barriguinha” — conte linhas e espaços a partir do Mi da primeira linha."
+    },
+    "shapes": {
+      "F1": { "label": "F1", "pair": "2 e 3", "desc": "2 e 3 juntos", "example": "Corda Lá em Ré maior: Si, Dó♯, Ré, Mi" },
+      "F2": { "label": "F2", "pair": "1 e 2", "desc": "1 e 2 juntos", "example": "Corda Lá em Sol maior: Si, Dó, Ré, Mi" },
+      "F3": { "label": "F3", "pair": "3 e 4", "desc": "3 e 4 juntos", "example": "Corda Ré em Lá maior: Mi, Fá♯, Sol♯, Lá" },
+      "F4": { "label": "F4", "pair": "0 e 1", "desc": "1 baixo, colado na pestana", "example": "Corda Lá em Fá maior: Si♭, Dó, Ré, Mi" },
+      "other": { "label": "Outra", "pair": "Mais de um par, ou nenhum", "desc": "outra combinação ou nenhum par", "example": "Corda Mi em Fá maior: Fá, Sol, Lá, Si♭" }
+    }
   }
 }

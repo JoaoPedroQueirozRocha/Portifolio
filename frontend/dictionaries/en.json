@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "shelf": "Shelf",
+    "armaduras": "Key Signatures",
     "blog": "Blog",
     "stats": "Stats"
   },
@@ -137,6 +138,120 @@
       "agile": "Agile Methodologies",
       "dataModeling": "Data Modeling",
       "analytics": "Analytics"
+    }
+  },
+  "armaduras": {
+    "meta_title": "Key Signature Trainer",
+    "meta_description": "A violin mini game: read the key signature, name the key and place your fingers on each string.",
+    "eyebrow": "Mini game · Violin",
+    "title": "Key Signature Trainer",
+    "subtitle": "Look at the key signature, name the key and place your fingers on each string. For players who already read music and want to connect the signature to the hand.",
+    "loading": "Tuning the violin…",
+    "letters": ["C", "D", "E", "F", "G", "A", "B"],
+    "score": {
+      "label": "Score",
+      "hits": "Correct",
+      "streak": "Streak",
+      "rounds": "Rounds"
+    },
+    "settings": {
+      "range": "Accidentals",
+      "range_opt": "up to {n}",
+      "pos": "Position",
+      "pos_opt": "{n}",
+      "mode": "Key",
+      "mode_major": "Major only",
+      "mode_both": "Major and minor"
+    },
+    "modes": {
+      "major": "major",
+      "minor": "minor"
+    },
+    "key_name": "{note} {mode}",
+    "actions": {
+      "skip": "Skip signature",
+      "skip_title": "Draw another signature without scoring",
+      "next": "Next signature",
+      "show_halves": "Show half steps",
+      "hide_halves": "Hide half steps",
+      "help": "How to play",
+      "check": "Check",
+      "check_title": "Pick the key first",
+      "explain": "Explain this signature",
+      "close": "Close"
+    },
+    "sound": {
+      "off": "Sound off",
+      "loading": "Loading sound…",
+      "on": "Sound on",
+      "error": "Sound unavailable"
+    },
+    "q1": "1. Which {mode} key is it?",
+    "q2": "2. Notes and hand shape on each string",
+    "instructions": "Each fret is a half step. Tap a finger to change its accidental (♮ → ♯ → ♭) or drag it to the neighbouring fret. Fingers on neighbouring frets sit together.",
+    "scale_of": "{key} scale",
+    "string": "String",
+    "open_string": "Open string",
+    "open_out": "Open string outside the scale",
+    "finger_aria": "Finger {k}: {name}. Accidental {alt}. Tap or drag to change.",
+    "shape": "Shape",
+    "fingers_ok": "{n}/4 fingers",
+    "ruler_aria": "Half-step ruler",
+    "staff_aria_sharps": "Key signature with {n} sharp(s)",
+    "staff_aria_flats": "Key signature with {n} flat(s)",
+    "msg": {
+      "perfect": "Perfect: {total}/{total}.",
+      "perfect_help": "All correct ({total}/{total}), with help from the explanation.",
+      "partial": "{ok} of {total} items correct. Corrections are shown in yellow.",
+      "help_used": "Explanation opened — this round won't score."
+    },
+    "explain": {
+      "aria": "Key signature explanation",
+      "eyebrow": "Explanation",
+      "close": "Close explanation",
+      "relative": "relative {key}",
+      "how_to_read": "How to read the signature",
+      "rel_minor_note": "The relative minor sits on the 6th note of the major scale: **{key}**, with the same signature.",
+      "scale_notes": "Scale notes",
+      "scale_note": "Highlighted: notes altered by the signature. The 6th ({note}) is the tonic of the relative minor. Each accidental applies to every octave and string.",
+      "on_violin": "On the violin ({pos})",
+      "pos_name": "position {n}",
+      "open_out_alert": "Open string outside the scale: don't play open {string} — the scale asks for {note}.",
+      "stretch_alert": "A step and a half between fingers {a} and {b}: finger {b} is extended."
+    },
+    "read": {
+      "none_1": "No accidentals in the signature.",
+      "none_2": "No sharps or flats → {key}.",
+      "sharp_one": "sharp",
+      "sharp_many": "sharps",
+      "sharps_1": "{n} {word}, in the order F, C, G, D…: {list}.",
+      "sharps_2": "The last sharp is {last}. A half step above it is {tonic} → {key}.",
+      "flat_one_1": "1 flat: {list}.",
+      "flat_one_2": "A single flat is the exception to memorise → {key}.",
+      "flats_1": "{n} flats, in the order B, E, A, D…: {list}.",
+      "flats_2": "The second-to-last flat is {penult} → {key}."
+    },
+    "help": {
+      "title": "How to read a key signature",
+      "rules": [
+        "**No accidentals** = C major.",
+        "**Sharps:** last sharp + a half step = tonic.",
+        "**Flats:** the second-to-last flat is the tonic.",
+        "**A single flat** = F major.",
+        "**Scale notes:** start from the tonic and apply every accidental in the signature.",
+        "**Relative minor:** the 6th note of the major scale, same signature."
+      ],
+      "example_sharps": "**3♯** → F♯, C♯, G♯ → **A major** → A, B, C♯, D, E, F♯, G♯ → relative F♯ minor.",
+      "example_flats": "**2♭** → B♭, E♭ → **B♭ major** → B♭, C, D, E♭, F, G, A → relative G minor.",
+      "forms": "Hand shapes",
+      "tip": "Tip: read a flat by its “belly” — count lines and spaces up from the E on the bottom line."
+    },
+    "shapes": {
+      "F1": { "label": "F1", "pair": "2 and 3", "desc": "2 and 3 together", "example": "A string in D major: B, C♯, D, E" },
+      "F2": { "label": "F2", "pair": "1 and 2", "desc": "1 and 2 together", "example": "A string in G major: B, C, D, E" },
+      "F3": { "label": "F3", "pair": "3 and 4", "desc": "3 and 4 together", "example": "D string in A major: E, F♯, G♯, A" },
+      "F4": { "label": "F4", "pair": "0 and 1", "desc": "low 1, right next to the nut", "example": "A string in F major: B♭, C, D, E" },
+      "other": { "label": "Other", "pair": "More than one pair, or none", "desc": "another combination or no pair", "example": "E string in F major: F, G, A, B♭" }
     }
   }
 }
