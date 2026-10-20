@@ -16,9 +16,11 @@ interface HeaderProps {
 
 const NAV_ROUTES = [
   { key: "home",  path: "" },
-  { key: "shelf", path: "/shelf" },
-  { key: "blog",  path: "/blog" },
-  { key: "stats", path: "/stats" },
+  { key: "armaduras", path: "/armaduras" },
+  // Ocultas até as páginas existirem:
+  // { key: "shelf", path: "/shelf" },
+  // { key: "blog",  path: "/blog" },
+  // { key: "stats", path: "/stats" },
 ] as const
 
 const noopSubscribe = () => () => {};
