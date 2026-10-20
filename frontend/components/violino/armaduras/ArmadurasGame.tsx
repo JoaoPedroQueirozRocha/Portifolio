@@ -7,6 +7,7 @@ import {
   type Alt, type Mode,
 } from "@/lib/armaduras"
 import { playMidi } from "@/lib/violinSound"
+import { Board } from "../shared/Board"
 import { ScoreBoard, Seg, SoundButton } from "../shared/Controls"
 import { useViolinoText } from "../shared/text"
 import KeyStaff from "./KeyStaff"
@@ -255,19 +256,21 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
               )}
             </div>
             <div className="arm-strings">
-              {STRINGS.map((s, si) => (
-                <StringRow
-                  key={`${s.l}-${round.n}-${p}`}
-                  s={s}
-                  p={p}
-                  n={round.n}
-                  alts={alts[si]}
-                  onSetAlt={(k, v) => setAlt(si, k, v)}
-                  checked={checked}
-                  ans={answers[si]}
-                  showHalves={halves}
-                />
-              ))}
+              <Board>
+                {STRINGS.map((s, si) => (
+                  <StringRow
+                    key={`${s.l}-${round.n}-${p}`}
+                    s={s}
+                    p={p}
+                    n={round.n}
+                    alts={alts[si]}
+                    onSetAlt={(k, v) => setAlt(si, k, v)}
+                    checked={checked}
+                    ans={answers[si]}
+                    showHalves={halves}
+                  />
+                ))}
+              </Board>
             </div>
           </div>
 

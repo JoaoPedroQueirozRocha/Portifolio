@@ -3,6 +3,7 @@
 import { STRINGS, fingerFor, type NoteNames } from "@/lib/armaduras"
 import { FINGER_COLS, OPEN_MIDI, inScale, type Config, type ReadNote } from "@/lib/leitura"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
+import { Board, BoardCell, BoardCells, BoardRow, BoardWire } from "../shared/Board"
 import { FretCell, type FretState } from "../shared/Fret"
 import { fmt } from "../shared/text"
 
@@ -31,61 +32,58 @@ export default function Fingerboard({ t, nn, cfg, keyN, cur, fb, onTap }: Finger
   const cols = Array.from({ length: FINGER_COLS }, (_, ci) => ci)
 
   return (
-    <div className="ot-board">
+    <Board>
       {STRINGS.map((sg, si) => {
         const enabled = cfg.strings[si]
         const sname = nn.note(sg.l)
         return (
-          <div key={si} className={"ot-row" + (enabled ? "" : " is-off")}>
-            <div className="ot-sname">
-              <span>{enabled ? t.string_cap : t.string_off}</span>
-              <b>{sname}</b>
-            </div>
-            {cols.map((ci) => {
-              const m = OPEN_MIDI[si] + ci
-              const open = ci === 0
-              const finger = open ? 0 : fingerFor(sg, 1, m, keyN)
-              const scale = inScale(m, keyN)
+          <BoardRow key={si} name={sname} cap={enabled ? t.string_cap : t.string_off} off={!enabled}>
+            <BoardWire />
+            <BoardCells>
+              {cols.map((ci) => {
+                const m = OPEN_MIDI[si] + ci
+                const open = ci === 0
+                const finger = open ? 0 : fingerFor(sg, 1, m, keyN)
+                const scale = inScale(m, keyN)
 
-              let kind: FretState = ""
-              if (fb && cur && enabled) {
-                if (fb.si === si && fb.ci === ci) kind = fb.ok ? "ok" : "bad"
-                else if (m === cur.midi) kind = fb.ok ? "alt" : "fix"
-              }
+                let kind: FretState = ""
+                if (fb && cur && enabled) {
+                  if (fb.si === si && fb.ci === ci) kind = fb.ok ? "ok" : "bad"
+                  else if (m === cur.midi) kind = fb.ok ? "alt" : "fix"
+                }
 
-              // conteúdo do círculo conforme a "Ajuda no braço"
-              let text = ""
-              if (cfg.digits === "names") text = nn.pitch(m, keyN)
-              else if (cfg.digits === "digits") text = finger === null ? "" : String(finger)
-              if (kind === "ok" && cur) text = nn.note(cur.l, cur.alt)
-              if (kind === "bad") text = nn.pitch(m, keyN)
-              // notas da escala mais claras (só quando a casa mostra o nome)
-              const tone = cfg.digits !== "names" || scale ? "scale" : "out"
-              const note = kind === "fix" ? t.was_here : kind === "alt" ? t.also_ok : undefined
-              return (
-                <div key={ci} className={"ot-cell" + (open ? " is-open" : "")}>
-                  <span className="ot-wire" />
-                  <FretCell
-                    name={text}
-                    tone={tone}
-                    number={ci}
-                    open={open}
-                    finger={cfg.digits === "names" ? finger : null}
-                    note={note}
-                    state={kind}
-                    dotClassName="ot-spot"
-                    button={{
-                      disabled: !!fb || !cur || !enabled,
-                      onClick: () => onTap(si, ci),
-                      "aria-label": fmt(t.cell_aria, { string: sname, pos: t.cols_long[ci] }),
-                    }}
-                  />
-                </div>
-              )
-            })}
-          </div>
+                // conteúdo do círculo conforme a "Ajuda no braço"
+                let text = ""
+                if (cfg.digits === "names") text = nn.pitch(m, keyN)
+                else if (cfg.digits === "digits") text = finger === null ? "" : String(finger)
+                if (kind === "ok" && cur) text = nn.note(cur.l, cur.alt)
+                if (kind === "bad") text = nn.pitch(m, keyN)
+                // notas da escala mais claras (só quando a casa mostra o nome)
+                const tone = cfg.digits !== "names" || scale ? "scale" : "out"
+                const note = kind === "fix" ? t.was_here : kind === "alt" ? t.also_ok : undefined
+                return (
+                  <BoardCell key={ci} open={open}>
+                    <FretCell
+                      name={text}
+                      tone={tone}
+                      number={ci}
+                      open={open}
+                      finger={cfg.digits === "names" ? finger : null}
+                      note={note}
+                      state={kind}
+                      button={{
+                        disabled: !!fb || !cur || !enabled,
+                        onClick: () => onTap(si, ci),
+                        "aria-label": fmt(t.cell_aria, { string: sname, pos: t.cols_long[ci] }),
+                      }}
+                    />
+                  </BoardCell>
+                )
+              })}
+            </BoardCells>
+          </BoardRow>
         )
       })}
-    </div>
+    </Board>
   )
 }

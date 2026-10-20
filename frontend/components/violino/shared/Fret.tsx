@@ -31,13 +31,15 @@ interface FretCellProps {
   state?: FretState        // resultado ao responder
   struck?: boolean         // corda solta fora da escala (riscada)
   dotClassName?: string    // posicionamento do círculo no jogo
+  /** false = casa vazia, sem círculo (no Armaduras, só onde há dedo); o nome vai para o rótulo */
+  dot?: boolean
   title?: string
   /** com `button`, o círculo é clicável; sem, é só visual */
   button?: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "type" | "title">
 }
 
 export function FretCell({
-  name, tone, number, open, finger, note, state = "", struck, dotClassName, title, button,
+  name, tone, number, open, finger, note, state = "", struck, dotClassName, title, button, dot = true,
 }: FretCellProps) {
   const t = useViolinoText().fret
   const dotCls =
@@ -51,10 +53,12 @@ export function FretCell({
   return (
     <>
       {number !== undefined && !open && <span className="vl-fret-n" aria-hidden="true">{number}</span>}
-      {button
+      {!dot ? null : button
         ? <button type="button" className={dotCls} title={title} {...button}>{content}</button>
         : <span className={dotCls} title={title} aria-hidden={title ? undefined : true}>{content}</span>}
-      {note
+      {!dot
+        ? <span className={"vl-fret-lab is-" + tone}>{content}</span>
+        : note
         ? <span className="vl-fret-lab is-note">{note}</span>
         : open
           ? <span className="vl-fret-lab">{t.open}</span>

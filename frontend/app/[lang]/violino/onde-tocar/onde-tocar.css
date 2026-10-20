@@ -11,7 +11,7 @@
 .ot-hint { font-family: var(--font-alt); font-style: italic; font-size: 15px; line-height: 1.25; color: var(--muted); }
 
 /* ---- cabeçalho do fólio ---- */
-.ot-folio { padding: 28px 34px; display: flex; flex-direction: column; gap: 18px; }
+.ot-folio { display: flex; flex-direction: column; gap: 18px; } /* padding: o mesmo do .vl-folio (modo I) */
 .ot-qhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
 .ot-qmeta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .ot-badge { font-family: var(--font-mono); font-size: 11px; color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; border-radius: 3px; }
@@ -51,18 +51,7 @@
 .ot-actions { margin-top: 0; min-height: 46px; }
 .ot-actions .vl-msg { flex: 1; min-width: min(320px, 100%); }
 
-/* ---- braço ---- (casas: .vl-dot / .vl-fret-* em violino.css) */
-.ot-board { display: flex; flex-direction: column; }
-.ot-row { display: grid; grid-template-columns: 72px repeat(9, minmax(0, 1fr)); align-items: center; border-top: 1px solid var(--line-soft); height: 100px; }
-.ot-row:last-child { border-bottom: 1px solid var(--line-soft); }
-.ot-row.is-off { opacity: .35; }
-.ot-sname { display: flex; flex-direction: column; line-height: 1.05; }
-.ot-sname span { font-family: var(--font-caps); font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
-.ot-sname b { font-family: var(--font-display); font-weight: 400; font-size: 26px; color: var(--text); }
-.ot-cell { position: relative; height: 100px; border-left: 1px solid var(--line-soft); display: grid; place-items: center; }
-.ot-cell.is-open { background: color-mix(in oklab, var(--surface-2) 45%, transparent); }
-.ot-wire { position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: var(--muted); opacity: .5; }
-.ot-spot { position: relative; }
+/* ---- braço: componentes Board* + FretCell, estilo em violino.css ---- */
 
 /* ---- "por quê" ao errar uma nota com acidente ---- */
 .ot-rule { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px dashed var(--gold); border-radius: 3px; }
@@ -77,11 +66,6 @@
 }
 @media (max-width: 560px) {
   .ot-panel { grid-template-columns: 1fr; }
-  .ot-folio { padding: 24px 12px 20px; }
-  .ot-row { grid-template-columns: 34px repeat(9, minmax(0, 1fr)); }
-  .ot-row, .ot-cell { height: 72px; }
-  .ot-sname span { display: none; }
-  .ot-sname b { font-size: 17px; }
   .ot-rule { grid-template-columns: 1fr; }
   .ot-rule > div + div { border-left: 0; border-top: 1px dashed color-mix(in oklab, var(--gold) 50%, transparent); }
 }

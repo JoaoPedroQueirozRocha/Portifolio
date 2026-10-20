@@ -25,24 +25,11 @@
 .arm-ruler-h { font-family: var(--font-mono); font-size: 11px; color: var(--fix); padding: 0 2px; }
 
 /* ---- cordas / braço ---- */
-.arm-strings { display: flex; flex-direction: column; margin-top: 20px; }
-.arm-string { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 20px; align-items: center; padding: 6px 0; border-top: 1px solid var(--line-soft); }
-.arm-string:last-child { border-bottom: 1px solid var(--line-soft); }
-.arm-sname { display: flex; flex-direction: column; line-height: 1.05; }
-.arm-sname span { font-family: var(--font-caps); font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
-.arm-sname b { font-family: var(--font-display); font-weight: 400; font-size: 26px; color: var(--text); }
+/* estrutura do braço (Board/BoardRow) e casas (FretCell): violino.css */
+.arm-strings { margin-top: 20px; }
 
-.arm-board { position: relative; height: 112px; }
-.arm-casas { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); }
-.arm-casa { position: relative; border-right: 1px solid var(--line-soft); }
-.arm-casa:first-child { border-left: 1px solid var(--line-soft); }
-.arm-casa.is-nut { background: color-mix(in oklab, var(--surface-2) 45%, transparent); }
-.arm-casa.is-ref { background: repeating-linear-gradient(135deg, var(--rule-tint) 0 4px, transparent 4px 8px); }
-.arm-casa.is-target { background: var(--accent-soft); }
-/* círculo de cada casa (o dedo arrastável cobre o da casa onde está) */
-.arm-ghost { position: absolute; left: 50%; top: 56px; transform: translate(-50%, -50%); z-index: 1; }
-.arm-wire { position: absolute; left: 0; right: 0; top: 56px; height: 1.5px; background: var(--muted); opacity: .55; }
-.arm-finger { position: absolute; top: 56px; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.05; z-index: 2; transition: left .26s cubic-bezier(.34, 1.3, .5, 1), background .16s, border-color .16s; }
+.arm .vl-cell.is-target { background: var(--accent-soft); } /* onde o dedo arrastado vai cair */
+.arm-finger { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.05; z-index: 2; transition: left .26s cubic-bezier(.34, 1.3, .5, 1), background .16s, border-color .16s; }
 .arm-finger { background: var(--surface-2); border: 1px solid var(--accent); box-shadow: 0 3px 10px oklch(0 0 0 / 0.25); touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
 .arm-finger.is-dragging { transition: none; cursor: grabbing; z-index: 5; transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 10px 24px oklch(0 0 0 / 0.4); border-color: var(--accent-bright); }
 .arm-finger:hover:not(:disabled) { border-color: var(--accent-bright); background: color-mix(in oklab, var(--surface-2) 80%, var(--accent)); }
@@ -104,19 +91,13 @@
 /* ---- responsivo ---- */
 @media (max-width: 920px) {
   .arm-q1 { grid-template-columns: 1fr; gap: 24px; }
-  .arm-string { grid-template-columns: auto 1fr; gap: 6px 14px; padding: 10px 0 8px; }
-  .arm-sname { flex-direction: row; align-items: baseline; gap: 8px; }
-  .arm-board { grid-column: 1 / -1; grid-row: 2; }
-  .arm-sfix { grid-column: 1 / -1; }
   .arm-explain-grid, .arm-ex-strings { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   .arm-explain { padding: 24px 16px 20px; }
   .arm-opts { grid-template-columns: 1fr; }
-  .arm-board { height: 84px; }
-  .arm-wire, .arm-finger, .arm-ghost { top: 42px; }
   .arm-finger { width: 30px; height: 42px; border-radius: 15px; }
   .arm-finger b { font-size: 10px; }
-  .arm-string { grid-template-columns: 1fr; }
+  .arm-sfix { grid-column: 1 / -1; }
   .arm-explain-head .vl-x { top: 14px; right: 10px; }
 }
