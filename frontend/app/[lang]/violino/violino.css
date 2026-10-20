@@ -1,0 +1,162 @@
+/* =====================================================================
+   CADERNO DE VIOLINO — base comum a todos os modos
+   Tokens de certo/errado/correção, abas dos modos e as peças
+   reaproveitadas (botões, seletores, placar, fólio, mensagens).
+   Cada modo tem seu próprio CSS (armaduras.css, onde-tocar.css…).
+===================================================================== */
+.vl {
+  --ok: oklch(0.76 0.13 150);
+  --ok-soft: oklch(0.76 0.13 150 / 0.14);
+  --bad: oklch(0.68 0.17 30);
+  --bad-soft: oklch(0.68 0.17 30 / 0.14);
+  --fix: var(--gold);
+  /* largura toda (até --maxw) em todos os modos — sem isso o container
+     encolhe até o conteúdo, porque o body é flex em coluna */
+  width: 100%;
+  padding-top: 32px;
+  padding-bottom: 64px;
+}
+html[data-theme="light"] .vl {
+  --ok: oklch(0.50 0.13 150);
+  --ok-soft: oklch(0.50 0.13 150 / 0.12);
+  --bad: oklch(0.52 0.18 30);
+  --bad-soft: oklch(0.52 0.18 30 / 0.10);
+  --fix: oklch(0.52 0.11 70);
+}
+.vl-main { padding-top: 34px; }
+.vl-loading { min-height: 80vh; }
+
+/* ---- abas dos modos ---- */
+/* rola na horizontal quando falta espaço (celular), sem barra visível */
+.vl-tabs { display: flex; align-items: stretch; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+.vl-tabs::-webkit-scrollbar { display: none; }
+.vl-tabs-brand { flex: none; display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 12px 22px 12px 0; }
+.vl-tabs-brand span:first-child { font-family: var(--font-caps); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-bright); }
+.vl-tabs-brand span:last-child { font-family: var(--font-alt); font-style: italic; font-size: 15px; color: var(--muted); }
+.vl-tabs-item { flex: 0 1 240px; min-width: 170px; position: relative; display: flex; align-items: baseline; gap: 10px; padding: 14px 18px; border-left: 1px solid var(--line-soft); color: var(--text); transition: background .16s; }
+.vl-tabs-item:hover { background: var(--rule-tint); }
+.vl-tabs-item.active { background: color-mix(in oklab, var(--accent) 8%, transparent); }
+.vl-tabs-item.active::after { content: ""; position: absolute; left: 18px; right: 18px; bottom: 0; height: 1px; background: var(--accent); }
+.vl-tabs-num { font-family: var(--font-caps); font-size: 12px; color: var(--faint); }
+.vl-tabs-item.active .vl-tabs-num { color: var(--accent); }
+.vl-tabs-text { display: flex; flex-direction: column; gap: 3px; }
+.vl-tabs-label { font-family: var(--font-display); font-size: 19px; line-height: 1.1; }
+.vl-tabs-item.active .vl-tabs-label { color: var(--accent-bright); }
+.vl-tabs-hint { font-family: var(--font-mono); font-size: 10px; color: var(--faint); }
+
+/* ---- botões / seletores ---- */
+.vl-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: 15px; font-weight: 500; padding: 10px 18px; border-radius: 4px; transition: .18s; letter-spacing: .01em; }
+.vl-btn:disabled { opacity: .45; cursor: not-allowed; }
+.vl-btn-primary { background: var(--accent); color: var(--on-accent); }
+.vl-btn-primary:hover:not(:disabled) { background: var(--accent-bright); transform: translateY(-1px); }
+.vl-btn-ghost { border: 1px solid var(--line); color: var(--text); }
+.vl-btn-ghost:hover:not(:disabled) { border-color: var(--accent); color: var(--accent-bright); }
+.vl-btn-ghost.on { border-color: var(--accent); color: var(--accent-bright); background: var(--accent-soft); }
+.vl-btn[aria-busy="true"] { opacity: .6; cursor: progress; }
+.vl-nowrap { white-space: nowrap; }
+.vl-tab { font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em; color: var(--muted); padding: 8px 16px; border: 1px solid var(--line-soft); border-radius: 3px; transition: .16s; white-space: nowrap; }
+.vl-tab:hover:not(:disabled) { color: var(--text); }
+.vl-tab.active { color: var(--accent-bright); border-color: var(--accent); background: var(--accent-soft); }
+.vl-tab:disabled { opacity: .55; cursor: default; }
+.vl-x { width: 32px; height: 32px; display: grid; place-items: center; color: var(--faint); border-radius: 3px; }
+.vl-x:hover { color: var(--text); background: var(--surface-2); }
+
+/* ---- cabeçalho + placar ---- */
+.vl-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; margin-bottom: 38px; }
+.vl-head .eyebrow { margin-bottom: 16px; }
+.vl-title { font-family: var(--font-display); font-weight: 400; font-size: 58px; letter-spacing: .01em; line-height: 1; }
+.vl-sub { font-size: 17px; color: var(--muted); max-width: 56ch; margin-top: 16px; }
+.vl-score { display: flex; border: 1px solid var(--line); }
+.vl-score > div { padding: 12px 22px 10px; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 92px; }
+.vl-score > div + div { border-left: 1px solid var(--line-soft); }
+.vl-score dt { font-family: var(--font-caps); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
+.vl-score dd { font-family: var(--font-alt); font-weight: 600; font-size: 38px; line-height: 1; color: var(--accent-bright); font-variant-numeric: lining-nums; }
+
+/* ---- barra de ajustes ---- */
+.vl-toolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px 28px; flex-wrap: wrap; padding: 16px 0 18px; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.vl-settings { display: flex; gap: 14px 28px; flex-wrap: wrap; }
+.vl-seg { display: flex; flex-direction: column; gap: 7px; }
+.vl-seg-l { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+.vl-seg-o { display: flex; gap: 2px; flex-wrap: wrap; }
+.vl-tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+/* ---- fólio (cartão do exercício) ---- */
+.vl-folio { position: relative; margin-top: 26px; border: 1px solid var(--line); background: color-mix(in oklab, var(--surface) 70%, transparent); padding: 36px 38px 30px; box-shadow: var(--shadow); }
+.vl-corner { position: absolute; width: 14px; height: 14px; border: 1px solid var(--accent); z-index: 6; }
+.vl-corner.tl { top: 6px; left: 6px; border-right: 0; border-bottom: 0; }
+.vl-corner.tr { top: 6px; right: 6px; border-left: 0; border-bottom: 0; }
+.vl-corner.bl { bottom: 6px; left: 6px; border-right: 0; border-top: 0; }
+.vl-corner.br { bottom: 6px; right: 6px; border-left: 0; border-top: 0; }
+.vl-q { font-family: var(--font-display); font-weight: 400; font-size: 27px; line-height: 1.15; }
+
+/* ---- mensagens e ações ---- */
+.vl-actions { display: flex; align-items: center; justify-content: space-between; gap: 14px 24px; flex-wrap: wrap; margin-top: 26px; }
+.vl-actions-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-left: auto; }
+.vl-actions .vl-btn { min-height: 46px; padding: 12px 22px; font-size: 16px; white-space: nowrap; }
+.vl-msg { font-family: var(--font-alt); font-style: italic; font-size: 22px; line-height: 1.3; }
+.vl-msg.is-perfect { color: var(--ok); }
+.vl-msg.is-partial { color: var(--fix); }
+.vl-msg.is-bad { color: var(--bad); }
+.vl-msg.is-help { color: var(--muted); }
+
+/* ---- braço (componentes Board*, os dois minijogos) ----
+   cada corda: nome à esquerda + trilho de 100px com a corda no meio e 9 casas
+   (corda solta/referência + 8 de meio tom). */
+.vl-board { display: flex; flex-direction: column; }
+.vl-brow { display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: center; border-top: 1px solid var(--line-soft); }
+.vl-brow:last-child { border-bottom: 1px solid var(--line-soft); }
+.vl-brow.is-off { opacity: .35; }
+.vl-sname { display: flex; flex-direction: column; line-height: 1.05; }
+.vl-sname span { font-family: var(--font-caps); font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
+.vl-sname b { font-family: var(--font-display); font-weight: 400; font-size: 26px; color: var(--text); }
+.vl-track { position: relative; height: 100px; }
+.vl-wire { position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: var(--muted); opacity: .5; pointer-events: none; }
+.vl-cells { position: relative; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); height: 100%; }
+.vl-cell { position: relative; border-left: 1px solid var(--line-soft); display: grid; place-items: center; }
+.vl-cell.is-open { background: color-mix(in oklab, var(--surface-2) 45%, transparent); }
+.vl-cell.is-ref { background: repeating-linear-gradient(135deg, var(--rule-tint) 0 4px, transparent 4px 8px); }
+
+/* ---- casas do braço (componente FretCell, os dois minijogos) ----
+   número no canto, círculo com a nota sobre a corda, rótulo embaixo.
+   Mesma paleta nos dois jogos: escala clara, fora da escala apagada,
+   acidente na cor da nota; dourado só nos avisos. */
+.vl-fret-n { position: absolute; top: 5px; left: 7px; font-family: var(--font-mono); font-size: 10px; line-height: 1; color: var(--faint); pointer-events: none; }
+.vl-dot { width: 58px; height: 58px; border-radius: 50%; border: 1px solid var(--line); background: color-mix(in oklab, var(--surface-2) 75%, transparent); display: flex; align-items: center; justify-content: center; font-family: var(--font-body); font-weight: 600; font-size: 14px; line-height: 1; color: var(--muted); white-space: nowrap; transition: background .15s, border-color .15s, color .15s; }
+.vl-dot.is-scale { color: var(--text); }
+.vl-dot.is-out { color: var(--faint); }
+.vl-dot.is-neutral { color: var(--muted); }
+.vl-dot.is-open { border-style: dashed; background: var(--bg); color: var(--text); }
+.vl-dot.is-struck { opacity: .45; text-decoration: line-through; text-decoration-color: var(--bad); text-decoration-thickness: 1.5px; }
+.vl-acc { color: inherit; }
+button.vl-dot:hover:not(:disabled) { border-color: var(--accent-bright); color: var(--accent-bright); background: var(--accent-soft); }
+button.vl-dot:disabled { cursor: default; }
+.vl-dot.is-ok { border: 1px solid var(--ok); background: var(--ok-soft); color: var(--ok); }
+.vl-dot.is-bad { border: 1px solid var(--bad); background: var(--bad-soft); color: var(--bad); }
+.vl-dot.is-fix, .vl-dot.is-alt { border: 1px dashed var(--gold); color: var(--gold); }
+.vl-fret-lab { position: absolute; left: 0; right: 0; bottom: 5px; text-align: center; font-family: var(--font-mono); font-size: 11px; line-height: 1; color: var(--faint); white-space: nowrap; pointer-events: none; }
+.vl-fret-lab.is-note { color: var(--gold); }
+/* casa sem círculo: o nome da nota vai para o rótulo, com a mesma paleta */
+.vl-fret-lab.is-scale { color: var(--text); }
+.vl-fret-lab.is-neutral { color: var(--muted); }
+
+@media (max-width: 560px) {
+  .vl { padding-top: 20px; }
+  .vl-main { padding-top: 24px; }
+  .vl-tabs-brand { display: none; }
+  .vl-tabs-item { min-width: 150px; padding: 12px 14px; }
+  .vl-tabs-item:first-of-type { border-left: 0; }
+  .vl-title { font-size: 42px; }
+  .vl-folio { padding: 24px 16px 20px; }
+  .vl-score { width: 100%; }
+  .vl-score > div { flex: 1; min-width: 0; padding: 10px 8px 8px; }
+  .vl-score dd { font-size: 30px; }
+  .vl-tools { position: relative; width: 100%; }
+  .vl-brow { grid-template-columns: 34px minmax(0, 1fr); }
+  .vl-sname span { display: none; }
+  .vl-sname b { font-size: 17px; }
+  .vl-track { height: 72px; }
+  .vl-dot { width: 30px; height: 42px; border-radius: 15px; font-size: 10px; }
+  .vl-fret-n { top: 3px; left: 3px; font-size: 8px; }
+  .vl-fret-lab { font-size: 9px; bottom: 3px; }
+  .vl-fret-word { display: none; } /* no celular, só o número do dedo */
+}

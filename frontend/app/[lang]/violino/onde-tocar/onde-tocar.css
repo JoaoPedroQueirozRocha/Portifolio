@@ -1,0 +1,71 @@
+/* =====================================================================
+   MODO II · ONDE TOCAR — pauta com 8 notas + braço clicável.
+   Portado do Claude Design (OndeTocar.dc.html).
+   Base comum (tokens, botões, placar, fólio): ../violino.css
+===================================================================== */
+
+/* ---- painel de ajustes ---- */
+.ot-panel { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 28px; margin-top: 18px; padding: 18px 20px; border: 1px solid var(--line); background: color-mix(in oklab, var(--bg-2) 60%, transparent); border-radius: 3px; }
+.ot-group { display: flex; flex-direction: column; gap: 7px; }
+.ot-group .vl-tab { padding: 7px 12px; }
+.ot-hint { font-family: var(--font-alt); font-style: italic; font-size: 15px; line-height: 1.25; color: var(--muted); }
+
+/* ---- cabeçalho do fólio ---- */
+.ot-folio { display: flex; flex-direction: column; gap: 18px; } /* padding: o mesmo do .vl-folio (modo I) */
+.ot-qhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+.ot-qmeta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.ot-badge { font-family: var(--font-mono); font-size: 11px; color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; border-radius: 3px; }
+.ot-progress { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.ot-line { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
+.ot-mini-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 12px; border-radius: 3px; border: 1px solid var(--line); font-family: var(--font-mono); font-size: 12px; transition: .16s; }
+.ot-mini-btn:hover { border-color: var(--accent); color: var(--accent-bright); }
+
+/* ---- pauta ---- */
+.ot-plate { background: var(--bg-2); border: 1px solid var(--line-soft); box-shadow: inset 0 1px 18px oklch(0 0 0 / 0.14); padding: 4px 8px; overflow-x: auto; }
+.ot-staff { color: var(--text); max-width: 940px; margin: 0 auto; }
+.ot-staff svg { display: block; width: 100%; min-width: 620px; height: auto; }
+.ot-lines line { stroke: currentColor; stroke-width: 1.1; opacity: .75; }
+.ot-clef { font-family: var(--font-music), serif; font-size: 64px; }
+.ot-time { font-family: var(--font-display); font-size: 34px; }
+.ot-measure { font-family: var(--font-mono); font-size: 10px; fill: var(--faint); }
+.ot-cursor { transition: transform .25s cubic-bezier(.34, 1.3, .5, 1), fill .2s, stroke .2s; fill: var(--accent-soft); stroke: color-mix(in oklab, var(--accent) 50%, transparent); }
+.ot-cursor.is-ok { fill: var(--ok-soft); stroke: color-mix(in oklab, var(--ok) 60%, transparent); }
+.ot-cursor.is-bad { fill: var(--bad-soft); stroke: color-mix(in oklab, var(--bad) 60%, transparent); }
+.ot-note { color: var(--text); }
+.ot-note.is-current { color: var(--accent-bright); }
+.ot-note.is-ok { color: var(--ok); }
+.ot-note.is-bad { color: var(--bad); }
+.ot-note ellipse { fill: none; stroke: currentColor; stroke-width: 3; transition: stroke .2s; }
+.ot-ledger { stroke: var(--text); stroke-width: 1.5; opacity: .75; }
+.ot-tag { font-family: var(--font-mono); font-size: 10px; fill: var(--gold); text-anchor: middle; }
+.ot-name { font-family: var(--font-alt); font-weight: 600; font-size: 16px; fill: currentColor; text-anchor: middle; }
+.ot-label { font-family: var(--font-mono); font-size: 9.5px; fill: var(--faint); text-anchor: middle; }
+
+/* ---- cronômetro ---- */
+.ot-timer { display: flex; align-items: center; gap: 12px; }
+.ot-timer > span { font-family: var(--font-mono); font-size: 11px; color: var(--faint); min-width: 44px; }
+.ot-timer-bar { flex: 1; height: 4px; background: var(--line-soft); border-radius: 2px; overflow: hidden; }
+.ot-timer-bar > div { height: 4px; background: var(--gold); transition: width .1s linear; }
+.ot-timer-bar > div.is-low { background: var(--bad); }
+
+.ot-actions { margin-top: 0; min-height: 46px; }
+.ot-actions .vl-msg { flex: 1; min-width: min(320px, 100%); }
+
+/* ---- braço: componentes Board* + FretCell, estilo em violino.css ---- */
+
+/* ---- "por quê" ao errar uma nota com acidente ---- */
+.ot-rule { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px dashed var(--gold); border-radius: 3px; }
+.ot-rule > div { padding: 12px 18px; display: flex; flex-direction: column; gap: 5px; }
+.ot-rule > div + div { border-left: 1px dashed color-mix(in oklab, var(--gold) 50%, transparent); }
+.ot-rule span { font-family: var(--font-caps); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+.ot-rule p { font-size: 16px; color: var(--text); }
+.ot-rule p.is-muted { color: var(--muted); }
+
+@media (max-width: 920px) {
+  .ot-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .ot-panel { grid-template-columns: 1fr; }
+  .ot-rule { grid-template-columns: 1fr; }
+  .ot-rule > div + div { border-left: 0; border-top: 1px dashed color-mix(in oklab, var(--gold) 50%, transparent); }
+}

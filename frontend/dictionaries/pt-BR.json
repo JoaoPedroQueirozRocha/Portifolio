@@ -2,7 +2,7 @@
   "nav": {
     "home": "Início",
     "shelf": "Estante",
-    "armaduras": "Armaduras",
+    "violino": "Caderno de Violino",
     "blog": "Blog",
     "stats": "Stats"
   },
@@ -154,11 +154,10 @@
   "armaduras": {
     "meta_title": "Treino de Armaduras",
     "meta_description": "Mini jogo para violino: leia a armadura, diga a tonalidade e posicione os dedos em cada corda.",
-    "eyebrow": "Mini jogo · Violino",
+    "eyebrow": "Exercício I · Armaduras",
     "title": "Treino de Armaduras",
     "subtitle": "Veja a armadura, diga a tonalidade e posicione os dedos em cada corda. Para quem já lê partitura e quer ligar a armadura à mão.",
     "loading": "Afinando o violino…",
-    "letters": ["Dó", "Ré", "Mi", "Fá", "Sol", "Lá", "Si"],
     "score": {
       "label": "Placar",
       "hits": "Acertos",
@@ -190,12 +189,6 @@
       "check_title": "Escolha a tonalidade primeiro",
       "explain": "Explicar esta armadura",
       "close": "Fechar"
-    },
-    "sound": {
-      "off": "Som desligado",
-      "loading": "Carregando som…",
-      "on": "Som ligado",
-      "error": "Som indisponível"
     },
     "q1": "1. Qual é a tonalidade {mode}?",
     "q2": "2. Notas e forma em cada corda",
@@ -255,7 +248,18 @@
       "example_sharps": "**3♯** → Fá♯, Dó♯, Sol♯ → **Lá maior** → Lá, Si, Dó♯, Ré, Mi, Fá♯, Sol♯ → relativa Fá♯ menor.",
       "example_flats": "**2♭** → Si♭, Mi♭ → **Si♭ maior** → Si♭, Dó, Ré, Mi♭, Fá, Sol, Lá → relativa Sol menor.",
       "forms": "Formas da mão",
-      "tip": "Dica: leia o bemol pela “barriguinha” — conte linhas e espaços a partir do Mi da primeira linha."
+      "tip": "Dica: leia o bemol pela “barriguinha” — conte linhas e espaços a partir do Mi da primeira linha.",
+      "relatives_title": "Relativa menor e equivalentes",
+      "relative_rule": "**Relativa menor:** a 6ª nota da escala maior — ou desça 1 tom e meio (3 meios tons) a partir da tônica. Usa a mesma armadura. Dó maior → Lá menor; Sol maior → Mi menor.",
+      "enharmonic_rule": "**Equivalente (enarmonia):** o mesmo som com dois nomes, como Fá♯ = Sol♭. Tonalidades também: Fá♯ maior (6♯) soa igual a Sol♭ maior (6♭).",
+      "lookup_label": "Escolha uma nota",
+      "lookup_note": "**{note}** também se escreve **{others}**.",
+      "lookup_note_single": "**{note}** não tem outro nome com um só acidente.",
+      "lookup_same_sound": "As duas tonalidades abaixo soam igual — só muda a escrita:",
+      "lookup_key": "**{key}** · {acc} · relativa **{rel}**",
+      "acc_none": "sem acidentes",
+      "acc_sharps": "{n}♯",
+      "acc_flats": "{n}♭"
     },
     "shapes": {
       "F1": { "label": "F1", "pair": "2 e 3", "desc": "2 e 3 juntos", "example": "Corda Lá em Ré maior: Si, Dó♯, Ré, Mi" },
@@ -263,6 +267,231 @@
       "F3": { "label": "F3", "pair": "3 e 4", "desc": "3 e 4 juntos", "example": "Corda Ré em Lá maior: Mi, Fá♯, Sol♯, Lá" },
       "F4": { "label": "F4", "pair": "0 e 1", "desc": "1 baixo, colado na pestana", "example": "Corda Lá em Fá maior: Si♭, Dó, Ré, Mi" },
       "other": { "label": "Outra", "pair": "Mais de um par, ou nenhum", "desc": "outra combinação ou nenhum par", "example": "Corda Mi em Fá maior: Fá, Sol, Lá, Si♭" }
+    }
+  },
+  "violino": {
+    "title": "Caderno de Violino",
+    "letters": ["Dó", "Ré", "Mi", "Fá", "Sol", "Lá", "Si"],
+    "meta_description": "Exercícios de violino: leia armaduras e partituras e encontre cada nota no braço.",
+    "brand_top": "Caderno",
+    "brand_bottom": "de violino",
+    "tabs_aria": "Modos do Caderno de Violino",
+    "modes": {
+      "armaduras": {
+        "label": "Armaduras",
+        "hint": "tonalidade e dedilhado"
+      },
+      "onde_tocar": {
+        "label": "Onde tocar",
+        "hint": "ponha o dedo"
+      },
+      "nomear": {
+        "label": "Nomear notas",
+        "hint": "diga o nome"
+      },
+      "corrida": {
+        "label": "Corrida",
+        "hint": "leia no tempo"
+      }
+    },
+    "fret": { "open": "solta", "finger": "dedo" },
+    "sound": {
+      "off": "Som desligado",
+      "loading": "Carregando som…",
+      "on": "Som ligado",
+      "error": "Som indisponível"
+    }
+  },
+  "onde_tocar": {
+    "meta_title": "Onde tocar",
+    "meta_description": "Leia a partitura e toque cada nota no lugar certo do braço do violino.",
+    "eyebrow": "Exercício II · Braço",
+    "title": "Leia e coloque o dedo",
+    "subtitle": "Uma partitura de 8 notas: para cada nota destacada, toque na corda e no dedo onde ela soa. Vale a armadura, o acidente escrito e a barra de compasso.",
+    "loading": "Afinando o violino…",
+    "score": {
+      "label": "Placar",
+      "hits": "Acertos",
+      "streak": "Sequência",
+      "seen": "Notas"
+    },
+    "presets": {
+      "label": "Perfil",
+      "ini": "Iniciante",
+      "mid": "Intermediário",
+      "adv": "Avançado",
+      "custom": "Personalizado"
+    },
+    "panel_open": "Ajustes",
+    "panel_close": "Fechar ajustes",
+    "groups": {
+      "length": {
+        "label": "Tamanho da partitura",
+        "opts": [
+          "Pequena",
+          "Média",
+          "Grande"
+        ],
+        "hints": [
+          "8 notas · 1 linha de 2 compassos.",
+          "16 notas · 2 linhas, uma de cada vez.",
+          "32 notas · 4 linhas, uma de cada vez."
+        ]
+      },
+      "acc": {
+        "label": "Alterações",
+        "opts": [
+          "Só a escala",
+          "Com ♯ ♭ ♮",
+          "+ compasso"
+        ],
+        "hints": [
+          "Todas as notas seguem a armadura.",
+          "1 ou 2 notas por rodada com acidente escrito.",
+          "O acidente vale até a barra: a nota repetida sem sinal continua alterada."
+        ]
+      },
+      "keys": {
+        "label": "Armaduras",
+        "opts": [
+          "Só Dó",
+          "Até 2 ♯/♭",
+          "Até 4 ♯/♭"
+        ],
+        "hints": [
+          "Sem armadura: treina só o desenho das notas.",
+          "Dó, Sol, Ré, Fá e Si♭ maior.",
+          "Inclui Lá, Mi, Mi♭ e Lá♭ maior."
+        ]
+      },
+      "range": {
+        "label": "Extensão",
+        "opts": [
+          "Dentro da pauta",
+          "1ª posição toda"
+        ],
+        "hints": [
+          "Sem linhas suplementares (Ré⁴ a Sol⁵).",
+          "Sol³ a Si⁵, com linhas suplementares em cima e embaixo."
+        ]
+      },
+      "strings": {
+        "label": "Cordas",
+        "hints": [
+          "Só aparecem notas tocáveis nas cordas ligadas."
+        ]
+      },
+      "leaps": {
+        "label": "Saltos",
+        "opts": [
+          "Vizinhos",
+          "Médios",
+          "Grandes"
+        ],
+        "hints": [
+          "Quase sempre a nota ao lado — lê-se como escala.",
+          "Mistura graus vizinhos e saltos de até 5ª.",
+          "Saltos de até 7ª: troca de corda o tempo todo."
+        ]
+      },
+      "time": {
+        "label": "Tempo por nota",
+        "opts": [
+          "Livre",
+          "6 s",
+          "3 s"
+        ],
+        "hints": [
+          "Sem pressa.",
+          "Acabou o tempo, conta como erro.",
+          "Acabou o tempo, conta como erro."
+        ]
+      },
+      "digits": {
+        "label": "Ajuda no braço",
+        "opts": [
+          "Dedo + nota",
+          "Só o dedo",
+          "Nada"
+        ],
+        "hints": [
+          "Cada casa mostra a nota que soa ali; as da escala ficam mais claras.",
+          "Só o número do dedo nas casas.",
+          "Casas vazias: você precisa saber qual é qual."
+        ]
+      }
+    },
+    "question": "Onde se toca a nota destacada?",
+    "key_badge": "{key} · {list}",
+    "key_name": "{note} maior",
+    "no_accidentals": "sem acidentes",
+    "progress": "{i} / {total}",
+    "line_of": "linha {i} de {n}",
+    "new_score": "Outra partitura",
+    "new_score_title": "Sortear outra partitura",
+    "hear": "Ouvir nota",
+    "hear_title": "Toca a nota destacada (liga o som se estiver desligado). A nota ouvida não pontua.",
+    "skip_note": "Pular nota",
+    "next_note": "Próxima nota",
+    "new_round": "Nova partitura",
+    "staff_aria": "Partitura em {key}. Nota {i} de {total}.",
+    "string_cap": "Corda",
+    "string_off": "desligada",
+    "cols": [
+      "solta",
+      "1 baixo",
+      "1",
+      "2 baixo",
+      "2 alto",
+      "3",
+      "3 alto",
+      "4",
+      "4 alto"
+    ],
+    "cols_long": [
+      "solta",
+      "1º dedo baixo",
+      "1º dedo",
+      "2º dedo baixo",
+      "2º dedo alto",
+      "3º dedo",
+      "3º dedo alto",
+      "4º dedo",
+      "4º dedo alto"
+    ],
+    "cell_aria": "Corda {string}, {pos}",
+    "was_here": "era aqui",
+    "also_ok": "também vale",
+    "place": "corda {string}, {pos}",
+    "place_none": "fora das cordas ligadas",
+    "short_place": "{string} · {col}",
+    "tags": {
+      "written": "{acc} escrito",
+      "inherit": "{acc} ainda vale",
+      "reset": "barra: volta à armadura"
+    },
+    "msg": {
+      "prompt": "Leia a nota destacada e toque na corda e no dedo.",
+      "done": "Fim da partitura: {n} de {total} no lugar certo.",
+      "timeout": "Tempo esgotado — era {note}, {place}.",
+      "ok": "Certo — {note}, {place}.",
+      "ok_written": "Bem lido o {acc}.",
+      "ok_inherit": "O acidente ainda valia neste compasso.",
+      "ok_reset": "A barra cancelou o acidente.",
+      "heard": "Você ouviu a nota antes: não pontua.",
+      "bad_written": "Quase — o {acc} escrito muda a nota: é {note}, não {keyNote}.",
+      "bad_inherit": "O {acc} de antes ainda vale até a barra: é {note}.",
+      "bad_reset": "Passou a barra: o acidente do compasso 1 não vale mais. É {note} de novo.",
+      "bad_key": "Faltou a armadura: é {note}, {place}.",
+      "bad": "Você tocou {played} — era {note}, {place}."
+    },
+    "rule": {
+      "by_key": "Pela armadura",
+      "this_note": "Nesta nota",
+      "why": "Por quê",
+      "why_written": "O acidente escrito ao lado da nota manda mais que a armadura.",
+      "why_inherit": "O acidente escrito antes, no mesmo compasso, ainda vale para esta nota.",
+      "why_reset": "A barra de compasso cancela o acidente: volta a valer a armadura."
     }
   }
 }

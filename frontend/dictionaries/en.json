@@ -2,7 +2,7 @@
   "nav": {
     "home": "Home",
     "shelf": "Shelf",
-    "armaduras": "Key Signatures",
+    "violino": "Violin Notebook",
     "blog": "Blog",
     "stats": "Stats"
   },
@@ -143,11 +143,10 @@
   "armaduras": {
     "meta_title": "Key Signature Trainer",
     "meta_description": "A violin mini game: read the key signature, name the key and place your fingers on each string.",
-    "eyebrow": "Mini game · Violin",
+    "eyebrow": "Exercise I · Key signatures",
     "title": "Key Signature Trainer",
     "subtitle": "Look at the key signature, name the key and place your fingers on each string. For players who already read music and want to connect the signature to the hand.",
     "loading": "Tuning the violin…",
-    "letters": ["C", "D", "E", "F", "G", "A", "B"],
     "score": {
       "label": "Score",
       "hits": "Correct",
@@ -179,12 +178,6 @@
       "check_title": "Pick the key first",
       "explain": "Explain this signature",
       "close": "Close"
-    },
-    "sound": {
-      "off": "Sound off",
-      "loading": "Loading sound…",
-      "on": "Sound on",
-      "error": "Sound unavailable"
     },
     "q1": "1. Which {mode} key is it?",
     "q2": "2. Notes and hand shape on each string",
@@ -244,7 +237,18 @@
       "example_sharps": "**3♯** → F♯, C♯, G♯ → **A major** → A, B, C♯, D, E, F♯, G♯ → relative F♯ minor.",
       "example_flats": "**2♭** → B♭, E♭ → **B♭ major** → B♭, C, D, E♭, F, G, A → relative G minor.",
       "forms": "Hand shapes",
-      "tip": "Tip: read a flat by its “belly” — count lines and spaces up from the E on the bottom line."
+      "tip": "Tip: read a flat by its “belly” — count lines and spaces up from the E on the bottom line.",
+      "relatives_title": "Relative minor and equivalents",
+      "relative_rule": "**Relative minor:** the 6th note of the major scale — or go down a step and a half (3 half steps) from the tonic. Same key signature. C major → A minor; G major → E minor.",
+      "enharmonic_rule": "**Equivalent (enharmonic):** the same sound with two names, like F♯ = G♭. Keys too: F♯ major (6♯) sounds the same as G♭ major (6♭).",
+      "lookup_label": "Pick a note",
+      "lookup_note": "**{note}** can also be written **{others}**.",
+      "lookup_note_single": "**{note}** has no other name with a single accidental.",
+      "lookup_same_sound": "The two keys below sound the same — only the spelling changes:",
+      "lookup_key": "**{key}** · {acc} · relative **{rel}**",
+      "acc_none": "no accidentals",
+      "acc_sharps": "{n}♯",
+      "acc_flats": "{n}♭"
     },
     "shapes": {
       "F1": { "label": "F1", "pair": "2 and 3", "desc": "2 and 3 together", "example": "A string in D major: B, C♯, D, E" },
@@ -252,6 +256,231 @@
       "F3": { "label": "F3", "pair": "3 and 4", "desc": "3 and 4 together", "example": "D string in A major: E, F♯, G♯, A" },
       "F4": { "label": "F4", "pair": "0 and 1", "desc": "low 1, right next to the nut", "example": "A string in F major: B♭, C, D, E" },
       "other": { "label": "Other", "pair": "More than one pair, or none", "desc": "another combination or no pair", "example": "E string in F major: F, G, A, B♭" }
+    }
+  },
+  "violino": {
+    "title": "Violin Notebook",
+    "letters": ["C", "D", "E", "F", "G", "A", "B"],
+    "meta_description": "Violin exercises: read key signatures and scores, and find every note on the fingerboard.",
+    "brand_top": "Violin",
+    "brand_bottom": "notebook",
+    "tabs_aria": "Violin Notebook modes",
+    "modes": {
+      "armaduras": {
+        "label": "Key signatures",
+        "hint": "key and fingering"
+      },
+      "onde_tocar": {
+        "label": "Where to play",
+        "hint": "place the finger"
+      },
+      "nomear": {
+        "label": "Name the notes",
+        "hint": "say the name"
+      },
+      "corrida": {
+        "label": "Race",
+        "hint": "read in time"
+      }
+    },
+    "fret": { "open": "open", "finger": "finger" },
+    "sound": {
+      "off": "Sound off",
+      "loading": "Loading sound…",
+      "on": "Sound on",
+      "error": "Sound unavailable"
+    }
+  },
+  "onde_tocar": {
+    "meta_title": "Where to play",
+    "meta_description": "Read the score and play each note in the right place on the violin fingerboard.",
+    "eyebrow": "Exercise II · Fingerboard",
+    "title": "Read and place the finger",
+    "subtitle": "An 8-note score: for each highlighted note, tap the string and finger where it sounds. The key signature, written accidentals and bar lines all count.",
+    "loading": "Tuning the violin…",
+    "score": {
+      "label": "Score",
+      "hits": "Correct",
+      "streak": "Streak",
+      "seen": "Notes"
+    },
+    "presets": {
+      "label": "Profile",
+      "ini": "Beginner",
+      "mid": "Intermediate",
+      "adv": "Advanced",
+      "custom": "Custom"
+    },
+    "panel_open": "Settings",
+    "panel_close": "Close settings",
+    "groups": {
+      "length": {
+        "label": "Score length",
+        "opts": [
+          "Short",
+          "Medium",
+          "Long"
+        ],
+        "hints": [
+          "8 notes · 1 line of 2 bars.",
+          "16 notes · 2 lines, one at a time.",
+          "32 notes · 4 lines, one at a time."
+        ]
+      },
+      "acc": {
+        "label": "Accidentals",
+        "opts": [
+          "Scale only",
+          "With ♯ ♭ ♮",
+          "+ bar rule"
+        ],
+        "hints": [
+          "Every note follows the key signature.",
+          "1 or 2 notes per round with a written accidental.",
+          "An accidental lasts until the bar line: the repeated note without a sign stays altered."
+        ]
+      },
+      "keys": {
+        "label": "Key signatures",
+        "opts": [
+          "C only",
+          "Up to 2 ♯/♭",
+          "Up to 4 ♯/♭"
+        ],
+        "hints": [
+          "No signature: practise reading note shapes only.",
+          "C, G, D, F and B♭ major.",
+          "Adds A, E, E♭ and A♭ major."
+        ]
+      },
+      "range": {
+        "label": "Range",
+        "opts": [
+          "Inside the staff",
+          "Whole 1st position"
+        ],
+        "hints": [
+          "No ledger lines (D4 to G5).",
+          "G3 to B5, with ledger lines above and below."
+        ]
+      },
+      "strings": {
+        "label": "Strings",
+        "hints": [
+          "Only notes playable on the enabled strings appear."
+        ]
+      },
+      "leaps": {
+        "label": "Leaps",
+        "opts": [
+          "Steps",
+          "Medium",
+          "Large"
+        ],
+        "hints": [
+          "Almost always the next note — reads like a scale.",
+          "Mixes steps and leaps up to a 5th.",
+          "Leaps up to a 7th: constant string crossings."
+        ]
+      },
+      "time": {
+        "label": "Time per note",
+        "opts": [
+          "Free",
+          "6 s",
+          "3 s"
+        ],
+        "hints": [
+          "No rush.",
+          "When time runs out, it counts as a miss.",
+          "When time runs out, it counts as a miss."
+        ]
+      },
+      "digits": {
+        "label": "Fingerboard help",
+        "opts": [
+          "Finger + note",
+          "Finger only",
+          "Nothing"
+        ],
+        "hints": [
+          "Each spot shows the note that sounds there; scale notes are brighter.",
+          "Only the finger number on each spot.",
+          "Empty spots: you have to know which is which."
+        ]
+      }
+    },
+    "question": "Where is the highlighted note played?",
+    "key_badge": "{key} · {list}",
+    "key_name": "{note} major",
+    "no_accidentals": "no accidentals",
+    "progress": "{i} / {total}",
+    "line_of": "line {i} of {n}",
+    "new_score": "Another score",
+    "new_score_title": "Draw another score",
+    "hear": "Hear note",
+    "hear_title": "Plays the highlighted note (turns the sound on if it's off). A note you heard doesn't score.",
+    "skip_note": "Skip note",
+    "next_note": "Next note",
+    "new_round": "New score",
+    "staff_aria": "Score in {key}. Note {i} of {total}.",
+    "string_cap": "String",
+    "string_off": "disabled",
+    "cols": [
+      "open",
+      "low 1",
+      "1",
+      "low 2",
+      "high 2",
+      "3",
+      "high 3",
+      "4",
+      "high 4"
+    ],
+    "cols_long": [
+      "open",
+      "low 1st finger",
+      "1st finger",
+      "low 2nd finger",
+      "high 2nd finger",
+      "3rd finger",
+      "high 3rd finger",
+      "4th finger",
+      "high 4th finger"
+    ],
+    "cell_aria": "{string} string, {pos}",
+    "was_here": "it was here",
+    "also_ok": "also valid",
+    "place": "{string} string, {pos}",
+    "place_none": "outside the enabled strings",
+    "short_place": "{string} · {col}",
+    "tags": {
+      "written": "{acc} written",
+      "inherit": "{acc} still applies",
+      "reset": "bar line: back to the key"
+    },
+    "msg": {
+      "prompt": "Read the highlighted note and tap the string and finger.",
+      "done": "End of the score: {n} of {total} in the right place.",
+      "timeout": "Time's up — it was {note}, {place}.",
+      "ok": "Right — {note}, {place}.",
+      "ok_written": "Well read, that {acc}.",
+      "ok_inherit": "The accidental still applied in this bar.",
+      "ok_reset": "The bar line cancelled the accidental.",
+      "heard": "You heard the note first: no point.",
+      "bad_written": "Almost — the written {acc} changes the note: it's {note}, not {keyNote}.",
+      "bad_inherit": "The earlier {acc} still applies until the bar line: it's {note}.",
+      "bad_reset": "Past the bar line: the accidental from bar 1 no longer applies. It's {note} again.",
+      "bad_key": "You missed the key signature: it's {note}, {place}.",
+      "bad": "You played {played} — it was {note}, {place}."
+    },
+    "rule": {
+      "by_key": "By the key signature",
+      "this_note": "This note",
+      "why": "Why",
+      "why_written": "The accidental written next to the note overrides the key signature.",
+      "why_inherit": "The accidental written earlier in the same bar still applies to this note.",
+      "why_reset": "The bar line cancels the accidental: the key signature applies again."
     }
   }
 }

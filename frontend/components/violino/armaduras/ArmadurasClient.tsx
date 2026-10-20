@@ -7,7 +7,7 @@ import type { ArmDict } from "./text"
    cliente evita divergência de hidratação. */
 const ArmadurasGame = dynamic(() => import("./ArmadurasGame"), {
   ssr: false,
-  loading: () => <div className="content-container arm arm-loading" aria-busy="true" />,
+  loading: () => <div className="vl-loading" aria-busy="true" />,
 })
 
 export default function ArmadurasClient({ t }: { t: ArmDict }) {

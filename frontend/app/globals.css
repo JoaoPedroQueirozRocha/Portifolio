@@ -257,6 +257,9 @@ html[data-theme="light"] {
 @layer utilities {
   /* Container padrão — max 1080px, padding responsivo */
   .content-container {
+    /* o body é flex em coluna: sem width, a margem automática faz o
+       container encolher até a largura do conteúdo */
+    width: 100%;
     max-width: var(--maxw);
     margin-inline: auto;
     padding-inline: 1rem;        /* mobile: 16px */

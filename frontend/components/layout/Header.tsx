@@ -16,7 +16,7 @@ interface HeaderProps {
 
 const NAV_ROUTES = [
   { key: "home",  path: "" },
-  { key: "armaduras", path: "/armaduras" },
+  { key: "violino", path: "/violino" },
   // Ocultas até as páginas existirem:
   // { key: "shelf", path: "/shelf" },
   // { key: "blog",  path: "/blog" },
