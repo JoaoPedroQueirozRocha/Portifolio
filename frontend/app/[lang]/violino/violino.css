@@ -111,7 +111,7 @@ html[data-theme="light"] .vl {
 .vl-sname b { font-family: var(--font-display); font-weight: 400; font-size: 26px; color: var(--text); }
 .vl-track { position: relative; height: 100px; }
 .vl-wire { position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: var(--muted); opacity: .5; pointer-events: none; }
-.vl-cells { position: relative; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); height: 100%; }
+.vl-cells { position: relative; display: grid; grid-template-columns: repeat(var(--cols, 9), minmax(0, 1fr)); height: 100%; }
 .vl-cell { position: relative; border-left: 1px solid var(--line-soft); display: grid; place-items: center; }
 .vl-cell.is-open { background: color-mix(in oklab, var(--surface-2) 45%, transparent); }
 .vl-cell.is-ref { background: repeating-linear-gradient(135deg, var(--rule-tint) 0 4px, transparent 4px 8px); }

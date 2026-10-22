@@ -11,7 +11,11 @@ import { fmt, useArmText } from "./text"
 
 const ALT_GLYPH: Record<Alt, string> = { [-1]: "♭", 0: "♮", 1: "♯" }
 const CYCLE: Alt[] = [0, 1, -1]
-const COLS = 9
+
+/* Janela de casas do braço — igual para as 4 cordas, como no violino de verdade.
+   1ª posição: corda solta + casas 1–8. 2ª e 3ª: casas 2–11 (a 3ª chega à casa 11
+   com o 4º dedo alto, ex.: Fá♯ na corda Sol). */
+const windowFor = (p: number) => (p === 1 ? { start: 0, cols: 9 } : { start: 2, cols: 10 })
 
 interface Drag {
   k: number
@@ -37,7 +41,8 @@ export default function StringRow({ s, p, n, alts, onSetAlt, checked, ans, showH
   const { t, nn } = useArmText()
   const [drag, setDrag] = useState<Drag | null>(null)
 
-  const b = base(s, p)
+  const { start: b, cols: COLS } = windowFor(p)
+  const ref = p === 1 ? null : base(s, p) // casa de referência da posição (logo abaixo do 1º dedo)
   const frets = fretsFor(s, p, alts)
   const cols = Array.from({ length: COLS }, (_, i) => b + i)
   const colOf = (f: number) => Math.max(0, Math.min(COLS - 1, f - b))
@@ -117,7 +122,7 @@ export default function StringRow({ s, p, n, alts, onSetAlt, checked, ans, showH
   return (
     <BoardRow name={stringName} cap={t.string} after={sfix}>
       <BoardWire />
-      <BoardCells>
+      <BoardCells cols={COLS}>
         {cols.map((f, i) => {
           const open = p === 1 && i === 0
           const m = openMidi(s) + f
@@ -127,7 +132,7 @@ export default function StringRow({ s, p, n, alts, onSetAlt, checked, ans, showH
             <BoardCell
               key={f}
               open={open}
-              className={(p !== 1 && i === 0 ? "is-ref" : "") + (snapCol === i ? " is-target" : "")}
+              className={(f === ref ? "is-ref" : "") + (snapCol === i ? " is-target" : "")}
             >
               {/* círculo só na corda solta; nas outras casas o dedo arrastável é o círculo */}
               <FretCell
