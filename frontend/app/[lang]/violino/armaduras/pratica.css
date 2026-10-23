@@ -63,6 +63,7 @@
 /* ---- mensagem e barra de baixo ---- */
 .prt-msg { font-family: var(--font-alt); font-style: italic; font-size: 20px; line-height: 1.3; color: var(--muted); min-height: 1.3em; }
 .prt-msg.is-ok { color: var(--ok); }
+.prt-msg.is-ready { color: var(--accent-bright); }
 .prt-msg.is-flat, .prt-msg.is-sharp { color: var(--fix); }
 .prt-msg.is-octave, .prt-msg.is-wrong { color: var(--bad); }
 .prt-tools { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid var(--line-soft); margin-top: 2px; padding-top: 16px; }

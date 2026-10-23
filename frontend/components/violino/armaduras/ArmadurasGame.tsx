@@ -281,6 +281,9 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
             {msg && <p className={"vl-msg " + msgKind}>{msg}</p>}
             {explainUsed && !checked && <p className="vl-msg is-help">{t.msg.help_used}</p>}
             <div className="vl-actions-btns">
+              {!explainOpen && (
+                <button type="button" className="vl-btn vl-btn-ghost" onClick={openExplain}>{t.actions.explain}</button>
+              )}
               {!checked ? (
                 <button
                   type="button"
@@ -300,9 +303,6 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
                 <button type="button" className="vl-btn vl-btn-ghost vl-nowrap" onClick={() => setPracticeOpen(true)}>
                   <Mic size={15} /> {t.actions.practice}
                 </button>
-              )}
-              {!explainOpen && (
-                <button type="button" className="vl-btn vl-btn-ghost" onClick={openExplain}>{t.actions.explain}</button>
               )}
               {!checked && (
                 <button type="button" className="vl-btn vl-btn-ghost" onClick={next} title={t.actions.skip_title}>

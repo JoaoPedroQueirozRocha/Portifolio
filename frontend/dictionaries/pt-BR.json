@@ -288,6 +288,8 @@
       "skip": "Pular nota",
       "listening": "Escutando…",
       "ok": "Isso!",
+      "next_up": "Próxima nota: {note}.",
+      "ready": "Troque para {note} — a escuta volta em instantes…",
       "flat": "Quase — {cents} cents baixo.",
       "sharp": "Quase — {cents} cents alto.",
       "octave": "Altura certa, oitava errada — confira a corda.",

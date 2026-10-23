@@ -23,8 +23,10 @@ const TOLERANCES = [20, 35, 50] as const
 
 /** Cadência da leitura na tela — a análise roda bem mais rápido que isso */
 const UI_MS = 70
-/** Pausa depois de acertar, antes de pedir a próxima */
-const NEXT_MS = 700
+/** Tempo com o acerto (e o aviso da próxima nota) na tela antes de passar */
+const NEXT_MS = 1400
+/** Intervalo para trocar de nota: a escuta só volta depois dele */
+const READY_MS = 2500
 /** Quanto tempo o erro fica na tela antes de liberar nova tentativa */
 const RETRY_MS = 1600
 /** Janela em que a escuta fica pausada enquanto a referência toca */
@@ -46,6 +48,7 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
   const [verdict, setVerdict] = useState<Verdict | null>(null)
   const [live, setLive] = useState<Live | null>(null)
   const [clean, setClean] = useState(0) // acertos de primeira
+  const [ready, setReady] = useState(false) // intervalo de troca de nota, escuta pausada
   const [a4, setA4] = useState<number>(A4_OPTIONS[0])
   const [tolerance, setTolerance] = useState<number>(TOLERANCES[1])
   const missed = useRef(false)
@@ -75,6 +78,7 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
       setIdx(0)
       setClean(0)
       setVerdict(null)
+      setReady(false)
       missed.current = false
     }
   }
@@ -85,6 +89,7 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
     setClean(0)
     setVerdict(null)
     setLive(null)
+    setReady(false)
     missed.current = false
   }
 
@@ -93,13 +98,23 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
     setLive(null)
     missed.current = false
     if (idx + 1 >= total) setPhase("done")
-    else setIdx(idx + 1)
+    else {
+      setIdx(idx + 1)
+      setReady(true)
+    }
   }
+
+  /* Depois de passar para a próxima nota, a escuta espera a pessoa trocar */
+  useEffect(() => {
+    if (!ready) return
+    const timer = window.setTimeout(() => setReady(false), READY_MS)
+    return () => clearTimeout(timer)
+  }, [ready, idx])
 
   /* A análise entrega leituras fora do React; aqui elas viram veredito.
      Um juiz por nota: ele só decide quando a altura se estabiliza. */
   useEffect(() => {
-    if (phase !== "run" || status !== "on" || !target) return
+    if (phase !== "run" || status !== "on" || !target || ready) return
     const judge = createJudge({ targetMidi: target.midi, a4, tolerance })
     const targetHz = midiToHz(target.midi, a4)
     let settled = false
@@ -124,7 +139,10 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
           setLive(null)
           missed.current = false
           if (idx + 1 >= total) setPhase("done")
-          else setIdx(idx + 1)
+          else {
+            setIdx(idx + 1)
+            setReady(true)
+          }
         }, NEXT_MS)
       } else {
         missed.current = true
@@ -140,7 +158,7 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
       off()
       clearTimeout(timer)
     }
-  }, [phase, status, idx, total, target, a4, tolerance])
+  }, [phase, status, ready, idx, total, target, a4, tolerance])
 
   /** Toca a nota pedida, com a escuta pausada para o app não ouvir a si mesmo */
   async function hear() {
@@ -153,6 +171,8 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
 
   const sName = target ? nn.note(STRINGS[target.si].l) : ""
   const noteName = target ? nn.note(target.l, target.alt) : ""
+  const nextTarget = targets[idx + 1]
+  const nextName = nextTarget ? nn.note(nextTarget.l, nextTarget.alt) : ""
   const where = target
     ? target.k === 0
       ? fmt(pt.on_open, { string: sName })
@@ -214,8 +234,12 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
 
           <PracticeBoard n={n} p={p} targets={targets} idx={idx} state={verdict?.state ?? null} />
 
-          <p className={"prt-msg" + (verdict ? " is-" + verdict.state : "")} aria-live="polite">
-            {verdict ? verdictText(verdict, pt, nn.pitch(verdict.midi, n)) : pt.listening}
+          <p className={"prt-msg" + (verdict ? " is-" + verdict.state : ready ? " is-ready" : "")} aria-live="polite">
+            {verdict
+              ? verdictText(verdict, pt, nn.pitch(verdict.midi, n), nextName)
+              : ready
+                ? fmt(pt.ready, { note: noteName })
+                : pt.listening}
           </p>
 
           <div className="prt-tools">
@@ -255,9 +279,9 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
 
 type PracticeDict = ReturnType<typeof useArmText>["t"]["practice"]
 
-function verdictText(v: Verdict, pt: PracticeDict, heard: string) {
+function verdictText(v: Verdict, pt: PracticeDict, heard: string, next: string) {
   const cents = Math.round(Math.abs(v.cents))
-  if (v.state === "ok") return pt.ok
+  if (v.state === "ok") return next ? `${pt.ok} ${fmt(pt.next_up, { note: next })}` : pt.ok
   if (v.state === "flat") return fmt(pt.flat, { cents })
   if (v.state === "sharp") return fmt(pt.sharp, { cents })
   if (v.state === "octave") return pt.octave

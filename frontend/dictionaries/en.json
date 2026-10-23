@@ -277,6 +277,8 @@
       "skip": "Skip note",
       "listening": "Listening…",
       "ok": "That's it!",
+      "next_up": "Next note: {note}.",
+      "ready": "Switch to {note} — listening resumes in a moment…",
       "flat": "Close — {cents} cents flat.",
       "sharp": "Close — {cents} cents sharp.",
       "octave": "Right pitch, wrong octave — check the string.",
