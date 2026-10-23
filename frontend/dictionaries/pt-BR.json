@@ -336,6 +336,26 @@
       }
     },
     "fret": { "open": "solta", "finger": "dedo" },
+    "tuner": {
+      "title": "Afinador",
+      "close": "Fechar afinador",
+      "lead": "Ouve as cordas pelo microfone e mostra o quanto cada uma está baixa ou alta. Nada é gravado.",
+      "start": "Ligar o microfone",
+      "retry": "Tentar de novo",
+      "asking": "Esperando a permissão…",
+      "err": {
+        "denied": "Permissão negada. Libere o microfone para este site nas configurações do navegador.",
+        "nomic": "Nenhum microfone encontrado.",
+        "busy": "O microfone está sendo usado por outro programa.",
+        "insecure": "O navegador só libera o microfone em conexão segura (HTTPS).",
+        "error": "Não consegui abrir o microfone."
+      },
+      "silent": "toque uma corda",
+      "hz": "{hz} Hz",
+      "flat": "baixo",
+      "sharp": "alto",
+      "a4": "Lá de referência"
+    },
     "sound": {
       "off": "Som desligado",
       "loading": "Carregando som…",

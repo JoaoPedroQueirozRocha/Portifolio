@@ -45,6 +45,9 @@ let detector: Detector | null = null
 let buffer: Float32Array<ArrayBuffer> | null = null
 let raf = 0
 let muted = false
+/* Quem precisa do microfone agora (afinador, prática…). O hardware só é
+   solto quando o último deles sai — senão um fecha e derruba o outro. */
+const owners = new Set<symbol>()
 
 const statusListeners = new Set<() => void>()
 const frameListeners = new Set<FrameListener>()
@@ -82,10 +85,13 @@ function errorStatus(err: unknown): ListenStatus {
   return "error"
 }
 
-/** Liga o microfone e começa a analisar. Chamar a partir de um clique. */
-export async function startListening(): Promise<ListenStatus> {
+/** Liga o microfone e começa a analisar. Chamar a partir de um clique.
+ *  `owner` identifica quem está pedindo (ver `stopListening`). */
+export async function startListening(owner: symbol): Promise<ListenStatus> {
+  owners.add(owner)
   if (status === "on" || status === "asking") return status
   if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
+    owners.clear()
     setStatus("insecure")
     return status
   }
@@ -118,6 +124,7 @@ export async function startListening(): Promise<ListenStatus> {
     loop()
     return status
   } catch (err) {
+    owners.clear() // ninguém ficou com o microfone
     release()
     setStatus(errorStatus(err))
     return status
@@ -147,8 +154,11 @@ function release() {
   muted = false
 }
 
-/** Desliga o microfone e para a análise. */
-export function stopListening() {
+/** Avisa que `owner` não precisa mais do microfone. O hardware só é
+ *  solto quando ninguém mais está usando. */
+export function stopListening(owner: symbol) {
+  owners.delete(owner)
+  if (owners.size) return
   release()
   setStatus("off")
 }

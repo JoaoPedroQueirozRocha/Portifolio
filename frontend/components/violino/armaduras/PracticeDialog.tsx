@@ -36,6 +36,7 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
   const { t, nn, keyName } = useArmText()
   const pt = t.practice
   const ref = useRef<HTMLDialogElement>(null)
+  const owner = useMemo(() => Symbol("pratica"), [])
   const status = useSyncExternalStore(subscribeListen, getListenStatus, () => "off" as const)
   const soundStatus = useSoundStatus()
 
@@ -60,15 +61,15 @@ export default function PracticeDialog({ n, p, onClose }: { n: number; p: number
   }, [])
 
   // soltar o microfone ao sair, sempre
-  useEffect(() => () => stopListening(), [])
+  useEffect(() => () => stopListening(owner), [owner])
 
   const close = useCallback(() => {
-    stopListening()
+    stopListening(owner)
     ref.current?.close()
-  }, [])
+  }, [owner])
 
   async function askMic() {
-    const st = await startListening()
+    const st = await startListening(owner)
     if (st === "on") {
       setPhase("run")
       setIdx(0)

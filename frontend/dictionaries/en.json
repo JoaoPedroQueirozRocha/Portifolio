@@ -325,6 +325,26 @@
       }
     },
     "fret": { "open": "open", "finger": "finger" },
+    "tuner": {
+      "title": "Tuner",
+      "close": "Close tuner",
+      "lead": "Listens to the strings through the microphone and shows how flat or sharp each one is. Nothing is recorded.",
+      "start": "Turn the microphone on",
+      "retry": "Try again",
+      "asking": "Waiting for permission…",
+      "err": {
+        "denied": "Permission denied. Allow the microphone for this site in your browser settings.",
+        "nomic": "No microphone found.",
+        "busy": "The microphone is being used by another program.",
+        "insecure": "Browsers only allow the microphone over a secure connection (HTTPS).",
+        "error": "Could not open the microphone."
+      },
+      "silent": "play a string",
+      "hz": "{hz} Hz",
+      "flat": "flat",
+      "sharp": "sharp",
+      "a4": "Reference A"
+    },
     "sound": {
       "off": "Sound off",
       "loading": "Loading sound…",
