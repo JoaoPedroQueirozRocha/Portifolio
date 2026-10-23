@@ -1,0 +1,84 @@
+/* ---------------------------------------------------------------
+   Prática no violino — popup com o espelho inteiro e o afinador.
+   <dialog> nativo: foco preso, Esc e backdrop vêm do navegador.
+   Estrutura do braço e casas: violino.css (.vl-b*, .vl-fret-*).
+--------------------------------------------------------------- */
+
+.prt-dialog {
+  width: min(1040px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: 26px 30px 24px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  overflow: auto;
+}
+.prt-dialog::backdrop { background: oklch(0 0 0 / 0.55); backdrop-filter: blur(2px); }
+
+.prt-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid var(--line-soft); }
+.prt-title { font-family: var(--font-display); font-weight: 400; font-size: 32px; line-height: 1.1; margin-top: 6px; }
+
+/* ---- tela de permissão ---- */
+.prt-intro { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 22px 0 6px; max-width: 62ch; }
+.prt-lead { font-family: var(--font-alt); font-style: italic; font-size: 21px; line-height: 1.35; color: var(--text); }
+.prt-notes { display: flex; flex-direction: column; gap: 8px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.prt-notes li { padding-left: 16px; position: relative; }
+.prt-notes li::before { content: "·"; position: absolute; left: 4px; color: var(--accent); }
+.prt-err { color: var(--bad); font-size: 15px; line-height: 1.5; }
+
+/* ---- a nota pedida ---- */
+.prt-run { display: flex; flex-direction: column; gap: 18px; padding-top: 20px; }
+.prt-ask { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+.prt-ask-note { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.prt-ask-l { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+.prt-ask-note strong { font-family: var(--font-display); font-weight: 400; font-size: 44px; line-height: 1; color: var(--accent-bright); }
+.prt-ask-where { font-family: var(--font-alt); font-style: italic; font-size: 18px; color: var(--muted); }
+.prt-ask-side { display: flex; align-items: center; gap: 14px; }
+.prt-count { font-family: var(--font-mono); font-size: 12px; color: var(--faint); }
+
+/* ---- afinador ---- */
+.prt-tuner { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 12px; }
+.prt-tuner-l, .prt-tuner-r { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+.prt-bar { position: relative; height: 12px; border: 1px solid var(--line-soft); border-radius: 6px; background: var(--bg-2); }
+.prt-band { position: absolute; top: 0; bottom: 0; background: var(--ok-soft); border-left: 1px solid var(--ok); border-right: 1px solid var(--ok); }
+.prt-mid { position: absolute; top: -3px; bottom: -3px; left: 50%; width: 1px; background: var(--accent); }
+.prt-needle { position: absolute; top: -5px; bottom: -5px; width: 3px; margin-left: -1.5px; border-radius: 2px; background: var(--text); transition: left .08s linear; }
+.prt-cents { font-family: var(--font-mono); font-size: 13px; color: var(--muted); min-width: 4ch; text-align: right; }
+
+/* ---- espelho ---- */
+.prt-board { margin-top: 2px; }
+.prt-mark { position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); width: 54px; height: 54px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.05; z-index: 2; }
+.prt-mark { border: 1px solid var(--line); background: var(--surface-2); color: var(--muted); transition: background .18s, border-color .18s, color .18s; }
+.prt-mark i { font-style: normal; font-family: var(--font-mono); font-size: 9.5px; color: var(--faint); }
+.prt-mark b { font-family: var(--font-body); font-weight: 600; font-size: 13px; white-space: nowrap; }
+.prt-mark.is-done { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); }
+.prt-mark.is-now { border-color: var(--accent-bright); background: var(--accent-soft); color: var(--accent-bright); box-shadow: 0 0 0 4px var(--accent-soft); z-index: 3; }
+.prt-mark.is-now b { font-size: 15px; }
+.prt-mark.is-ok { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); box-shadow: 0 0 0 4px var(--ok-soft); }
+.prt-mark.is-flat, .prt-mark.is-sharp { border-color: var(--fix); color: var(--fix); box-shadow: 0 0 0 4px transparent; }
+.prt-mark.is-octave, .prt-mark.is-wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); box-shadow: 0 0 0 4px transparent; }
+
+/* ---- mensagem e barra de baixo ---- */
+.prt-msg { font-family: var(--font-alt); font-style: italic; font-size: 20px; line-height: 1.3; color: var(--muted); min-height: 1.3em; }
+.prt-msg.is-ok { color: var(--ok); }
+.prt-msg.is-ready { color: var(--accent-bright); }
+.prt-msg.is-flat, .prt-msg.is-sharp { color: var(--fix); }
+.prt-msg.is-octave, .prt-msg.is-wrong { color: var(--bad); }
+.prt-tools { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid var(--line-soft); margin-top: 2px; padding-top: 16px; }
+.prt-tools .vl-btn { margin-left: auto; }
+
+/* ---- fim ---- */
+.prt-done { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; padding: 26px 0 8px; }
+.prt-done-n { font-family: var(--font-alt); font-style: italic; font-size: 24px; color: var(--text); }
+.prt-done-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+@media (max-width: 560px) {
+  .prt-dialog { padding: 20px 14px 18px; width: calc(100vw - 16px); }
+  .prt-title { font-size: 26px; }
+  .prt-ask-note strong { font-size: 34px; }
+  .prt-mark { width: 30px; height: 42px; border-radius: 15px; }
+  .prt-mark b, .prt-mark.is-now b { font-size: 10px; }
+  .prt-tools .vl-btn { margin-left: 0; }
+}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Mic } from "lucide-react"
 import {
   STRINGS, TOTAL_ITEMS, makeNoteNames, midiOf, options, pickKey, scale, stringAnswer,
   type Alt, type Mode,
@@ -11,6 +11,7 @@ import { Board } from "../shared/Board"
 import { ScoreBoard, Seg, SoundButton } from "../shared/Controls"
 import { useViolinoText } from "../shared/text"
 import KeyStaff from "./KeyStaff"
+import PracticeDialog from "./PracticeDialog"
 import StringRow from "./StringRow"
 import Explanation from "./Explanation"
 import { HalfRuler, HelpButton } from "./HelpBalloon"
@@ -81,6 +82,7 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
   const [result, setResult] = useState<{ ok: number; perfect: boolean } | null>(null)
   const [explainUsed, setExplainUsed] = useState(false)
   const [explainOpen, setExplainOpen] = useState(false)
+  const [practiceOpen, setPracticeOpen] = useState(false)
   const topRef = useRef<HTMLDivElement>(null)
   const explainRef = useRef<HTMLDivElement>(null)
 
@@ -101,6 +103,7 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
     setResult(null)
     setExplainUsed(false)
     setExplainOpen(false)
+    setPracticeOpen(false)
   }
 
   function changeSetting<K extends keyof Settings>(k: K, v: Settings[K]) {
@@ -278,6 +281,9 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
             {msg && <p className={"vl-msg " + msgKind}>{msg}</p>}
             {explainUsed && !checked && <p className="vl-msg is-help">{t.msg.help_used}</p>}
             <div className="vl-actions-btns">
+              {!explainOpen && (
+                <button type="button" className="vl-btn vl-btn-ghost" onClick={openExplain}>{t.actions.explain}</button>
+              )}
               {!checked ? (
                 <button
                   type="button"
@@ -293,8 +299,10 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
                   {t.actions.next} <ArrowRight size={15} />
                 </button>
               )}
-              {!explainOpen && (
-                <button type="button" className="vl-btn vl-btn-ghost" onClick={openExplain}>{t.actions.explain}</button>
+              {checked && (
+                <button type="button" className="vl-btn vl-btn-ghost vl-nowrap" onClick={() => setPracticeOpen(true)}>
+                  <Mic size={15} /> {t.actions.practice}
+                </button>
               )}
               {!checked && (
                 <button type="button" className="vl-btn vl-btn-ghost" onClick={next} title={t.actions.skip_title}>
@@ -308,6 +316,8 @@ export default function ArmadurasGame({ t }: { t: ArmDict }) {
         <div ref={explainRef}>
           {explainOpen && <Explanation n={round.n} mode={round.mode} p={p} onClose={() => setExplainOpen(false)} />}
         </div>
+
+        {practiceOpen && <PracticeDialog n={round.n} p={p} onClose={() => setPracticeOpen(false)} />}
       </main>
     </ArmTextContext.Provider>
   )

@@ -10,7 +10,7 @@
      </BoardRow>
    </Board>
 --------------------------------------------------------------- */
-import type { ReactNode } from "react"
+import type { CSSProperties, ReactNode } from "react"
 
 export function Board({ children }: { children: ReactNode }) {
   return <div className="vl-board">{children}</div>
@@ -38,8 +38,10 @@ export function BoardWire() {
   return <span className="vl-wire" aria-hidden="true" />
 }
 
-export function BoardCells({ children }: { children: ReactNode }) {
-  return <div className="vl-cells">{children}</div>
+/** `cols`: nº de casas do trilho (padrão 9: corda solta + 8) */
+export function BoardCells({ cols, children }: { cols?: number; children: ReactNode }) {
+  const style = cols ? ({ "--cols": cols } as CSSProperties) : undefined
+  return <div className="vl-cells" style={style}>{children}</div>
 }
 
 export function BoardCell({ open, className, children }: { open?: boolean; className?: string; children: ReactNode }) {

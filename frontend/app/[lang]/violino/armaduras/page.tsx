@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { getDictionary, isValidLocale } from "../../dictionaries"
 import ArmadurasClient from "@/components/violino/armaduras/ArmadurasClient"
 import "./armaduras.css"
+import "./pratica.css"
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/violino/armaduras">): Promise<Metadata> {
   const { lang } = await params

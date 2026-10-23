@@ -122,6 +122,11 @@ export function fret(s: ViolinString, p: number, k: number, alt: number) {
 export const midiOf = (s: ViolinString, p: number, k: number, alt: number) =>
   (s.oct + 1) * 12 + NAT[s.l] + fret(s, p, k, alt)
 
+/* Janela de casas do braço — igual para as 4 cordas, como no violino de verdade.
+   1ª posição: corda solta + casas 1–8. 2ª e 3ª: casas 2–11 (a 3ª chega à casa 11
+   com o 4º dedo alto, ex.: Fá♯ na corda Sol). */
+export const windowFor = (p: number) => (p === 1 ? { start: 0, cols: 9 } : { start: 2, cols: 10 })
+
 /** Primeira casa exibida no braço para a posição p */
 export function base(s: ViolinString, p: number) {
   if (p === 1) return 0
@@ -164,6 +169,38 @@ export function stringAnswer(s: ViolinString, p: number, n: number): StringAnswe
     stretches: stretchPairs(frets, p),
     openOut: acc[s.l] !== 0,
   }
+}
+
+/* ---------------------------------------------------------------
+   Prática no violino — a fila de notas que o usuário vai tocar
+--------------------------------------------------------------- */
+export interface PracticeTarget {
+  si: number    // índice da corda em STRINGS
+  k: number     // 0 = corda solta, 1..4 = dedos
+  fret: number  // casa, em semitons desde a corda solta
+  midi: number
+  l: number     // letra da nota
+  alt: Alt
+}
+
+/**
+ * As notas da escala no braço, corda por corda (Sol → Ré → Lá → Mi), na
+ * ordem em que a mão as toca: a corda solta (só na 1ª posição, e só quando
+ * pertence à escala) e os dedos 1 a 4.
+ */
+export function practiceTargets(p: number, n: number): PracticeTarget[] {
+  const out: PracticeTarget[] = []
+  STRINGS.forEach((s, si) => {
+    const ans = stringAnswer(s, p, n)
+    if (p === 1 && !ans.openOut) {
+      out.push({ si, k: 0, fret: 0, midi: openMidi(s), l: s.l, alt: 0 })
+    }
+    ans.letters.forEach((l, i) => {
+      const k = i + 1
+      out.push({ si, k, fret: ans.frets[k], midi: midiOf(s, p, k, ans.alts[i]), l, alt: ans.alts[i] })
+    })
+  })
+  return out
 }
 
 function shuffle<T>(arr: T[]): T[] {

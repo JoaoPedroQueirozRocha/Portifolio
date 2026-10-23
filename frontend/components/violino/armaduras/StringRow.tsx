@@ -2,7 +2,7 @@
 
 import { useState, type PointerEvent } from "react"
 import {
-  base, fret, fingerLetter, fretsFor, halfPairs, inScale, openMidi,
+  base, fret, fingerLetter, fretsFor, halfPairs, inScale, openMidi, windowFor,
   type Alt, type StringAnswer, type ViolinString,
 } from "@/lib/armaduras"
 import { BoardCell, BoardCells, BoardRow, BoardWire } from "../shared/Board"
@@ -11,7 +11,6 @@ import { fmt, useArmText } from "./text"
 
 const ALT_GLYPH: Record<Alt, string> = { [-1]: "♭", 0: "♮", 1: "♯" }
 const CYCLE: Alt[] = [0, 1, -1]
-const COLS = 9
 
 interface Drag {
   k: number
@@ -37,7 +36,8 @@ export default function StringRow({ s, p, n, alts, onSetAlt, checked, ans, showH
   const { t, nn } = useArmText()
   const [drag, setDrag] = useState<Drag | null>(null)
 
-  const b = base(s, p)
+  const { start: b, cols: COLS } = windowFor(p)
+  const ref = p === 1 ? null : base(s, p) // casa de referência da posição (logo abaixo do 1º dedo)
   const frets = fretsFor(s, p, alts)
   const cols = Array.from({ length: COLS }, (_, i) => b + i)
   const colOf = (f: number) => Math.max(0, Math.min(COLS - 1, f - b))
@@ -117,7 +117,7 @@ export default function StringRow({ s, p, n, alts, onSetAlt, checked, ans, showH
   return (
     <BoardRow name={stringName} cap={t.string} after={sfix}>
       <BoardWire />
-      <BoardCells>
+      <BoardCells cols={COLS}>
         {cols.map((f, i) => {
           const open = p === 1 && i === 0
           const m = openMidi(s) + f
@@ -127,7 +127,7 @@ export default function StringRow({ s, p, n, alts, onSetAlt, checked, ans, showH
             <BoardCell
               key={f}
               open={open}
-              className={(p !== 1 && i === 0 ? "is-ref" : "") + (snapCol === i ? " is-target" : "")}
+              className={(f === ref ? "is-ref" : "") + (snapCol === i ? " is-target" : "")}
             >
               {/* círculo só na corda solta; nas outras casas o dedo arrastável é o círculo */}
               <FretCell
@@ -148,6 +148,25 @@ export default function StringRow({ s, p, n, alts, onSetAlt, checked, ans, showH
         if (dragging && (dragging.k === k || dragging.k === k + 1)) return null
         const mid = (colOf(frets[k]) + colOf(frets[k + 1])) / 2
         return <span key={"h" + k} className="arm-half" style={{ left: left(mid) }}>½</span>
+      })}
+
+      {/* casa certa de cada dedo errado — mostra a nota e onde ela fica */}
+      {checked && [1, 2, 3, 4].map((k) => {
+        if (alts[k - 1] === ans.alts[k - 1]) return null
+        const fixName = nn.note(ans.letters[k - 1], ans.alts[k - 1])
+        // casa ocupada por um dedo (que ficaria por cima): a nota certa vira pastilha embaixo
+        const stacked = taken(k).includes(ans.frets[k])
+        return (
+          <span
+            key={"fix" + k}
+            className={"arm-ghost" + (stacked ? " is-stacked" : "")}
+            style={{ left: left(colOf(ans.frets[k])) }}
+            title={fmt(t.finger_fix, { k, name: fixName })}
+            aria-hidden="true"
+          >
+            <i>{k}</i><b>{fixName}</b>
+          </span>
+        )
       })}
 
       {[1, 2, 3, 4].map((k) => {
@@ -171,10 +190,12 @@ export default function StringRow({ s, p, n, alts, onSetAlt, checked, ans, showH
             onPointerCancel={() => setDrag(null)}
             // teclado (Enter/Espaço) dispara click com detail 0
             onClick={(e) => { if (e.detail === 0) cycle(k) }}
-            aria-label={fmt(t.finger_aria, { k, name, alt: ALT_GLYPH[alts[k - 1]] })}
+            aria-label={
+              fmt(t.finger_aria, { k, name, alt: ALT_GLYPH[alts[k - 1]] }) +
+              (ok === false ? " " + fmt(t.finger_fix, { k, name: nn.note(ans.letters[k - 1], ans.alts[k - 1]) }) : "")
+            }
           >
             <i>{k}</i><b>{name}</b>
-            {ok === false && <em className="arm-fix">{nn.note(ans.letters[k - 1], ans.alts[k - 1])}</em>}
           </button>
         )
       })}

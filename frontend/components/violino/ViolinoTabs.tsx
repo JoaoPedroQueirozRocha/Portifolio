@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { VIOLINO_MODES } from "./modes"
+import Tuner from "./shared/Tuner"
 import { useViolinoText } from "./shared/text"
 
 export default function ViolinoTabs({ lang }: { lang: string }) {
@@ -15,6 +16,7 @@ export default function ViolinoTabs({ lang }: { lang: string }) {
         <span>{t.brand_top}</span>
         <span>{t.brand_bottom}</span>
       </div>
+      <Tuner />
       {VIOLINO_MODES.filter((m) => m.enabled).map((m) => {
         const href = `/${lang}/violino/${m.slug}`
         const active = pathname.startsWith(href)

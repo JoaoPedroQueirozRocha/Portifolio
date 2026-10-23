@@ -38,7 +38,12 @@
 .arm-finger b { font-family: var(--font-body); font-weight: 600; font-size: 13.5px; white-space: nowrap; }
 .arm-finger.is-ok { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); }
 .arm-finger.is-bad { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
-.arm-fix { position: absolute; bottom: calc(100% + 3px); left: 50%; transform: translateX(-50%); font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--fix); white-space: nowrap; background: var(--surface); padding: 0 4px; border-radius: 2px; }
+/* casa certa de um dedo errado — fica atrás do dedo, em tracejado */
+.arm-ghost { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.05; z-index: 1; pointer-events: none; }
+.arm-ghost { border: 1px dashed var(--fix); background: color-mix(in oklab, var(--surface) 86%, var(--fix)); color: var(--fix); }
+.arm-ghost i { font-style: normal; font-family: var(--font-mono); font-size: 9.5px; opacity: .8; }
+.arm-ghost b { font-family: var(--font-body); font-weight: 600; font-size: 13.5px; white-space: nowrap; }
+.arm-ghost.is-stacked { top: auto; bottom: 2px; transform: translateX(-50%); width: auto; height: auto; flex-direction: row; gap: 5px; padding: 1px 7px; border-radius: 10px; z-index: 3; }
 .arm-half { position: absolute; top: 4px; transform: translateX(-50%); font-family: var(--font-mono); font-size: 11px; color: var(--fix); padding: 0 5px; border: 1px solid var(--fix); border-bottom: 0; border-radius: 4px 4px 0 0; line-height: 1.4; }
 
 .arm-sfix { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 2px 0 8px; }
@@ -96,8 +101,8 @@
 @media (max-width: 560px) {
   .arm-explain { padding: 24px 16px 20px; }
   .arm-opts { grid-template-columns: 1fr; }
-  .arm-finger { width: 30px; height: 42px; border-radius: 15px; }
-  .arm-finger b { font-size: 10px; }
+  .arm-finger, .arm-ghost { width: 30px; height: 42px; border-radius: 15px; }
+  .arm-finger b, .arm-ghost b { font-size: 10px; }
   .arm-sfix { grid-column: 1 / -1; }
   .arm-explain-head .vl-x { top: 14px; right: 10px; }
 }
