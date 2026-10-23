@@ -1,0 +1,147 @@
+{
+  "meta_title": "Roda cromática",
+  "meta_description": "Monte a volta das 12 notas, meio tom por vez, e descubra quais nomes diferentes soam igual.",
+  "eyebrow": "Treino · com placar",
+  "eyebrow_explore": "Consulta · sem placar",
+  "title": "Roda cromática",
+  "subtitle": "As 12 notas, de meio em meio tom, numa volta só. Monte a ordem nota por nota e descubra quais nomes diferentes soam igual — Dó♯ e Ré♭, Mi♯ e Fá.",
+  "score": { "label": "Placar da roda", "ok": "Acertos", "bad": "Erros", "streak": "Sequência" },
+  "groups": {
+    "mode": { "label": "Modo", "ordem": "Ordem", "eq": "Equivalentes", "explorar": "Explorar" },
+    "dir": { "label": "Sentido", "up": "Subindo ♯", "down": "Descendo ♭" },
+    "start": { "label": "Começar em", "rand": "Sorteada" }
+  },
+  "restart": "Recomeçar",
+  "wheel": {
+    "aria": "Roda das 12 notas",
+    "empty": "Casa {n}, vazia",
+    "named": "Casa {n}: {names}",
+    "or": " ou ",
+    "half_title": "Meio tom natural: não há nota entre elas"
+  },
+  "center": {
+    "ordem_eyebrow": "Nota {i} de {n}",
+    "ordem_start": "comece em {start}",
+    "ordem_next_up": "meio tom acima de {prev}",
+    "ordem_next_down": "meio tom abaixo de {prev}",
+    "ordem_done": "Volta completa",
+    "ordem_done_sub": "as 12 notas em ordem",
+    "eq_eyebrow": "Outro nome de",
+    "eq_sub": "mesmo som, outra escrita",
+    "eq_done": "Roda completa",
+    "eq_done_sub": "todos os nomes conferidos",
+    "exp_eyebrow": "Explorar",
+    "exp_sub": "toque numa casa ou num nome",
+    "exp_two": "Um som, dois nomes",
+    "exp_one": "Um nome só",
+    "exp_alias": "= {names}",
+    "exp_none": "sem outro nome simples",
+    "dir_up": "↻ subindo",
+    "dir_down": "↺ descendo",
+    "sep": " · "
+  },
+  "panel": {
+    "ordem": {
+      "eyebrow": "Modo · Ordem",
+      "title": "Monte a volta, meio tom por vez",
+      "text_up": "Escolha no banco a próxima nota subindo. Qualquer nome que soe certo vale — Dó♯ ou Ré♭. Quando um som entra na roda, todos os seus nomes se apagam no banco.",
+      "text_down": "Escolha no banco a próxima nota descendo. Qualquer nome que soe certo vale — Ré♭ ou Dó♯. Quando um som entra na roda, todos os seus nomes se apagam no banco.",
+      "progress": "notas na roda"
+    },
+    "eq": {
+      "eyebrow": "Modo · Equivalentes",
+      "title": "Qual é o outro nome?",
+      "text": "A roda está montada com um nome em cada casa. Para a casa marcada, encontre no banco o outro jeito de escrever o mesmo som — ou diga que não existe com um só acidente.",
+      "progress": "casas conferidas"
+    },
+    "explorar": {
+      "eyebrow": "Modo · Explorar",
+      "title": "Ouça e compare, sem placar",
+      "text": "Toque numa casa da roda ou num nome do banco: todos os nomes do mesmo som acendem juntos. Troque o sentido para ver as notas do meio com ♯ ou com ♭.",
+      "progress": "sons na roda"
+    }
+  },
+  "bank": {
+    "aria": "Banco de nomes",
+    "natural": "Naturais",
+    "sharp": "Com sustenido ♯ · sobe ½",
+    "flat": "Com bemol ♭ · desce ½",
+    "used": "usada",
+    "alias": "= {name}",
+    "done": "feito",
+    "same": "mesmo som",
+    "no": "não",
+    "ok": "certo"
+  },
+  "none_btn": "Não tem outro nome",
+  "none_hint": "(com um só acidente)",
+  "next_ordem": "Outra volta",
+  "next_eq": "Nova rodada",
+  "ladder": {
+    "title": "A escada, de Dó a Dó",
+    "subtitle": "a mesma roda, aberta numa linha — as notas aparecem conforme você acerta",
+    "aria": "A escada das 12 notas, de Dó a Dó",
+    "half": "sem nota",
+    "half_title": "meio tom: não há nota entre elas",
+    "unknown": "= ?",
+    "none": "—"
+  },
+  "cards": [
+    {
+      "tag": "1 · A ordem",
+      "title": "Dó Ré Mi Fá Sol Lá Si",
+      "text": "Sete letras que se repetem. Entre quase todas há um tom — e cabe uma nota no meio. Só Mi–Fá e Si–Dó ficam coladas: meio tom."
+    },
+    {
+      "tag": "2 · Dois nomes, um som",
+      "title": "Dó♯ = Ré♭",
+      "text": "♯ sobe meio tom, ♭ desce meio tom. A nota do meio pode ser chamada pela vizinha de baixo (subindo, ♯) ou pela de cima (descendo, ♭). No violino: meio tom é dedo colado."
+    },
+    {
+      "tag": "3 · Casos especiais",
+      "title": "Mi♯ = Fá · Si♯ = Dó",
+      "text": "E também Fá♭ = Mi e Dó♭ = Si, porque não há nota entre elas. Ré, Sol e Lá só ganham outro nome com dobrado (𝄪 ou 𝄫) — fica para depois."
+    }
+  ],
+  "semis_one": "meio tom",
+  "semis_many": "{n} meios-tons",
+  "heads": {
+    "ok": "Certo",
+    "bad": "Ainda não",
+    "ordem_done": "Volta completa",
+    "eq_done": "Roda completa",
+    "eq_none_bad": "Tem sim",
+    "start": "Para começar",
+    "tip": "Dica",
+    "explore": "Explorar",
+    "explore_near": "Meio tom abaixo: {below} · acima: {above}"
+  },
+  "msg": {
+    "ordem_start": "Toque em {start} no banco. Depois, a cada passo, a nota que está a meio tom.",
+    "eq_tip": "Pense na nota vizinha: o mesmo som pode ser “a de baixo + ♯” ou “a de cima + ♭”.",
+    "explore_idle": "Comece por Mi ou Si: veja que eles também têm um segundo nome.",
+    "explore_one": "{a} fica a um tom de cada vizinha natural, então só tem um nome simples.",
+    "explore_black": "{a} e {b} são o mesmo som: a nota do meio entre {lo} e {hi}.",
+    "explore_special": "{a} e {b} são o mesmo som, porque entre Mi–Fá e Si–Dó não existe nota.",
+    "ordem_done_up": "Volta completa! As 12 notas, subindo de {start}. A próxima seria {start} de novo, uma oitava acima.",
+    "ordem_done_down": "Volta completa! As 12 notas, descendo de {start}. A próxima seria {start} de novo, uma oitava abaixo.",
+    "ordem_special": "Vale! {label} soa igual a {base} — entre Mi e Fá (e entre Si e Dó) só há meio tom.",
+    "ordem_alias_up": "Vale! {label} é o mesmo som que {other}. Subindo, o costume é escrever {pref}.",
+    "ordem_alias_down": "Vale! {label} é o mesmo som que {other}. Descendo, o costume é escrever {pref}.",
+    "ordem_black": "Isso — {label}. O outro nome deste som é {other}: repare que ele também apagou no banco.",
+    "ordem_natural_alias": "Isso — {label}. (Também pode ser escrito {other}.)",
+    "ordem_natural": "Isso — {label}.",
+    "ordem_bad_first": "Comece por {start}. {label} vem depois.",
+    "ordem_bad_same": "{label} é a mesma nota que {prev} — um som com outro nome. Avance meio tom.",
+    "ordem_bad_up": "{label} fica {d} acima de {prev}. Procure a nota a só meio tom.",
+    "ordem_bad_down": "{label} fica {d} abaixo de {prev}. Procure a nota a só meio tom.",
+    "eq_ok_black": "{shown} = {label}. É a nota entre {lo} e {hi}: vista de baixo é ♯, vista de cima é ♭.",
+    "eq_ok_natural": "{shown} = {label}. Entre Mi–Fá e Si–Dó só há meio tom, então ♯ ou ♭ cai direto na vizinha.",
+    "eq_ok_none": "{shown} fica entre duas notas a um tom de distância, então não há letra vizinha a meio tom. Outro nome só com dobrado (𝄪/𝄫).",
+    "eq_bad_self": "Esse é o próprio nome mostrado. Procure o outro jeito de escrever o mesmo som.",
+    "eq_bad_up": "{label} soa {d} acima de {shown}. O som tem que ser o mesmo.",
+    "eq_bad_down": "{label} soa {d} abaixo de {shown}. O som tem que ser o mesmo.",
+    "eq_none_black": "Toda nota do meio tem dois nomes: um com ♯ e outro com ♭.",
+    "eq_none_natural": "Lembre de Mi–Fá e Si–Dó: só meio tom entre elas."
+  }
+}

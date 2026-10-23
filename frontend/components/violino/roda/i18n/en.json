@@ -1,0 +1,147 @@
+{
+  "meta_title": "Chromatic wheel",
+  "meta_description": "Build the circle of the 12 notes, one half step at a time, and find which different names sound the same.",
+  "eyebrow": "Practice · scored",
+  "eyebrow_explore": "Reference · no score",
+  "title": "Chromatic wheel",
+  "subtitle": "The 12 notes, half step by half step, in one turn. Build the order note by note and find which different names sound the same — C♯ and D♭, E♯ and F.",
+  "score": { "label": "Wheel score", "ok": "Hits", "bad": "Misses", "streak": "Streak" },
+  "groups": {
+    "mode": { "label": "Mode", "ordem": "Order", "eq": "Equivalents", "explorar": "Explore" },
+    "dir": { "label": "Direction", "up": "Rising ♯", "down": "Falling ♭" },
+    "start": { "label": "Start on", "rand": "Random" }
+  },
+  "restart": "Restart",
+  "wheel": {
+    "aria": "Wheel of the 12 notes",
+    "empty": "Slot {n}, empty",
+    "named": "Slot {n}: {names}",
+    "or": " or ",
+    "half_title": "Natural half step: there is no note between them"
+  },
+  "center": {
+    "ordem_eyebrow": "Note {i} of {n}",
+    "ordem_start": "start on {start}",
+    "ordem_next_up": "a half step above {prev}",
+    "ordem_next_down": "a half step below {prev}",
+    "ordem_done": "Full turn",
+    "ordem_done_sub": "all 12 notes in order",
+    "eq_eyebrow": "Other name for",
+    "eq_sub": "same sound, other spelling",
+    "eq_done": "Wheel complete",
+    "eq_done_sub": "every name checked",
+    "exp_eyebrow": "Explore",
+    "exp_sub": "tap a slot or a name",
+    "exp_two": "One sound, two names",
+    "exp_one": "Only one name",
+    "exp_alias": "= {names}",
+    "exp_none": "no other simple name",
+    "dir_up": "↻ rising",
+    "dir_down": "↺ falling",
+    "sep": " · "
+  },
+  "panel": {
+    "ordem": {
+      "eyebrow": "Mode · Order",
+      "title": "Build the turn, one half step at a time",
+      "text_up": "Pick the next note going up from the bank. Any name that sounds right counts — C♯ or D♭. When a sound enters the wheel, all of its names dim in the bank.",
+      "text_down": "Pick the next note going down from the bank. Any name that sounds right counts — D♭ or C♯. When a sound enters the wheel, all of its names dim in the bank.",
+      "progress": "notes on the wheel"
+    },
+    "eq": {
+      "eyebrow": "Mode · Equivalents",
+      "title": "What is the other name?",
+      "text": "The wheel is set with one name in each slot. For the marked slot, find in the bank the other way to write the same sound — or say there is none with a single accidental.",
+      "progress": "slots checked"
+    },
+    "explorar": {
+      "eyebrow": "Mode · Explore",
+      "title": "Listen and compare, no score",
+      "text": "Tap a slot on the wheel or a name in the bank: every name of the same sound lights up together. Switch direction to see the in-between notes with ♯ or with ♭.",
+      "progress": "sounds on the wheel"
+    }
+  },
+  "bank": {
+    "aria": "Name bank",
+    "natural": "Naturals",
+    "sharp": "With sharp ♯ · raises ½",
+    "flat": "With flat ♭ · lowers ½",
+    "used": "used",
+    "alias": "= {name}",
+    "done": "done",
+    "same": "same sound",
+    "no": "no",
+    "ok": "right"
+  },
+  "none_btn": "There is no other name",
+  "none_hint": "(with a single accidental)",
+  "next_ordem": "Another turn",
+  "next_eq": "New round",
+  "ladder": {
+    "title": "The ladder, from C to C",
+    "subtitle": "the same wheel, opened into a line — notes appear as you get them right",
+    "aria": "Ladder of the 12 notes, from C to C",
+    "half": "no note",
+    "half_title": "half step: there is no note between them",
+    "unknown": "= ?",
+    "none": "—"
+  },
+  "cards": [
+    {
+      "tag": "1 · The order",
+      "title": "C D E F G A B",
+      "text": "Seven letters that repeat. Between almost every pair there is a whole step — and room for a note in between. Only E–F and B–C sit side by side: a half step."
+    },
+    {
+      "tag": "2 · Two names, one sound",
+      "title": "C♯ = D♭",
+      "text": "♯ raises a half step, ♭ lowers a half step. The in-between note can be named from the neighbour below (rising, ♯) or from the one above (falling, ♭). On the violin: a half step is fingers touching."
+    },
+    {
+      "tag": "3 · Special cases",
+      "title": "E♯ = F · B♯ = C",
+      "text": "And also F♭ = E and C♭ = B, because there is no note between them. D, G and A only get another name with a double accidental (𝄪 or 𝄫) — for later."
+    }
+  ],
+  "semis_one": "a half step",
+  "semis_many": "{n} half steps",
+  "heads": {
+    "ok": "Right",
+    "bad": "Not yet",
+    "ordem_done": "Full turn",
+    "eq_done": "Wheel complete",
+    "eq_none_bad": "There is",
+    "start": "To begin",
+    "tip": "Tip",
+    "explore": "Explore",
+    "explore_near": "Half step below: {below} · above: {above}"
+  },
+  "msg": {
+    "ordem_start": "Tap {start} in the bank. Then, at each step, the note a half step away.",
+    "eq_tip": "Think of the neighbouring note: the same sound can be “the one below + ♯” or “the one above + ♭”.",
+    "explore_idle": "Start with E or B: see that they also have a second name.",
+    "explore_one": "{a} is a whole step from each natural neighbour, so it has only one simple name.",
+    "explore_black": "{a} and {b} are the same sound: the note between {lo} and {hi}.",
+    "explore_special": "{a} and {b} are the same sound, because there is no note between E–F and B–C.",
+    "ordem_done_up": "Full turn! All 12 notes, rising from {start}. The next would be {start} again, an octave higher.",
+    "ordem_done_down": "Full turn! All 12 notes, falling from {start}. The next would be {start} again, an octave lower.",
+    "ordem_special": "Good! {label} sounds the same as {base} — between E and F (and between B and C) there is only a half step.",
+    "ordem_alias_up": "Good! {label} is the same sound as {other}. Rising, the custom is to write {pref}.",
+    "ordem_alias_down": "Good! {label} is the same sound as {other}. Falling, the custom is to write {pref}.",
+    "ordem_black": "Yes — {label}. The other name for this sound is {other}: notice it dimmed in the bank too.",
+    "ordem_natural_alias": "Yes — {label}. (It can also be written {other}.)",
+    "ordem_natural": "Yes — {label}.",
+    "ordem_bad_first": "Start with {start}. {label} comes later.",
+    "ordem_bad_same": "{label} is the same note as {prev} — one sound with another name. Move up a half step.",
+    "ordem_bad_up": "{label} is {d} above {prev}. Look for the note just a half step away.",
+    "ordem_bad_down": "{label} is {d} below {prev}. Look for the note just a half step away.",
+    "eq_ok_black": "{shown} = {label}. It is the note between {lo} and {hi}: seen from below it is ♯, seen from above it is ♭.",
+    "eq_ok_natural": "{shown} = {label}. Between E–F and B–C there is only a half step, so ♯ or ♭ lands right on the neighbour.",
+    "eq_ok_none": "{shown} sits between two notes a whole step away, so there is no neighbouring letter a half step off. Another name only with a double accidental (𝄪/𝄫).",
+    "eq_bad_self": "That is the name already shown. Look for the other way to write the same sound.",
+    "eq_bad_up": "{label} sounds {d} above {shown}. The sound has to be the same.",
+    "eq_bad_down": "{label} sounds {d} below {shown}. The sound has to be the same.",
+    "eq_none_black": "Every in-between note has two names: one with ♯ and one with ♭.",
+    "eq_none_natural": "Remember E–F and B–C: only a half step between them."
+  }
+}

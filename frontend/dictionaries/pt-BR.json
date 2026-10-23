@@ -335,6 +335,10 @@
       "corrida": {
         "label": "Corrida",
         "hint": "leia no tempo"
+      },
+      "roda": {
+        "label": "Roda cromática",
+        "hint": "ordem e equivalentes"
       }
     },
     "fret": { "open": "solta", "finger": "dedo" },
