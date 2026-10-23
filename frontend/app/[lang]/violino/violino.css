@@ -167,8 +167,14 @@ button.vl-dot:disabled { cursor: default; }
 .vl-dot.is-ok { border: 1px solid var(--ok); background: var(--ok-soft); color: var(--ok); }
 .vl-dot.is-bad { border: 1px solid var(--bad); background: var(--bad-soft); color: var(--bad); }
 .vl-dot.is-fix, .vl-dot.is-alt { border: 1px dashed var(--gold); color: var(--gold); }
+/* "você está aqui": onde a mão está (anel duplo); "tocando": halo enquanto a casa soa */
+.vl-dot.is-here { border: 3px double var(--accent-bright); background: color-mix(in oklab, var(--accent-bright) 16%, transparent); color: var(--accent-bright); }
+.vl-dot.is-playing { box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 40%, transparent); }
 .vl-fret-lab { position: absolute; left: 0; right: 0; bottom: 5px; text-align: center; font-family: var(--font-mono); font-size: 11px; line-height: 1; color: var(--faint); white-space: nowrap; pointer-events: none; }
 .vl-fret-lab.is-note { color: var(--gold); }
+.vl-dot.is-ok ~ .vl-fret-lab.is-note { color: var(--ok); }
+.vl-dot.is-bad ~ .vl-fret-lab.is-note { color: var(--bad); }
+.vl-dot.is-here ~ .vl-fret-lab.is-note, .vl-dot.is-playing ~ .vl-fret-lab.is-note { color: var(--accent-bright); }
 /* casa sem círculo: o nome da nota vai para o rótulo, com a mesma paleta */
 .vl-fret-lab.is-scale { color: var(--text); }
 .vl-fret-lab.is-neutral { color: var(--muted); }

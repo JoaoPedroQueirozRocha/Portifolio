@@ -339,6 +339,10 @@
       "roda": {
         "label": "Roda cromática",
         "hint": "ordem e equivalentes"
+      },
+      "eco": {
+        "label": "Eco",
+        "hint": "ache a nota de ouvido"
       }
     },
     "fret": { "open": "solta", "finger": "dedo" },

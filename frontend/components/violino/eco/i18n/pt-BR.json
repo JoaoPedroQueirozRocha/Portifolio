@@ -1,0 +1,209 @@
+{
+  "meta_title": "Eco",
+  "meta_description": "Ouça a nota e encontre-a no braço do violino, partindo de onde sua mão está.",
+  "eyebrow": "Treino · Ouvido",
+  "title": "Ache a nota de ouvido",
+  "subtitle": "Ouça a nota e encontre-a no braço, partindo de onde sua mão está — como quando você erra no meio de uma música e precisa pegar a nota da frente.",
+  "score": { "label": "Placar do Eco", "ok": "Acertos", "streak": "Sequência", "tries": "Tentativas" },
+  "decimal": ",",
+  "none": "—",
+  "presets": { "label": "Nível", "ini": "Iniciante", "mid": "Médio", "adv": "Avançado", "custom": "Personalizado" },
+  "mic": { "label": "Tocar no violino", "soon": "em breve", "title": "Em breve: toque no violino e o app ouve pelo microfone" },
+  "panel_open": "Ajustes",
+  "panel_close": "Fechar ajustes",
+  "groups": {
+    "dist": {
+      "label": "Distância da nota atual",
+      "opts": ["Até 2 graus", "Até uma 5ª", "Qualquer"],
+      "hints": [
+        "A próxima nota fica a até dois graus da escala: quase sempre vizinha.",
+        "Saltos de até uma quinta, para cima ou para baixo.",
+        "Qualquer nota da 1ª posição, até uma oitava de distância."
+      ]
+    },
+    "notes": {
+      "label": "Notas",
+      "opts": ["Só da escala", "Com cromáticas"],
+      "hints": ["Só as sete notas da tonalidade.", "De vez em quando, uma nota de fora da escala (cromática)."]
+    },
+    "key": {
+      "label": "Tonalidade",
+      "rand": "Sorteada",
+      "hints": ["Uma tonalidade maior por rodada — até 2 acidentes no nível Iniciante."]
+    },
+    "ctx": {
+      "label": "Contexto",
+      "opts": ["Tônica", "Trecho da escala", "Nenhum"],
+      "hints": [
+        "Toca a tônica antes da primeira nota.",
+        "Toca 1-2-3-4-5-3-1 da escala para você “entrar na música”.",
+        "Sem contexto: só a nota de partida e o alvo."
+      ]
+    },
+    "hint": {
+      "label": "Dica de direção",
+      "opts": ["Ligada", "Desligada"],
+      "hints": [
+        "Depois de um erro: “mais agudo ▲” ou “mais grave ▼” — sem dizer a distância.",
+        "Sem dica: só o seu ouvido."
+      ]
+    },
+    "tries": {
+      "label": "Tentativas por nota",
+      "opts": ["3", "Ilimitadas"],
+      "hints": [
+        "Depois da 3ª, o jogo revela a resposta e conta como erro.",
+        "Tente até achar; a média de tentativas continua contando."
+      ]
+    },
+    "staff": {
+      "label": "Mostrar pauta",
+      "opts": ["Escondida", "Visível"],
+      "hints": [
+        "Treino de ouvido puro: nada para ler.",
+        "Mostra a nota de partida na pauta; o alvo aparece depois do acerto."
+      ]
+    }
+  },
+  "key_name": "{note} maior",
+  "key_badge": "{key} · {n}{acc}",
+  "progress": "{i} / {n}",
+  "stage": { "ready": "Entre na música", "search": "Que nota vem agora?", "summary": "Resumo da rodada" },
+  "gate": {
+    "off": {
+      "eyebrow": "Modo de ouvido",
+      "title": "Este exercício precisa de som",
+      "text": "O Eco toca a nota e você a encontra pelo ouvido — sem ver o nome. Ligue o som para começar.",
+      "button": "Ligar o som"
+    },
+    "loading": {
+      "eyebrow": "Carregando",
+      "title": "Preparando o som…",
+      "text": "Só um instante: estamos carregando os sons do violino.",
+      "button": ""
+    },
+    "error": {
+      "eyebrow": "Não deu certo",
+      "title": "Não foi possível ligar o som",
+      "text": "Confira se o navegador permite áudio nesta página e se o aparelho não está no modo silencioso.",
+      "button": "Tentar de novo"
+    },
+    "hint": "Use fones ou o alto-falante, num volume confortável."
+  },
+  "live": {
+    "ctx_head": "♪ Tocando o contexto · {i} de {n}",
+    "ctx_text": "{key} — entre na música",
+    "target_head": "♪ Tocando a nota-alvo",
+    "target_text": "ouça bem: é a nota que vem depois de {from}",
+    "here_head": "♪ Tocando a nota atual",
+    "here_text": "é onde sua mão está: {from} — compare com o alvo",
+    "touch_head": "♪ Tocando o seu toque",
+    "touch_text": "compare com o alvo",
+    "ready_head": "Silêncio · pronto",
+    "ready_text": "aperte “Ouvir” para começar",
+    "search_head": "Silêncio · sua vez",
+    "search_text": "toque no braço — cada casa soa",
+    "sum_head": "Rodada encerrada",
+    "sum_text": "{key}",
+    "idle_head": "Silêncio",
+    "idle_text": "ouça de novo quando quiser"
+  },
+  "tries": {
+    "aria_limited": "Tentativas: {used} de {max} usadas",
+    "aria_unlimited": "Tentativas ilimitadas",
+    "left_one": "{n} tentativa",
+    "left_many": "{n} tentativas",
+    "hit": "achou na {n}ª",
+    "none": "sem tentativas",
+    "unlimited": "tentativa {n}"
+  },
+  "buttons": {
+    "hear_context": "Ouvir o contexto",
+    "hear_here": "Ouvir a nota atual",
+    "hear_target": "Ouvir o alvo",
+    "space": "espaço",
+    "listen": "Ouvir",
+    "next": "Próxima nota →",
+    "summary": "Ver resumo"
+  },
+  "msg": {
+    "ready": "Ouça o contexto e depois a nota. Sem ver o nome.",
+    "ready_sub": "você está em {note} ({place})",
+    "search": "Procure no braço a nota que você ouviu.",
+    "search_sub": "partindo de {note} · cada toque soa, compare com o alvo",
+    "hint_up": "Mais agudo ▲",
+    "hint_down": "Mais grave ▼",
+    "same_pc": "Mesmo nome, outra oitava — ",
+    "rest_one": " Resta {n} tentativa.",
+    "rest_many": " Restam {n} tentativas.",
+    "nohint": "Ainda não. Ouça o alvo de novo e compare.",
+    "wrong_sub": "você tocou a casa marcada com ✕ · tentativa {n}",
+    "hit": "Isso — {note}, {degree}. {move}",
+    "hit_same": "A mesma nota de antes.",
+    "move_up": "{amount} acima do {from}.",
+    "move_down": "{amount} abaixo do {from}.",
+    "hit_sub": "{place} · {when}",
+    "first_try": "de primeira",
+    "nth_try": "na {n}ª tentativa",
+    "reveal": "Era {note} — {place}. Ouça de novo e compare.",
+    "reveal_sub": "{degree} · conta como erro"
+  },
+  "place": { "text": "corda {string}, {pos}", "open": "solta", "finger": "{n}º dedo", "fret": "casa {n}" },
+  "degree": {
+    "in": "{n}º grau de {key}",
+    "out": "fora da escala de {key}, entre o {lo}º e o {hi}º grau",
+    "short_in": "{n}º · {name}",
+    "short_out": "cromática",
+    "names": ["tônica", "supertônica", "mediante", "subdominante", "dominante", "superdominante", "sensível"]
+  },
+  "semis": {
+    "one": "um meio-tom",
+    "many": "{n} meios-tons",
+    "nums": ["zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "catorze", "quinze"]
+  },
+  "intervals": ["uníssono", "2ª menor", "2ª maior", "3ª menor", "3ª maior", "4ª justa", "trítono", "5ª justa", "6ª menor", "6ª maior", "7ª menor", "7ª maior", "oitava"],
+  "board": {
+    "hint": "1ª posição · só a altura conta: o mesmo som em outra corda também vale",
+    "cols": "1ª coluna = corda solta · depois, casas em semitons",
+    "string_cap": "Corda",
+    "cell_aria": "Corda {string}, {pos}",
+    "legend": "Legenda",
+    "states": {
+      "here": "você está aqui",
+      "playing": "tocando",
+      "wrong": "errado",
+      "right": "certo",
+      "fix": "era aqui",
+      "alt": "também vale",
+      "try": "tentativa {n}"
+    }
+  },
+  "staff": { "aria": "Pauta com a nota de partida e a nota-alvo", "here": "você está aqui", "target": "alvo" },
+  "trail": {
+    "title": "A melodia até aqui",
+    "start": "início",
+    "tonic": "tônica",
+    "nth": "{n}ª nota",
+    "first": "de primeira",
+    "tries": "{n} tentativas",
+    "revealed": "revelada",
+    "listening": "ouvindo"
+  },
+  "summary": {
+    "firsts": { "label": "De primeira", "sub": "acertos sem errar nenhuma vez" },
+    "avg": { "label": "Média de tentativas", "sub": "por nota, nesta rodada" },
+    "revealed": { "label": "Reveladas", "sub_one": "nota que o jogo mostrou", "sub_many": "notas que o jogo mostrou" },
+    "notes_title": "As notas da rodada",
+    "hard_title": "Deram mais trabalho",
+    "hard_item": "{note} ({degree}, {status})",
+    "hard_none": "Nenhuma — todas de primeira.",
+    "jumps_title": "Saltos mais difíceis",
+    "jump_item": "{interval} — média {avg}",
+    "jumps_none": "Nenhum salto deu trabalho.",
+    "jump_up": "▲ {interval}",
+    "jump_down": "▼ {interval}",
+    "jump_same": "= {interval}",
+    "train": "Treinar as difíceis",
+    "new_round": "Nova rodada"
+  }
+}

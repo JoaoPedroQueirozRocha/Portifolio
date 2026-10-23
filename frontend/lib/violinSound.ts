@@ -60,9 +60,15 @@ export function turnSoundOff() {
 }
 
 /** Toca uma nota MIDI curta, interrompendo a anterior. Ignorado com o som desligado. */
-export function playMidi(midi: number) {
+export function playMidi(midi: number, duration = 0.9) {
   if (status !== "on" || !violin) return
   stopLast?.()
-  const event: NoteEvent = { note: midi, velocity: 90, duration: 0.9 }
+  const event: NoteEvent = { note: midi, velocity: 90, duration }
   stopLast = violin.start(event)
+}
+
+/** Corta a nota que estiver soando, sem desligar o som (ex.: ao sair de um modo) */
+export function stopMidi() {
+  stopLast?.()
+  stopLast = null
 }
