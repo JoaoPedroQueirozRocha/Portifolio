@@ -324,6 +324,10 @@
       "corrida": {
         "label": "Race",
         "hint": "read in time"
+      },
+      "roda": {
+        "label": "Chromatic wheel",
+        "hint": "order and equivalents"
       }
     },
     "fret": { "open": "open", "finger": "finger" },

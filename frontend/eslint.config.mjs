@@ -13,6 +13,27 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  // Modo autocontido do Caderno de Violino: só pode depender do núcleo
+  // (@/lib/armaduras, @/lib/violinSound, ../shared) e de si mesmo, para sair
+  // do repositório sem reescrita. Ver docs/specs/ se existir o plano.
+  {
+    files: ["components/violino/roda/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": ["error", {
+        patterns: [
+          {
+            group: [
+              "@/app/**", "@/components/ui/**", "@/components/layout/**",
+              "@/lib/utils", "@/lib/experience", "@/lib/i18n",
+              "@/components/violino/armaduras/**", "@/components/violino/onde-tocar/**",
+              "../armaduras/**", "../onde-tocar/**",
+            ],
+            message: "O modo Roda só importa o núcleo do violino (lib/armaduras, lib/violinSound, ../shared) e a si mesmo.",
+          },
+        ],
+      }],
+    },
+  },
 ]);
 
 export default eslintConfig;
