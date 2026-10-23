@@ -1,0 +1,209 @@
+{
+  "meta_title": "Echo",
+  "meta_description": "Hear the note and find it on the violin fingerboard, starting from where your hand is.",
+  "eyebrow": "Practice · Ear",
+  "title": "Find the note by ear",
+  "subtitle": "Hear the note and find it on the fingerboard, starting from where your hand is — like when you slip in the middle of a piece and need to catch the note ahead.",
+  "score": { "label": "Echo score", "ok": "Hits", "streak": "Streak", "tries": "Attempts" },
+  "decimal": ".",
+  "none": "—",
+  "presets": { "label": "Level", "ini": "Beginner", "mid": "Intermediate", "adv": "Advanced", "custom": "Custom" },
+  "mic": { "label": "Play the violin", "soon": "soon", "title": "Coming soon: play your violin and the app listens through the microphone" },
+  "panel_open": "Settings",
+  "panel_close": "Close settings",
+  "groups": {
+    "dist": {
+      "label": "Distance from the current note",
+      "opts": ["Up to 2 degrees", "Up to a 5th", "Any"],
+      "hints": [
+        "The next note is within two scale degrees: almost always a neighbour.",
+        "Leaps of up to a fifth, up or down.",
+        "Any note in 1st position, up to an octave away."
+      ]
+    },
+    "notes": {
+      "label": "Notes",
+      "opts": ["Scale only", "With chromatics"],
+      "hints": ["Only the seven notes of the key.", "Now and then, a note outside the scale (chromatic)."]
+    },
+    "key": {
+      "label": "Key",
+      "rand": "Random",
+      "hints": ["One major key per round — up to 2 accidentals at the Beginner level."]
+    },
+    "ctx": {
+      "label": "Context",
+      "opts": ["Tonic", "Scale passage", "None"],
+      "hints": [
+        "Plays the tonic before the first note.",
+        "Plays 1-2-3-4-5-3-1 of the scale so you can “get into the music”.",
+        "No context: only the starting note and the target."
+      ]
+    },
+    "hint": {
+      "label": "Direction hint",
+      "opts": ["On", "Off"],
+      "hints": [
+        "After a miss: “higher ▲” or “lower ▼” — without saying the distance.",
+        "No hint: just your ear."
+      ]
+    },
+    "tries": {
+      "label": "Attempts per note",
+      "opts": ["3", "Unlimited"],
+      "hints": [
+        "After the 3rd, the game reveals the answer and counts it as a miss.",
+        "Keep trying until you find it; the average of attempts still counts."
+      ]
+    },
+    "staff": {
+      "label": "Show staff",
+      "opts": ["Hidden", "Visible"],
+      "hints": [
+        "Pure ear training: nothing to read.",
+        "Shows the starting note on the staff; the target appears after you get it."
+      ]
+    }
+  },
+  "key_name": "{note} major",
+  "key_badge": "{key} · {n}{acc}",
+  "progress": "{i} / {n}",
+  "stage": { "ready": "Get into the music", "search": "Which note comes next?", "summary": "Round summary" },
+  "gate": {
+    "off": {
+      "eyebrow": "Ear mode",
+      "title": "This exercise needs sound",
+      "text": "Echo plays the note and you find it by ear — without seeing its name. Turn the sound on to start.",
+      "button": "Turn sound on"
+    },
+    "loading": {
+      "eyebrow": "Loading",
+      "title": "Getting the sound ready…",
+      "text": "Just a moment: we are loading the violin sounds.",
+      "button": ""
+    },
+    "error": {
+      "eyebrow": "It did not work",
+      "title": "Could not turn the sound on",
+      "text": "Check that the browser allows audio on this page and that the device is not in silent mode.",
+      "button": "Try again"
+    },
+    "hint": "Use headphones or the speaker at a comfortable volume."
+  },
+  "live": {
+    "ctx_head": "♪ Playing the context · {i} of {n}",
+    "ctx_text": "{key} — get into the music",
+    "target_head": "♪ Playing the target note",
+    "target_text": "listen closely: it is the note that comes after {from}",
+    "here_head": "♪ Playing the current note",
+    "here_text": "this is where your hand is: {from} — compare it with the target",
+    "touch_head": "♪ Playing your note",
+    "touch_text": "compare it with the target",
+    "ready_head": "Silence · ready",
+    "ready_text": "press “Listen” to start",
+    "search_head": "Silence · your turn",
+    "search_text": "tap the fingerboard — every fret sounds",
+    "sum_head": "Round over",
+    "sum_text": "{key}",
+    "idle_head": "Silence",
+    "idle_text": "listen again whenever you like"
+  },
+  "tries": {
+    "aria_limited": "Attempts: {used} of {max} used",
+    "aria_unlimited": "Unlimited attempts",
+    "left_one": "{n} attempt",
+    "left_many": "{n} attempts",
+    "hit": "found on {n}",
+    "none": "no attempts left",
+    "unlimited": "attempt {n}"
+  },
+  "buttons": {
+    "hear_context": "Hear the context",
+    "hear_here": "Hear the current note",
+    "hear_target": "Hear the target",
+    "space": "space",
+    "listen": "Listen",
+    "next": "Next note →",
+    "summary": "See summary"
+  },
+  "msg": {
+    "ready": "Listen to the context, then to the note. Without seeing its name.",
+    "ready_sub": "you are on {note} ({place})",
+    "search": "Find on the fingerboard the note you heard.",
+    "search_sub": "starting from {note} · every tap sounds, compare it with the target",
+    "hint_up": "Higher ▲",
+    "hint_down": "Lower ▼",
+    "same_pc": "Same name, other octave — ",
+    "rest_one": " {n} attempt left.",
+    "rest_many": " {n} attempts left.",
+    "nohint": "Not yet. Hear the target again and compare.",
+    "wrong_sub": "you played the fret marked with ✕ · attempt {n}",
+    "hit": "Yes — {note}, {degree}. {move}",
+    "hit_same": "The same note as before.",
+    "move_up": "{amount} above {from}.",
+    "move_down": "{amount} below {from}.",
+    "hit_sub": "{place} · {when}",
+    "first_try": "first try",
+    "nth_try": "on try {n}",
+    "reveal": "It was {note} — {place}. Listen again and compare.",
+    "reveal_sub": "{degree} · counts as a miss"
+  },
+  "place": { "text": "{string} string, {pos}", "open": "open", "finger": "finger {n}", "fret": "fret {n}" },
+  "degree": {
+    "in": "degree {n} of {key}",
+    "out": "outside the scale of {key}, between degrees {lo} and {hi}",
+    "short_in": "{n} · {name}",
+    "short_out": "chromatic",
+    "names": ["tonic", "supertonic", "mediant", "subdominant", "dominant", "submediant", "leading tone"]
+  },
+  "semis": {
+    "one": "one half step",
+    "many": "{n} half steps",
+    "nums": ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen"]
+  },
+  "intervals": ["unison", "minor 2nd", "major 2nd", "minor 3rd", "major 3rd", "perfect 4th", "tritone", "perfect 5th", "minor 6th", "major 6th", "minor 7th", "major 7th", "octave"],
+  "board": {
+    "hint": "1st position · only the pitch counts: the same sound on another string is also right",
+    "cols": "1st column = open string · then frets in half steps",
+    "string_cap": "String",
+    "cell_aria": "{string} string, {pos}",
+    "legend": "Legend",
+    "states": {
+      "here": "you are here",
+      "playing": "playing",
+      "wrong": "wrong",
+      "right": "right",
+      "fix": "it was here",
+      "alt": "also right",
+      "try": "attempt {n}"
+    }
+  },
+  "staff": { "aria": "Staff with the starting note and the target note", "here": "you are here", "target": "target" },
+  "trail": {
+    "title": "The melody so far",
+    "start": "start",
+    "tonic": "tonic",
+    "nth": "note {n}",
+    "first": "first try",
+    "tries": "{n} attempts",
+    "revealed": "revealed",
+    "listening": "listening"
+  },
+  "summary": {
+    "firsts": { "label": "First try", "sub": "hits without a single miss" },
+    "avg": { "label": "Average attempts", "sub": "per note, this round" },
+    "revealed": { "label": "Revealed", "sub_one": "note the game showed", "sub_many": "notes the game showed" },
+    "notes_title": "The notes of the round",
+    "hard_title": "Gave the most trouble",
+    "hard_item": "{note} ({degree}, {status})",
+    "hard_none": "None — all on the first try.",
+    "jumps_title": "Hardest leaps",
+    "jump_item": "{interval} — average {avg}",
+    "jumps_none": "No leap gave trouble.",
+    "jump_up": "▲ {interval}",
+    "jump_down": "▼ {interval}",
+    "jump_same": "= {interval}",
+    "train": "Practice the hard ones",
+    "new_round": "New round"
+  }
+}

@@ -328,6 +328,10 @@
       "roda": {
         "label": "Chromatic wheel",
         "hint": "order and equivalents"
+      },
+      "eco": {
+        "label": "Echo",
+        "hint": "find the note by ear"
       }
     },
     "fret": { "open": "open", "finger": "finger" },

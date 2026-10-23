@@ -17,7 +17,7 @@ const eslintConfig = defineConfig([
   // (@/lib/armaduras, @/lib/violinSound, ../shared) e de si mesmo, para sair
   // do repositório sem reescrita. Ver docs/specs/ se existir o plano.
   {
-    files: ["components/violino/roda/**/*.{ts,tsx}"],
+    files: ["components/violino/roda/**/*.{ts,tsx}", "components/violino/eco/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": ["error", {
         patterns: [
@@ -28,7 +28,7 @@ const eslintConfig = defineConfig([
               "@/components/violino/armaduras/**", "@/components/violino/onde-tocar/**",
               "../armaduras/**", "../onde-tocar/**",
             ],
-            message: "O modo Roda só importa o núcleo do violino (lib/armaduras, lib/violinSound, ../shared) e a si mesmo.",
+            message: "Um modo só importa o núcleo do violino (lib/armaduras, lib/leitura, lib/violinSound, ../shared) e a si mesmo.",
           },
         ],
       }],

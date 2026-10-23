@@ -12,7 +12,7 @@ import { useViolinoText } from "./text"
 
 /** scale = nota da escala (clara) · out = fora da escala (apagada) · neutral = sem destaque */
 export type FretTone = "scale" | "out" | "neutral"
-export type FretState = "" | "ok" | "bad" | "fix" | "alt"
+export type FretState = "" | "ok" | "bad" | "fix" | "alt" | "here"
 
 /** Nome da nota com o ♯/♭ separado (mesma cor da nota) — "Fá" + "♯" */
 export function NoteText({ name }: { name: string }) {

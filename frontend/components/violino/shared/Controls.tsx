@@ -36,7 +36,7 @@ export function Seg<T extends string | number>({ label, value, options, onChange
   )
 }
 
-export function ScoreBoard({ label, items }: { label: string; items: { label: string; value: number }[] }) {
+export function ScoreBoard({ label, items }: { label: string; items: { label: string; value: number | string }[] }) {
   return (
     <dl className="vl-score" aria-label={label}>
       {items.map((it) => (

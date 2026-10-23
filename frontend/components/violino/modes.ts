@@ -11,6 +11,7 @@ export const VIOLINO_MODES = [
   { id: "nomear",     slug: "nomear-notas", enabled: false },
   { id: "corrida",    slug: "corrida",      enabled: false },
   { id: "roda",       slug: "roda",         enabled: true },
+  { id: "eco",        slug: "eco",          enabled: true },
 ] as const
 
 export type ViolinoModeId = (typeof VIOLINO_MODES)[number]["id"]
