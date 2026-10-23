@@ -1,18 +1,19 @@
 /* ---------------------------------------------------------------
    Som de violino — amostras do soundfont "violin" (MusyngKite) via smplr.
    Nada é baixado para o projeto: as amostras vêm da CDN da smplr na
-   primeira vez que o som é habilitado. O AudioContext só é criado dentro
-   de um gesto do usuário (clique no botão), como os navegadores exigem.
+   primeira vez que o som é habilitado. O AudioContext é o compartilhado
+   do caderno (audioContext.ts) e só é criado dentro de um gesto do
+   usuário (clique no botão), como os navegadores exigem.
 
    O estado (desligado/carregando/ligado/erro) é global ao Caderno de
    Violino: ligar o som num modo vale para os outros. Sempre começa
    desligado a cada carregamento da página.
 --------------------------------------------------------------- */
 import type { NoteEvent, Smplr } from "smplr"
+import { resumeAudioContext } from "./audioContext"
 
 export type SoundStatus = "off" | "loading" | "on" | "error"
 
-let ctx: AudioContext | null = null
 let loading: Promise<Smplr> | null = null
 let violin: Smplr | null = null
 let stopLast: (() => void) | null = null
@@ -36,10 +37,9 @@ export async function turnSoundOn(): Promise<boolean> {
   if (status === "on") return true
   setStatus("loading")
   try {
-    ctx ??= new AudioContext()
-    if (ctx.state === "suspended") await ctx.resume()
+    const ctx = await resumeAudioContext()
     loading ??= import("smplr").then(async ({ Soundfont }) => {
-      const inst = Soundfont(ctx as AudioContext, { instrument: "violin", kit: "MusyngKite" })
+      const inst = Soundfont(ctx, { instrument: "violin", kit: "MusyngKite" })
       await inst.ready
       return inst
     })
